@@ -50,23 +50,30 @@ const ItemDetail = () => {
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
 
   return (
-    <div className="container py-8 space-y-6">
+    <div className="container space-y-6 relative">
+      <div className='absolute top-4 left-8'>
+
       {location.state?.fromWeeklyMenu ? (
         <Link to="/" className="inline-block px-4 py-2 rounded-full bg-dark text-light font-semibold hover:bg-primary/80 transition">
-          ← Back to Home
+          ←
+          {/* Back to Home */}
         </Link>
       ) : (
         <Link to="/menu" className="inline-block px-4 py-2 rounded-full bg-dark text-light font-semibold hover:bg-primary/80 transition">
-          ← Back to Menu
+          ←
+          {/* Back to Menu */}
         </Link>
       )}
+      </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6">
-        <img
-          src={item.image || placeholder}
-          alt={item.name}
-          className="w-full h-64 object-cover rounded-xl mb-4"
-        />
+      <div className="">
+        <div className='bg-primary flex items-center justify-center p-4'>
+          <img
+            src={item.image || placeholder}
+            alt={item.name}
+            className="w-fit h-64 object-cover rounded-xl mb-4 ring-4 ring-dark"
+            />
+        </div>
         
         <h2 className="text-2xl font-bold mb-2">{item.name}</h2>
         
