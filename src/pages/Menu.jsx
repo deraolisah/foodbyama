@@ -38,22 +38,26 @@ const Menu = () => {
   return (
     <div className="space-y-4">
       {/* Horizontal Category List */}
-      <div className={`sticky z-40 top-0 transition-colors duration-300 ${scrolled ? "bg-dark/95 backdrop-blur-sm" : "bg-transparent"}`}>
-        <div className='container flex overflow-x-auto space-x-2 py-2 md:py-3 scrollbar-hidden'>
+      <div className={`sticky z-40 top-0 transition-colors duration-300 ${scrolled ? "bg-primary" : "bg-transparent"}`}>
+        <div className='container flex overflow-x-auto space-x-2 py-2.5 md:py-3 scrollbar-hidden'>
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
               title={category}
-              className={`snap-start px-4.5 py-1.5 rounded-full whitespace-nowrap text-xs md:text-sm cursor-pointer ${
+              className={`relative scroll-snap snap-start px-4.5 py-1.5 rounded-full whitespace-nowrap text-sm cursor-pointer ${
                 selectedCategory === category
                 ? "bg-primary text-light"
                 : scrolled 
-                ? "bg-primary/20 text-light hover:bg-light/20"
+                ? "bg-dark/5 text-light hover:bg-dark/15"
                 : "border border-dark/10 text-dark/80 hover:bg-dark/10"
               }`}
             >
               {category}
+              {/* Dot below active category — only on scroll */}
+              {selectedCategory === category && scrolled && (
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1 w-1.5 h-1.5 rounded-full bg-light"></span>
+              )}
             </button>
           ))}
         </div>
@@ -63,18 +67,18 @@ const Menu = () => {
       <div className='container space-y-6'>
         <h3 className="text-md font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-0.5 uppercase"> All {selectedCategory}s</h3>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {itemsByCategory[selectedCategory]?.map((item, index) => (
             <Link 
               to={`/menu/${selectedCategory}/${encodeURIComponent(item.name)}`} 
               key={index} 
-              className="rounded-2xl shadow-lg bg-primary/20 overflow-hidden relative group"
+              className="rounded-2xl bg-primary/20 overflow-hidden relative group"
             >
-              <div className='overflow-hidden rounded-2xl h-66'>
+              <div className='overflow-hidden rounded-2xl h-[220px] md:h-60'>
                 <img src={item.image || placeholder} alt="" className='h-full w-full object-cover object-center outline-0 border-0 group-hover:scale-[1.04] transition-all duration-300' />
               </div>
 
-              <h3 className="text-base font-semibold p-2 px-4 absolute bottom-9 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs text-light w-full rounded-b-2xl">
+              <h3 className="text-sm md:text-base font-semibold p-2 px-4 absolute bottom-9 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs text-light w-full rounded-b-2xl">
                 {item.name}
                 {item.size && (
                   <span className="text-sm font-normal text-light/80"> x {item.size}</span>
@@ -82,16 +86,16 @@ const Menu = () => {
               </h3>
 
               <div className='p-4 py-1.5 flex justify-between items-center'>
-                <p className="text-primary font-bold">{item.price}</p>
+                <p className="text-dark font-bold">{item.price}</p>
                 
                 {/* Quick Add to Cart Button */}
-                <button
+                {/* <button
                   onClick={(e) => handleQuickAdd(item, e)}
                   className="p-2 bg-primary text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   title="Quick add to cart"
                 >
                   <FaShoppingCart size={14} />
-                </button>
+                </button> */}
               </div>
             </Link>
           ))}

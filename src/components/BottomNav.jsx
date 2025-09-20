@@ -101,7 +101,7 @@ const BottomNav = () => {
           )}
         </NavLink>
 
-        <NavLink to="/chat" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "" }` }>
+        {/* <NavLink to="/chat" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "" }` }>
           {({ isActive }) => (
             <>
               {isActive ? (
@@ -112,7 +112,7 @@ const BottomNav = () => {
               Chat
             </>
           )}
-        </NavLink>
+        </NavLink> */}
       </ul>
     </div>
   )
