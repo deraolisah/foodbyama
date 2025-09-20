@@ -4,6 +4,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import placeholder from "../assets/placeholder.jpg";
 import { MenuContext } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
+import { FaArrowLeft, FaArrowRight, FaShoppingCart } from "react-icons/fa";
 
 const ItemDetail = () => {
   const { category, itemName } = useParams();
@@ -50,36 +51,37 @@ const ItemDetail = () => {
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
 
   return (
-    <div className="container space-y-6 relative">
-      <div className='absolute top-4 left-8'>
-
-      {location.state?.fromWeeklyMenu ? (
-        <Link to="/" className="inline-block px-4 py-2 rounded-full bg-dark text-light font-semibold hover:bg-primary/80 transition">
-          ←
-          {/* Back to Home */}
-        </Link>
-      ) : (
-        <Link to="/menu" className="inline-block px-4 py-2 rounded-full bg-dark text-light font-semibold hover:bg-primary/80 transition">
-          ←
-          {/* Back to Menu */}
-        </Link>
-      )}
+    <div className="space-y-6 container">
+      <div className='relative bg-primary flex items-center justify-center py-4'>
+        <div className='absolute top-4 left-4'>
+          {location.state?.fromWeeklyMenu ? (
+            <Link to="/" className="text-xs md:text-sm p-2.5 flex items-center justify-center rounded-full bg-dark text-light font-semibold hover:bg-dark/80 transition">
+              <FaArrowLeft /> 
+              {/* Back to Home */}
+            </Link>
+          ) : (
+            <Link to="/menu" className="text-xs md:text-sm p-2.5 flex items-center justify-center rounded-full bg-dark text-light font-semibold hover:bg-dark/80 transition">
+              <FaArrowLeft /> 
+              {/* Back to Menu */}
+            </Link>
+          )}
+        </div>
+        <img
+          src={item.image || placeholder}
+          alt={item.name}
+          className="w-fit h-64 object-cover rounded-xl mb-4 ring-4 ring-dark"
+          />
       </div>
 
-      <div className="">
-        <div className='bg-primary flex items-center justify-center p-4'>
-          <img
-            src={item.image || placeholder}
-            alt={item.name}
-            className="w-fit h-64 object-cover rounded-xl mb-4 ring-4 ring-dark"
-            />
-        </div>
-        
+
+      <div className='w-full flex items-center justify-between gap-4'>
         <h2 className="text-2xl font-bold mb-2">{item.name}</h2>
-        
+        <p className="text-xl text-primary font-bold mb-4">{item.price}</p>
+      </div>
+
+      <div>        
         {item.size && <p className="text-md text-dark/70 mb-2">Size: {item.size}</p>}
         
-        <p className="text-xl text-primary font-bold mb-4">{item.price}</p>
         
         <p className={`text-sm mb-4 ${item.isAvailable !== false ? "text-green-600" : "text-red-600"}`}>
           {item.isAvailable !== false ? "Available" : "Out of stock"}
