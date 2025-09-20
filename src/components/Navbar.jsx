@@ -3,6 +3,7 @@ import logo from "../assets/logo.jpg";
 import { Link } from 'react-router-dom';
 import { MdSearch } from "react-icons/md";
 import { TbMenu3 } from "react-icons/tb";
+import { IoMdClose } from "react-icons/io";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,7 +32,9 @@ const Navbar = () => {
       {/* Navigation Menu */}
       {menuOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-dark text-light shadow-md z-50 pt-40">
-          <button onClick={toggleMenu} className='text-2xl fixed top-5 right-5 p-2 bg-light/10 text-primary rounded-full cursor-pointer'> x </button>
+          <button onClick={toggleMenu} className='fixed top-4 right-4 p-2 bg-light/10 text-primary rounded-full cursor-pointer'>
+            <IoMdClose className='text-xl' />
+          </button>
           <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
             <Link to="/about" className="hover:text-primary"> About </Link>
             <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
