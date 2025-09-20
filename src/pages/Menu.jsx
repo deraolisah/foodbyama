@@ -1,0 +1,104 @@
+// pages/Menu.jsx
+import React, { useState, useEffect, useContext } from 'react';
+import placeholder from "../assets/placeholder.jpg";
+import { Link } from 'react-router-dom';
+import { MenuContext } from '../contexts/MenuContext';
+import { useCart } from '../contexts/CartContext';
+import { FaShoppingCart } from "react-icons/fa";
+
+const Menu = () => {
+  const { categories, itemsByCategory, selectedCategory, setSelectedCategory, isLoading } = useContext(MenuContext);
+  const { addToCart } = useCart();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 68);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleQuickAdd = (item, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(item);
+    alert(`${item.name} added to cart!`);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="container py-8 text-center">
+        <p>Loading menu...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Horizontal Category List */}
+      <div className={`sticky z-40 top-0 transition-colors duration-300 ${scrolled ? "bg-dark/95 backdrop-blur-sm" : "bg-transparent"}`}>
+        <div className='container flex overflow-x-auto space-x-2 py-2 md:py-3 scrollbar-hidden'>
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              title={category}
+              className={`snap-start px-4.5 py-1.5 rounded-full whitespace-nowrap text-xs md:text-sm cursor-pointer ${
+                selectedCategory === category
+                ? "bg-primary text-light"
+                : scrolled 
+                ? "bg-primary/20 text-light hover:bg-light/20"
+                : "border border-dark/10 text-dark/80 hover:bg-dark/10"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Display Items */}
+      <div className='container space-y-6'>
+        <h3 className="text-md font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-0.5 uppercase"> All {selectedCategory}s</h3>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8">
+          {itemsByCategory[selectedCategory]?.map((item, index) => (
+            <Link 
+              to={`/menu/${selectedCategory}/${encodeURIComponent(item.name)}`} 
+              key={index} 
+              className="rounded-2xl shadow-lg bg-primary/20 overflow-hidden relative group"
+            >
+              <div className='overflow-hidden rounded-2xl h-66'>
+                <img src={item.image || placeholder} alt="" className='h-full w-full object-cover object-center outline-0 border-0 group-hover:scale-[1.04] transition-all duration-300' />
+              </div>
+
+              <h3 className="text-base font-semibold p-2 px-4 absolute bottom-9 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs text-light w-full rounded-b-2xl">
+                {item.name}
+                {item.size && (
+                  <span className="text-sm font-normal text-light/80"> x {item.size}</span>
+                )}
+              </h3>
+
+              <div className='p-4 py-1.5 flex justify-between items-center'>
+                <p className="text-primary font-bold">{item.price}</p>
+                
+                {/* Quick Add to Cart Button */}
+                <button
+                  onClick={(e) => handleQuickAdd(item, e)}
+                  className="p-2 bg-primary text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  title="Quick add to cart"
+                >
+                  <FaShoppingCart size={14} />
+                </button>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Menu;
