@@ -10,6 +10,7 @@ import Cart from '../pages/Cart.jsx';
 import Account from '../pages/Account.jsx';
 import Chatbot from '../pages/Chatbot.jsx';
 import ItemDetail from '../pages/ItemDetail.jsx';
+import NotFound from '../pages/NotFound.jsx';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,9 @@ const AppRoutes = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/chat" element={<Chatbot />} />
           <Route path="/menu/:category/:itemName" element={<ItemDetail />} />
+
+          {/* Not Found Page */}
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </div>
