@@ -100,19 +100,6 @@ const BottomNav = () => {
             </>
           )}
         </NavLink>
-
-        {/* <NavLink to="/chat" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "" }` }>
-          {({ isActive }) => (
-            <>
-              {isActive ? (
-                <RiWhatsappFill className="text-3xl" />
-              ) : (
-                <RiWhatsappLine className="text-xl" />
-              )}
-              Chat
-            </>
-          )}
-        </NavLink> */}
       </ul>
     </div>
   )

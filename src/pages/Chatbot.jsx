@@ -1,13 +1,15 @@
 import React from 'react';
-import { FaWhatsapp } from "react-icons/fa";
+// import { FaWhatsapp } from "react-icons/fa";
+import whatsapp from "../assets/whatsapp.png";
 
 const Chatbot = () => {
   return (
-    <div className='fixed bottom-20 right-5 bg-light hover:bg-white text-green-500 font-semibold rounded-full flex items-center gap-1 py-2 px-3 pr-5 cursor-pointer select-none border border-dark/10'>
-      <FaWhatsapp className='text-2xl' />
-      Live Chat
-      <span className='flex absolute -top-1 right-1 w-3 h-3 rounded-full bg-primary animate-pulse'></span>
-      <span className='flex absolute -top-1 right-1 w-3 h-3 rounded-full bg-primary animate-ping'></span>
+    <div className='fixed w-full left-0 bottom-20 z-40'>
+      <div className='container relative bg-transparent flex items-center justify-end gap-1 cursor-pointer select-none'>
+        <img src={whatsapp} alt='' className='w-10' />
+        <span className='flex absolute -top-1 right-3 w-3 h-3 rounded-full bg-primary animate-pulse'></span>
+        <span className='flex absolute -top-1 right-3 w-3 h-3 rounded-full bg-primary animate-ping'></span>
+      </div>
     </div>
   )
 }
