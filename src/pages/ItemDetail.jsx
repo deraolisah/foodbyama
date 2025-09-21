@@ -5,6 +5,7 @@ import placeholder from "../assets/placeholder.jpg";
 import { MenuContext } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
 import { FaArrowLeft, FaArrowRight, FaShoppingCart } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
 const ItemDetail = () => {
   const { category, itemName } = useParams();
@@ -91,19 +92,21 @@ const ItemDetail = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
               <span className="font-semibold">Quantity:</span>
-              <div className="flex items-center border rounded-lg">
+              <div className="flex items-center bg-gray-100 p-1 rounded-full overflow-hidden">
                 <button 
                   onClick={decrementQuantity}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                  className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer"
                 >
-                  -
+                  {/* - */}
+                  <FaMinus />
                 </button>
                 <span className="px-4 py-1">{quantity}</span>
                 <button 
                   onClick={incrementQuantity}
-                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                  className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer"
                 >
-                  +
+                  {/* + */}
+                  <FaPlus />
                 </button>
               </div>
             </div>
