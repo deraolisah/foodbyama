@@ -35,7 +35,7 @@ const Chatbot = () => {
 
         {/* Popup Chat Window */}
         {/* {isOpen && ( */}
-          <div className={`absolute bottom-20 right-6 z-30 bg-transparent shadow-xl rounded-2xl overflow-hidden w-[360px] p-0 text-dark pointer-events-auto transform transition-all duration-400 ease-in-out ${
+          <div className={`absolute bottom-20 ml-4 right-6 z-30 bg-transparent shadow-xl rounded-2xl overflow-hidden max-w-[360px] p-0 text-dark pointer-events-auto transform transition-all duration-400 ease-in-out ${
             isOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
             }`}>
             {/* Header */}

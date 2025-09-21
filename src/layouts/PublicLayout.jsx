@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar';
 import { Outlet } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
-import Chatbot from '../pages/Chatbot';
+import Chatbot from '../components/Chatbot';
 
 const PublicLayout = () => {
   return (
