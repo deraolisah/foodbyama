@@ -68,7 +68,7 @@ const Chatbot = () => {
                   onChange={(e) => setMessage(e.target.value)} 
                   placeholder="Type a message..."
                   required
-                  className="w-full px-3 py-2 text-sm bg-light border border-dark/10 rounded-full"
+                  className="w-full px-3 py-2 text-md bg-light border border-dark/10 rounded-full"
                 />
 
                 <button onClick={handleSend} className="w-fit text-light rounded-md text-sm font-semibold cursor-pointer">
@@ -79,6 +79,12 @@ const Chatbot = () => {
             </div>
           </div>
         {/* )} */}
+
+        {/* Overlay */}
+        {isOpen && (
+          <div onClick={handleClose} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-20 pointer-events-auto transition-opacity duration-300"/>
+        )}
+
       </div>
     </div>
   );
