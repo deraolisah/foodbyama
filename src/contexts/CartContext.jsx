@@ -1,10 +1,12 @@
 // contexts/CartContext.jsx
 import React, { createContext, useContext, useState } from 'react';
+import { useToast } from './ToastContext'; // Add this import
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+   const toast = useToast(); // Get toast function
 
   const addToCart = (item, quantity = 1) => {
     setCartItems(prevItems => {
@@ -13,6 +15,7 @@ export const CartProvider = ({ children }) => {
       );
       
       if (existingItem) {
+        toast.success(`Updated ${item.name} quantity to ${existingItem.quantity + quantity}`);
         return prevItems.map(cartItem =>
           cartItem.name === item.name && cartItem.size === item.size
             ? { ...cartItem, quantity: cartItem.quantity + quantity }
@@ -20,14 +23,19 @@ export const CartProvider = ({ children }) => {
         );
       }
       
+      toast.success(`Added ${quantity} ${item.name} to cart`);
       return [...prevItems, { ...item, quantity }];
     });
   };
 
   const removeFromCart = (itemName, size) => {
-    setCartItems(prevItems => 
-      prevItems.filter(item => !(item.name === itemName && item.size === size))
-    );
+    setCartItems(prevItems => {
+      const removedItem = prevItems.find(item => item.name === itemName && item.size === size);
+      if (removedItem) {
+        toast.info(`Removed ${removedItem.name} from cart`);
+      }
+      return prevItems.filter(item => !(item.name === itemName && item.size === size));
+    });
   };
 
   const updateQuantity = (itemName, size, newQuantity) => {
@@ -36,17 +44,22 @@ export const CartProvider = ({ children }) => {
       return;
     }
     
-    setCartItems(prevItems =>
-      prevItems.map(item =>
+    setCartItems(prevItems => {
+      const updatedItem = prevItems.find(item => item.name === itemName && item.size === size);
+      if (updatedItem) {
+        toast.success(`Updated ${updatedItem.name} quantity to ${newQuantity}`);
+      }
+      return prevItems.map(item =>
         item.name === itemName && item.size === size
           ? { ...item, quantity: newQuantity }
           : item
-      )
-    );
+      );
+    });
   };
 
   const clearCart = () => {
     setCartItems([]);
+    toast.info('Cart cleared');
   };
 
   const getCartTotal = () => {

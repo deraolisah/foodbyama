@@ -4,11 +4,13 @@ import placeholder from "../assets/placeholder.jpg";
 import { useCart } from '../contexts/CartContext';
 import { FaTimes } from "react-icons/fa";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { useToast } from '../contexts/ToastContext'; // Add this
 
 const ItemModal = ({ item, isOpen, onClose }) => {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [currentItem, setCurrentItem] = useState(null);
+  const toast = useToast(); // Get toast function
 
   // Update current item when modal opens with a new item
   useEffect(() => {
@@ -36,7 +38,8 @@ const ItemModal = ({ item, isOpen, onClose }) => {
   const handleAddToCart = () => {
     if (currentItem) {
       addToCart(currentItem, quantity);
-      alert(`${quantity} ${currentItem.name} added to cart!`);
+      // addToCart(item, quantity);
+      // alert(`${quantity} ${currentItem.name} added to cart!`);
       onClose();
     }
   };

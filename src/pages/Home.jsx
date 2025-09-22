@@ -29,8 +29,8 @@ const Home = () => {
   const handleQuickAdd = (item, e) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(item);
-    alert(`${item.name} added to cart!`);
+    addToCart(item); // This will now trigger the toast via CartContext
+    // alert(`${item.name} added to cart!`);
   };
 
   if (isLoading) {
