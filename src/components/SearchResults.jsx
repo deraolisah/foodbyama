@@ -1,7 +1,5 @@
-// components/SearchResults.jsx
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '../contexts/MenuContext';
-import { useCart } from '../contexts/CartContext';
 import placeholder from "../assets/placeholder.jpg";
 import ItemModal from './ItemModal';
 
@@ -40,8 +38,8 @@ const SearchResults = ({ query, onItemSelect }) => {
 
   return (
     <>
-      <div className="container bg-dark fixed top-20 z-50 max-h-96 overflow-y-auto !p-2 rounded-lg scrollbar-hidden">
-        <div className="grid grid-cols-2 gap-2">
+      <div className="mt-4 max-h-96 overflow-y-auto rounded-lg">
+        <div className="grid gap-2">
           {filteredItems.map((item, index) => (
             <div
               key={index}
