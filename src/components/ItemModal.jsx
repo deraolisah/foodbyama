@@ -48,16 +48,16 @@ const ItemModal = ({ item, isOpen, onClose }) => {
     <>
       {/* Backdrop with blur effect */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+        className="fixed inset-0 h-full w-full bg-black/50 backdrop-blur-sm z-50"
         onClick={onClose}
       />
       
       {/* Modal content */}
-      <div className="container !px-0 fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl z-50 max-h-[90vh] overflow-y-auto animate-slide-up scrollbar-hidden">
+      <div className="container !px-0 fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl z-50 max-h-[84vh] md:max-h-[90vh] overflow-y-auto animate-slide-up scrollbar-hidden">
         <div className="relative bg-primary flex items-center justify-center py-4 rounded-t-2xl">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-dark text-light hover:bg-dark/80 transition"
+            className="absolute top-4 right-4 p-2 rounded-full bg-dark text-light hover:bg-dark/80 transition cursor-pointer"
           >
             <FaTimes />
           </button>
@@ -65,15 +65,17 @@ const ItemModal = ({ item, isOpen, onClose }) => {
           <img
             src={item?.image || placeholder}
             alt={item?.name}
-            className="w-fit h-64 object-cover rounded-xl mb-4 ring-4 ring-dark"
+            className="w-fit h-64 object-cover rounded-xl ring-4 ring-dark"
           />
         </div>
 
-        <div className="p-6 space-y-6">
-          <div className='w-full flex items-center justify-between gap-4'>
-            <h2 className="text-2xl font-bold mb-2">{item.name}</h2>
-            <p className="text-xl text-primary font-bold mb-4">{item.price}</p>
+        <div className="p-6 space-y-4 md:space-y-6">
+          <div className='w-full flex items-start justify-between gap-4 mb-6 md:mb-8'>
+            <h2 className="text-xl md:text-2xl font-bold">{item.name}</h2>
+            <p className="text-xl text-primary font-bold">{item.price}</p>
           </div>
+
+          <hr className='h-px w-full border-none bg-dark/10'/>
 
           <div>        
             {item.size && <p className="text-md text-dark/70 mb-2">Size: {item.size}</p>}
