@@ -84,14 +84,14 @@ const Navbar = () => {
 
         {/* Search Bar - Fixed at top when open */}
         {searchOpen && (
-          <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-50 pt-4 animate-slide-down">
+          <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-500 pt-4 animate-slide-down">
             <div className="container pb-4">
               <div className="relative">
                 <input
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search for dishes, soups, stews..."
-                  className="w-full p-4 pr-12 rounded-lg bg-light/10 text-light placeholder-light/70 border border-light/20 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-4 py-2.5 pr-12 rounded-lg bg-light/10 text-light placeholder-light/70 border border-light/20 focus:outline-none focus:ring-2 focus:ring-primary"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
@@ -124,9 +124,9 @@ const Navbar = () => {
               <IoMdClose className='text-xl' />
             </button>
             <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
-              <Link to="/about" className="hover:text-primary"> About </Link>
+              <Link to="/about" className="hover:text-primary"> About Us </Link>
               <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
-              <Link to="/contact" className="hover:text-primary"> Contact </Link>
+              <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
             </ul>
           </div>
         )}
@@ -135,7 +135,7 @@ const Navbar = () => {
       {/* Backdrop overlay when search is open */}
       {searchOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-45"
           onClick={toggleSearch}
         />
       )}

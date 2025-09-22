@@ -55,7 +55,8 @@ const SearchResults = ({ query, onItemSelect }) => {
                 <div className="flex-1">
                   <h4 className="text-light font-medium">{item.name}</h4>
                   <div className="flex justify-between items-center text-sm text-light/70">
-                    <span>{item.category}</span>
+                    <span>{item?.category || ""}</span>
+                    <span>{item?.size || ""}</span>
                     <span className="font-semibold text-primary">{item.price}</span>
                   </div>
                 </div>
