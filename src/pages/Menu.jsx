@@ -92,7 +92,7 @@ const Menu = () => {
       {/*  */}
       <div className='bg-primary text-light text-center border border-dark/5 rounded-xl shadow flex flex-col gap-1 p-4 my-4'>
         <p className='font-semibold'> Thank you for shopping with FoodByAma! 🎉🎉 </p>
-        <p className='font-lighter text-light/80'> Please remember to place your order for each day atleast 12 hours beforehand. </p>
+        <p className='font-lighter text-light/80'> Please remember to place your order for each day, atleast 12 hours beforehand. </p>
       </div>
 
 

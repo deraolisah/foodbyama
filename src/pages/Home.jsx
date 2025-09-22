@@ -71,7 +71,7 @@ const Home = () => {
 
       {/* Display Items */}
       <div className='container space-y-6'>
-        <h3 className="text-md font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-0.5 uppercase"> All {selectedCategory}s</h3>
+        <h3 className="text-md font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-0.5 mt-2 uppercase"> All {selectedCategory}s</h3>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {itemsByCategory[selectedCategory]?.map((item, index) => (
