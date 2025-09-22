@@ -1,16 +1,17 @@
 // pages/Menu.jsx
 import React, { useState, useContext } from 'react';
 import { FaArrowLeft, FaArrowRight, FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { useCart } from '../contexts/CartContext';
 import { MenuContext } from '../contexts/MenuContext';
 import placeholderImg from "../assets/placeholder.jpg";
-
+import ItemModal from '../components/ItemModal';
 
 const Menu = () => {
   const { weeklyMenu } = useContext(MenuContext);
   const { addToCart } = useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const days = Object.keys(weeklyMenu);
   const nextDay = () => {
@@ -23,6 +24,11 @@ const Menu = () => {
 
   const currentDay = days[currentIndex];
   const menuItems = weeklyMenu[currentDay] || [];
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
 
   const handleQuickAdd = (item, e) => {
     e.preventDefault();
@@ -59,11 +65,10 @@ const Menu = () => {
       {/* Menu Items */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
         {menuItems.map((item, index) => (
-          <Link 
-            to={`/menu/${item.category}/${encodeURIComponent(item.name)}`} 
+          <div 
             key={index} 
-            className="bg-primary/10 p-4 rounded-xl shadow flex items-start gap-2.5 relative group"
-            state={{ fromWeeklyMenu: true, day: currentDay }} // Optional: pass state for tracking
+            className="bg-primary/10 p-4 rounded-xl shadow flex items-start gap-2.5 relative group cursor-pointer"
+            onClick={() => handleItemClick(item)}
           >
             <img src={placeholderImg} alt='' className='min-w-20 h-20 rounded-lg bg-dark/50' />
             <div className='flex flex-col items-start flex-1'>
@@ -79,9 +84,16 @@ const Menu = () => {
             >
               <FaShoppingCart size={14} />
             </button>
-          </Link>
+          </div>
         ))}
       </div>
+
+      {/* Item Modal */}
+      <ItemModal 
+        item={selectedItem} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };

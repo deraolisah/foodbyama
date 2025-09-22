@@ -1,15 +1,16 @@
 // pages/Home.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import placeholder from "../assets/placeholder.jpg";
-import { Link } from 'react-router-dom';
 import { MenuContext } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
-import { FaShoppingCart } from "react-icons/fa";
+import ItemModal from '../components/ItemModal';
 
 const Home = () => {
   const { categories, itemsByCategory, selectedCategory, setSelectedCategory, isLoading } = useContext(MenuContext);
   const { addToCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +20,11 @@ const Home = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
 
   const handleQuickAdd = (item, e) => {
     e.preventDefault();
@@ -56,7 +62,7 @@ const Home = () => {
               {category}
               {/* Dot below active category — only on scroll */}
               {selectedCategory === category && scrolled && (
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1 w-1.5 h-1.5 rounded-full bg-light"></span>
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-light"></span>
               )}
             </button>
           ))}
@@ -69,10 +75,10 @@ const Home = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {itemsByCategory[selectedCategory]?.map((item, index) => (
-            <Link 
-              to={`/menu/${selectedCategory}/${encodeURIComponent(item.name)}`} 
+            <div 
               key={index} 
-              className="rounded-2xl bg-primary/20 overflow-hidden relative group"
+              className="rounded-2xl bg-primary/20 overflow-hidden relative group cursor-pointer"
+              onClick={() => handleItemClick(item)}
             >
               <div className='overflow-hidden rounded-2xl h-[220px] md:h-60'>
                 <img src={item.image || placeholder} alt="" className='h-full w-full object-cover object-center outline-0 border-0 group-hover:scale-[1.04] transition-all duration-300' />
@@ -87,20 +93,18 @@ const Home = () => {
 
               <div className='p-4 py-1.5 flex justify-between items-center'>
                 <p className="text-dark font-bold">{item.price}</p>
-                
-                {/* Quick Add to Cart Button */}
-                {/* <button
-                  onClick={(e) => handleQuickAdd(item, e)}
-                  className="p-2 bg-primary text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  title="Quick add to cart"
-                >
-                  <FaShoppingCart size={14} />
-                </button> */}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
+
+      {/* Item Modal */}
+      <ItemModal 
+        item={selectedItem} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };

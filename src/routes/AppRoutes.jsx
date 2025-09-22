@@ -8,7 +8,7 @@ import About from '../pages/About.jsx';
 import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
 import Account from '../pages/Account.jsx';
-import ItemDetail from '../pages/ItemDetail.jsx';
+// import ItemDetail from '../pages/ItemDetail.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
 const AppRoutes = () => {
@@ -22,7 +22,7 @@ const AppRoutes = () => {
           <Route path="/menu" element={<Menu />} />
           <Route path="/account" element={<Account />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/menu/:category/:itemName" element={<ItemDetail />} />
+          {/* <Route path="/menu/:category/:itemName" element={<ItemDetail />} /> */}
 
           {/* Not Found Page */}
           <Route path='*' element={<NotFound />} />

@@ -56,8 +56,13 @@ const Chatbot = () => {
 
             {/* Body */}
             <div className='flex flex-col p-0 bg-[#eae6df]' style={{ backgroundImage: `url(${whatsappBg})`}}>
-              <div className='py-8 px-4'>
-                <p className="w-fit p-2.5 mr-10 text-xs mb-3 bg-light rounded-lg shadow"> Hi there 👋 <br/> Thanks for reaching out to us. What would you like to order today? </p>
+              <div className='py-8 px-4 space-y-4'>
+                <p className="w-fit p-2.5 mr-8 text-xs bg-light rounded-lg shadow"> Hi there 👋 <br/> Thanks for reaching out to us. What would you like to order today? </p>
+                <p className='flex items-center gap-1 bg-light p-2.5 rounded-lg w-fit ml-auto'>
+                  <span className='w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce'></span>
+                  <span className='w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce'></span>
+                  <span className='w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce'></span>
+                </p>
               </div>
 
 

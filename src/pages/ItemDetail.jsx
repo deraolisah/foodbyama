@@ -52,7 +52,7 @@ const ItemDetail = () => {
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
 
   return (
-    <div className="space-y-6 container">
+    <div className="space-y-6 container bg-blue-500 fixed bottom-0 left-1/2 -translate-x-1/2 overflow-y-auto rounded-t-2xl">
       <div className='relative bg-primary flex items-center justify-center py-4'>
         <div className='absolute top-4 left-4'>
           {location.state?.fromWeeklyMenu ? (

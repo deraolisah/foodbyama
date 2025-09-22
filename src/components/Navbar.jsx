@@ -14,7 +14,7 @@ const Navbar = () => {
     <nav className='bg-dark py-2 relative'>
       <div className='container flex items-center justify-between'>
         {/* Search Icon */}
-        <span className="text-primary bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
+        <span className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
           <MdSearch className='text-xl' />
         </span>
 
@@ -24,7 +24,7 @@ const Navbar = () => {
         </Link>
 
         {/* Menu Button */}
-        <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-primary rounded-full cursor-pointer'>
+        <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer'>
           <TbMenu3 className='text-xl' />
         </div>
       </div>
