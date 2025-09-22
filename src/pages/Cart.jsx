@@ -34,16 +34,19 @@ const Cart = () => {
     <div className="container">
       <h3 className="text-sm font-bold text-center rounded-full bg-primary/10 w-fit mx-auto mt-4 px-4 py-1.5 uppercase"> Your Cart </h3>
       
-      <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-6 mt-4">
+      <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6 mt-4">
         {cartItems.map((item, index) => {
           const itemTotal = getItemTotal(item);
           const unitPrice = item.unitPrice || parseFloat(item.price.replace(/[^\d.]/g, ''));
           
           return (
-            <div key={index} className="flex items-center justify-between py-4 border-b border-dark/10 last:border-b-0">
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
-                {item.size && <p className="text-sm text-gray-600 mb-2">Size: {item.size}</p>}
+            <div key={index} className="flex items-center justify-between pb-4 pt-2 border-b border-dark/10 last:border-b-0">
+              <div className="flex-1 overflow-hidden">
+                <h3 className="font-semibold md:text-lg mb-1 truncate">
+                  {item.name}
+                  {item.size && <span className="text-sm text-gray-600 mb-2"> | Size: {item.size}</span>}
+                </h3>
+                
                 
                 {/* Breakdown (optional) */}
                 <p className="text-xs text-gray-500 mt-1">
@@ -73,14 +76,14 @@ const Cart = () => {
                 <div className="flex items-center bg-dark/10 p-1 rounded-full overflow-hidden">
                   <button 
                     onClick={() => updateQuantity(item.name, item.size, item.quantity - 1)}
-                    className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer hover:bg-gray-50 transition"
+                    className="p-1.5 md:p-2 flex items-center justify-center font-bold rounded-full shadow bg-white cursor-pointer hover:bg-gray-50 transition"
                   >
                     <FaMinus className="text-sm" />
                   </button>
-                  <span className="px-4 py-1 font-medium">{item.quantity}</span>
+                  <span className="px-4 py-0 font-medium">{item.quantity}</span>
                   <button 
                     onClick={() => updateQuantity(item.name, item.size, item.quantity + 1)}
-                    className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer hover:bg-gray-50 transition"
+                    className="p-1.5 md:p-2 flex items-center justify-center font-bold rounded-full shadow bg-white cursor-pointer hover:bg-gray-50 transition"
                   >
                     <FaPlus className="text-sm" />
                   </button>
