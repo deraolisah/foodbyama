@@ -1,10 +1,14 @@
 // pages/Cart.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { FaMinus, FaPlus, FaXmark } from "react-icons/fa6";
+import ItemModal from '../components/ItemModal.jsx';
 
 const Cart = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { 
     cartItems, 
     updateQuantity, 
@@ -14,6 +18,11 @@ const Cart = () => {
     getItemTotal,
     formatPrice 
   } = useCart();
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -31,6 +40,7 @@ const Cart = () => {
   }
 
   return (
+    <>
     <div className="container">
       <h3 className="text-sm font-bold text-center rounded-full bg-primary/10 w-fit mx-auto mt-4 px-4 py-1.5 uppercase"> Your Cart </h3>
       
@@ -42,7 +52,7 @@ const Cart = () => {
           return (
             <div key={index} className="flex items-center justify-between pb-4 pt-2 border-b border-dark/10 last:border-b-0">
               <div className="flex-1 overflow-hidden">
-                <h3 className="font-semibold md:text-lg mb-1 truncate">
+                <h3 className="font-semibold md:text-lg mb-1 truncate cursor-pointer" onClick={() => handleItemClick(item)}>
                   {item.name}
                   {item.size && <span className="text-sm text-gray-600 mb-2"> | Size: {item.size}</span>}
                 </h3>
@@ -100,7 +110,7 @@ const Cart = () => {
           );
         })}
         
-        <div className="my-4 pt-4">
+        <div className="mt-4 pt-4">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="text-xl font-bold">Total: {formatPrice(getCartTotal())}</h3>
@@ -131,6 +141,16 @@ const Cart = () => {
         </div>
       </div>
     </div>
+
+    <ItemModal 
+        item={selectedItem} 
+        isOpen={isModalOpen} 
+        onClose={() => {
+          setIsModalOpen(false);
+          onItemSelect();
+        }} 
+      />
+    </>
   );
 };
 

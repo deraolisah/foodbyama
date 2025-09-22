@@ -65,7 +65,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
       <div className={`fixed bottom-0 left-0 right-0 z-60 transform transition-all duration-400 ease-in-out ${
         isOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-25 opacity-0 pointer-events-none"
       }`}>
-        <div className="container !px-0 !py-0 bg-white rounded-t-3xl max-h-[84vh] md:max-h-[90vh] overflow-y-auto scrollbar-hidden">
+        <div className="container !px-0 !py-0 bg-white rounded-t-3xl max-h-[80vh] md:max-h-[90vh] overflow-y-auto scrollbar-hidden">
           <div className="relative bg-primary flex items-center justify-center p-4 rounded-t-2xl">
             <button
               onClick={onClose}
