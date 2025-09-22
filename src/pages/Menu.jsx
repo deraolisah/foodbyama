@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { FaArrowLeft, FaArrowRight, FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../contexts/CartContext';
 import { MenuContext } from '../contexts/MenuContext';
-import placeholderImg from "../assets/placeholder.jpg";
+import placeholderImg from "../assets/placeholder.png";
 import ItemModal from '../components/ItemModal';
 
 const Menu = () => {

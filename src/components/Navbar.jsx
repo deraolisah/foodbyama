@@ -84,8 +84,8 @@ const Navbar = () => {
 
         {/* Search Bar - Fixed at top when open */}
         {searchOpen && (
-          <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-500 pt-4 animate-slide-down">
-            <div className="container pb-4">
+          <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-500 animate-slide-down">
+            <div className="container py-3">
               <div className="relative">
                 <input
                   ref={searchInputRef}

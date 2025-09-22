@@ -1,6 +1,6 @@
 // pages/Home.jsx
 import React, { useState, useEffect, useContext } from 'react';
-import placeholder from "../assets/placeholder.jpg";
+import placeholder from "../assets/placeholder.png";
 import { MenuContext } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
 import ItemModal from '../components/ItemModal';

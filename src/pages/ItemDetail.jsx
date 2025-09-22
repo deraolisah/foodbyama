@@ -1,6 +1,6 @@
 // components/ItemModal.jsx
 import React, { useState, useEffect } from 'react';
-import placeholder from "../assets/placeholder.jpg";
+import placeholder from "../assets/placeholder.png";
 import { useCart } from '../contexts/CartContext';
 import { FaTimes } from "react-icons/fa";
 import { FaMinus, FaPlus } from "react-icons/fa6";

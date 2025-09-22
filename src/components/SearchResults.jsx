@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '../contexts/MenuContext';
-import placeholder from "../assets/placeholder.jpg";
+import placeholder from "../assets/placeholder.png";
 import ItemModal from './ItemModal';
 
 const SearchResults = ({ query, onItemSelect }) => {
