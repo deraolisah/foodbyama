@@ -6,8 +6,9 @@ import { RiHome4Fill } from "react-icons/ri";
 import { FaListAlt } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 
-import { RiFileList2Fill } from "react-icons/ri";
 import { GoHomeFill } from "react-icons/go";
+import { FaBowlFood } from "react-icons/fa6";
+import { RiFileList2Fill } from "react-icons/ri";
 
 import { PiShoppingBagFill } from "react-icons/pi";
 import { PiUserFill } from "react-icons/pi";
@@ -53,7 +54,8 @@ const BottomNav = () => {
         </NavLink>
 
         <NavLink to="/menu" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "text-gray-500" }` }>
-          <RiFileList2Fill className="text-xl" />
+          {/* <RiFileList2Fill className="text-xl" /> */}
+          <FaBowlFood className='text-xl' />
           Menu
         </NavLink>
      

@@ -8,8 +8,10 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const toast = useToast();
 
-   // Add a debug log to see how many times this renders
-  console.log('CartProvider rendered');
+  // Helper function to extract price from string (e.g., "₦11,000" -> 11000)
+  const extractPrice = (priceString) => {
+    return parseFloat(priceString.replace(/[^\d.]/g, '')) || 0;
+  };
 
   const addToCart = (item, quantity = 1) => {
     setCartItems(prevItems => {
@@ -19,7 +21,6 @@ export const CartProvider = ({ children }) => {
       
       if (existingItem) {
         const newQuantity = existingItem.quantity + quantity;
-        // Only show toast once here
         toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
         return prevItems.map(cartItem =>
           cartItem.name === item.name && cartItem.size === item.size
@@ -27,9 +28,12 @@ export const CartProvider = ({ children }) => {
             : cartItem
         );
       } else {
-        // Only show toast once here
         toast.success(`Added ${quantity} ${item.name} to cart`);
-        return [...prevItems, { ...item, quantity }];
+        return [...prevItems, { 
+          ...item, 
+          quantity,
+          unitPrice: extractPrice(item.price) // Store unit price for calculations
+        }];
       }
     });
   };
@@ -53,12 +57,15 @@ export const CartProvider = ({ children }) => {
     setCartItems(prevItems => {
       const updatedItem = prevItems.find(item => item.name === itemName && item.size === size);
       if (updatedItem && updatedItem.quantity !== newQuantity) {
-        // Only show toast if quantity actually changed
         toast.success(`Updated ${updatedItem.name} quantity to ${newQuantity}`);
       }
       return prevItems.map(item =>
         item.name === itemName && item.size === size
-          ? { ...item, quantity: newQuantity }
+          ? { 
+              ...item, 
+              quantity: newQuantity,
+              unitPrice: item.unitPrice || extractPrice(item.price) // Ensure unitPrice exists
+            }
           : item
       );
     });
@@ -71,10 +78,20 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
+  // Calculate total for a specific item
+  const getItemTotal = (item) => {
+    const unitPrice = item.unitPrice || extractPrice(item.price);
+    return unitPrice * item.quantity;
+  };
+
+  // Format price with Nigerian Naira symbol
+  const formatPrice = (amount) => {
+    return `₦${amount.toLocaleString()}`;
+  };
+
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => {
-      const price = parseFloat(item.price.replace(/[^\d.]/g, ''));
-      return total + (price * item.quantity);
+      return total + getItemTotal(item);
     }, 0);
   };
 
@@ -90,7 +107,9 @@ export const CartProvider = ({ children }) => {
       updateQuantity,
       clearCart,
       getCartTotal,
-      getCartItemsCount
+      getCartItemsCount,
+      getItemTotal, // Add this new function
+      formatPrice   // Add formatting utility
     }}>
       {children}
     </CartContext.Provider>

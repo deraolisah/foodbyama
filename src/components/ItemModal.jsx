@@ -102,7 +102,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
                     <div className="space-y-4">
                       <div className="flex items-center space-x-4">
                         <span className="font-semibold">Quantity:</span>
-                        <div className="flex items-center bg-gray-100 p-1 rounded-full overflow-hidden">
+                        <div className="flex items-center bg-dark/10 p-1 rounded-full overflow-hidden">
                           <button 
                             onClick={decrementQuantity}
                             className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer"

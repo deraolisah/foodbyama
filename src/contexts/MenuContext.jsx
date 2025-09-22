@@ -8,7 +8,7 @@ export const MenuProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [itemsByCategory, setItemsByCategory] = useState({});
   const [weeklyMenu, setWeeklyMenu] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState("Soup");
+  const [selectedCategory, setSelectedCategory] = useState("Soups");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
