@@ -3,22 +3,22 @@ import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { MenuProvider } from './contexts/MenuContext';
 import { CartProvider } from './contexts/CartContext';
-import { ToastProvider } from './contexts/ToastContext'; // Add this
+import { ToastProvider } from './contexts/ToastContext';
 
 import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (
     <>
-      <MenuProvider>
-        <ToastProvider> {/* Wrap with ToastProvider */}
+      <ToastProvider> {/* ToastProvider should be OUTSIDE CartProvider */}
+        <MenuProvider>
           <CartProvider>
             <BrowserRouter>
               <AppRoutes />
             </BrowserRouter>
           </CartProvider>
-        </ToastProvider>
-      </MenuProvider>
+        </MenuProvider>
+      </ToastProvider>
     </>
   )
 }

@@ -21,8 +21,8 @@ const BottomNav = () => {
       icon: <FaListAlt />,
     },
     {
-      name: "Account",
-      path: "/account",
+      name: "profile",
+      path: "/profile",
       icon: <MdAccountCircle />,
     },
     {
@@ -62,9 +62,9 @@ const BottomNav = () => {
           Cart
         </NavLink>
 
-        <NavLink to="/account" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "text-gray-500" }` }>
+        <NavLink to="/profile" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "text-gray-500" }` }>
           <PiUserFill className="text-xl" />
-          Account
+          Profile
         </NavLink>
       </ul>
     </div>

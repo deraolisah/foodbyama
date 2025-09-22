@@ -67,7 +67,7 @@ const Menu = () => {
         {menuItems.map((item, index) => (
           <div 
             key={index} 
-            className="bg-primary/10 p-4 rounded-xl shadow flex items-start gap-2.5 relative group cursor-pointer"
+            className="bg-light/5 border border-dark/5 p-4 rounded-xl shadow flex items-start gap-2.5 relative group cursor-pointer"
             onClick={() => handleItemClick(item)}
           >
             <img src={placeholderImg} alt='' className='min-w-20 h-20 rounded-lg bg-dark/50' />
@@ -87,6 +87,14 @@ const Menu = () => {
           </div>
         ))}
       </div>
+
+
+      {/*  */}
+      <div className='bg-primary text-light text-center border border-dark/5 rounded-xl shadow flex flex-col gap-1 p-4 my-4'>
+        <p className='font-semibold'> Thank you for shopping with FoodByAma! 🎉🎉 </p>
+        <p className='font-lighter text-light/80'> Please remember to place your order for each day atleast 12 hours beforehand. </p>
+      </div>
+
 
       {/* Item Modal */}
       <ItemModal 

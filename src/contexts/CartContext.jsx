@@ -1,12 +1,15 @@
 // contexts/CartContext.jsx
 import React, { createContext, useContext, useState } from 'react';
-import { useToast } from './ToastContext'; // Add this import
+import { useToast } from './ToastContext';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-   const toast = useToast(); // Get toast function
+  const toast = useToast();
+
+   // Add a debug log to see how many times this renders
+  console.log('CartProvider rendered');
 
   const addToCart = (item, quantity = 1) => {
     setCartItems(prevItems => {
@@ -15,16 +18,19 @@ export const CartProvider = ({ children }) => {
       );
       
       if (existingItem) {
-        toast.success(`Updated ${item.name} quantity to ${existingItem.quantity + quantity}`);
+        const newQuantity = existingItem.quantity + quantity;
+        // Only show toast once here
+        toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
         return prevItems.map(cartItem =>
           cartItem.name === item.name && cartItem.size === item.size
-            ? { ...cartItem, quantity: cartItem.quantity + quantity }
+            ? { ...cartItem, quantity: newQuantity }
             : cartItem
         );
+      } else {
+        // Only show toast once here
+        toast.success(`Added ${quantity} ${item.name} to cart`);
+        return [...prevItems, { ...item, quantity }];
       }
-      
-      toast.success(`Added ${quantity} ${item.name} to cart`);
-      return [...prevItems, { ...item, quantity }];
     });
   };
 
@@ -46,7 +52,8 @@ export const CartProvider = ({ children }) => {
     
     setCartItems(prevItems => {
       const updatedItem = prevItems.find(item => item.name === itemName && item.size === size);
-      if (updatedItem) {
+      if (updatedItem && updatedItem.quantity !== newQuantity) {
+        // Only show toast if quantity actually changed
         toast.success(`Updated ${updatedItem.name} quantity to ${newQuantity}`);
       }
       return prevItems.map(item =>
@@ -58,8 +65,10 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = () => {
+    if (cartItems.length > 0) {
+      toast.info('Cart cleared');
+    }
     setCartItems([]);
-    toast.info('Cart cleared');
   };
 
   const getCartTotal = () => {

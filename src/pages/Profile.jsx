@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Account = () => {
+const Profile = () => {
   return (
     <div className='container p-4'>
       My Account
@@ -12,4 +12,4 @@ const Account = () => {
   )
 }
 
-export default Account;
+export default Profile;

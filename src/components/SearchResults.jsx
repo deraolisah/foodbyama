@@ -39,7 +39,7 @@ const SearchResults = ({ query, onItemSelect }) => {
   return (
     <>
       <div className="mt-4 max-h-96 overflow-y-auto rounded-lg">
-        <div className="grid gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {filteredItems.map((item, index) => (
             <div
               key={index}
@@ -55,8 +55,7 @@ const SearchResults = ({ query, onItemSelect }) => {
                 <div className="flex-1">
                   <h4 className="text-light font-medium">{item.name}</h4>
                   <div className="flex justify-between items-center text-sm text-light/70">
-                    <span>{item?.category || ""}</span>
-                    <span>{item?.size || ""}</span>
+                    <span>{item?.category || item?.size}</span>
                     <span className="font-semibold text-primary">{item.price}</span>
                   </div>
                 </div>

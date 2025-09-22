@@ -7,7 +7,7 @@ import Menu from '../pages/Menu.jsx';
 import About from '../pages/About.jsx';
 import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
-import Account from '../pages/Account.jsx';
+import Profile from '../pages/Profile.jsx';
 // import ItemDetail from '../pages/ItemDetail.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
@@ -20,7 +20,7 @@ const AppRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
           {/* <Route path="/menu/:category/:itemName" element={<ItemDetail />} /> */}
 
