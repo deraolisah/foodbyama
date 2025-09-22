@@ -134,9 +134,9 @@ const Cart = () => {
               Continue Shopping
             </Link>
 
-            <button className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition cursor-pointer">
+            <Link to="/checkout" className="w-full bg-primary text-white text-center py-3 rounded-lg font-semibold hover:bg-primary/90 transition cursor-pointer">
               Proceed to Checkout
-            </button>
+            </Link>
             </div>
         </div>
       </div>

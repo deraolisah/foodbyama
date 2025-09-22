@@ -119,15 +119,17 @@ const Navbar = () => {
 
         {/* Navigation Menu */}
         {menuOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-dark text-light shadow-md z-50 pt-40">
-            <button onClick={toggleMenu} className='fixed top-4 right-4 p-2 bg-light/10 text-primary rounded-full cursor-pointer'>
-              <IoMdClose className='text-xl' />
-            </button>
-            <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
-              <Link to="/about" className="hover:text-primary"> About Us </Link>
-              <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
-              <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
-            </ul>
+          <div className="container flex items-end justify-end !relative bg-red-500">
+            <div className="fixed top-16 right-0 w-md h-full bg-dark text-light shadow-md z-10 pt-40">
+              {/* <button onClick={toggleMenu} className='fixed top-4 right-4 p-2 bg-light/10 text-primary rounded-full cursor-pointer'>
+                <IoMdClose className='text-xl' />
+              </button> */}
+              <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
+                <Link to="/about" className="hover:text-primary"> About Us </Link>
+                <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
+                <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
+              </ul>
+            </div>
           </div>
         )}
       </nav>

@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MenuProvider } from './contexts/MenuContext';
 import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { CheckoutProvider } from './contexts/CheckoutContext'; // Add this
 
 import AppRoutes from './routes/AppRoutes'
 
@@ -13,9 +14,11 @@ function App() {
       <ToastProvider> {/* ToastProvider should be OUTSIDE CartProvider */}
         <MenuProvider>
           <CartProvider>
-            <BrowserRouter>
-              <AppRoutes />
-            </BrowserRouter>
+            <CheckoutProvider> {/* Add CheckoutProvider */}
+              <BrowserRouter>
+                <AppRoutes />
+              </BrowserRouter>
+            </CheckoutProvider>
           </CartProvider>
         </MenuProvider>
       </ToastProvider>
