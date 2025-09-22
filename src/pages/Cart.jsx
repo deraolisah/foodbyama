@@ -47,7 +47,7 @@ const Cart = () => {
                 
                 {/* Breakdown (optional) */}
                 <p className="text-xs text-gray-500 mt-1">
-                  {unitPrice.toLocaleString()} × {item.quantity} = 
+                  {unitPrice.toLocaleString()} × {item.quantity} =&nbsp;
                   <span className='text-primary font-bold'> 
                     {/* {itemTotal.toLocaleString()}  */}
                     {formatPrice(itemTotal)}
@@ -97,8 +97,8 @@ const Cart = () => {
           );
         })}
         
-        <div className="mt-6 pt-4">
-          <div className="flex justify-between items-center mb-6">
+        <div className="my-4 pt-4">
+          <div className="flex justify-between items-center">
             <div>
               <h3 className="text-xl font-bold">Total: {formatPrice(getCartTotal())}</h3>
               <p className="text-sm text-gray-600">
@@ -113,7 +113,7 @@ const Cart = () => {
             </button>
           </div>
           
-          <div className='flex flex-col-reverse sm:flex-row items-center gap-4 justify-between'>
+          <div className='flex flex-col-reverse sm:flex-row items-center gap-4 justify-between mt-4'>
             <Link 
               to="/menu" 
               className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer"
