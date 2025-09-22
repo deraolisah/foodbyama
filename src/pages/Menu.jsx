@@ -48,9 +48,9 @@ const Menu = () => {
   }
 
   return (
-    <div className="container mx-auto space-y-4 px-4 pt-4 md:pt-8">
+    <div className="container mx-auto space-y-0 px-4 pt-4 md:pt-8">
       {/* Carousel Controls */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-4">
         <button onClick={prevDay} className="p-2.5 bg-primary/10 text-dark text-xs hover:bg-primary hover:text-light rounded-full cursor-pointer"> 
           <FaArrowLeft /> 
         </button>

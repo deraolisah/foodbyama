@@ -42,7 +42,7 @@ const Home = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-0">
       {/* Horizontal Category List */}
       <div className={`sticky z-40 top-0 transition-colors duration-300 ${scrolled ? "bg-primary" : "bg-transparent"}`}>
         <div className='container flex overflow-x-auto space-x-2 py-2.5 md:py-3 scrollbar-hidden'>
