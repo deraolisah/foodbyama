@@ -50,6 +50,21 @@ export const MenuProvider = ({ children }) => {
     loadData();
   }, []);
 
+
+  // contexts/MenuContext.js (add this method to the context)
+  const searchItems = (query) => {
+    // Flatten all items
+    const allItems = Object.values(itemsByCategory).flat();
+    const weeklyItems = Object.values(weeklyMenu).flat();
+    const allMenuItems = [...allItems, ...weeklyItems];
+    
+    // Filter based on query
+    return allMenuItems.filter(item => 
+      item.name.toLowerCase().includes(query.toLowerCase()) ||
+      (item.category && item.category.toLowerCase().includes(query.toLowerCase()))
+    );
+  };
+
   return (
     <MenuContext.Provider value={{ 
       categories, 
@@ -57,7 +72,8 @@ export const MenuProvider = ({ children }) => {
       weeklyMenu,
       selectedCategory, 
       setSelectedCategory,
-      isLoading
+      isLoading,
+      searchItems // Add this
     }}>
       {children}
     </MenuContext.Provider>
