@@ -31,28 +31,32 @@ const Cart = () => {
   }
 
   return (
-    <div className="container py-8">
-      <h2 className="text-2xl font-bold mb-6">Your Cart</h2>
+    <div className="container">
+      <h3 className="text-sm font-bold text-center rounded-full bg-primary/10 w-fit mx-auto mt-4 px-4 py-1.5 uppercase"> Your Cart </h3>
       
-      <div className="bg-white rounded-2xl shadow-md p-6">
+      <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-6 mt-4">
         {cartItems.map((item, index) => {
           const itemTotal = getItemTotal(item);
           const unitPrice = item.unitPrice || parseFloat(item.price.replace(/[^\d.]/g, ''));
           
           return (
-            <div key={index} className="flex items-center justify-between py-4 border-b last:border-b-0">
+            <div key={index} className="flex items-center justify-between py-4 border-b border-dark/10 last:border-b-0">
               <div className="flex-1">
                 <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
                 {item.size && <p className="text-sm text-gray-600 mb-2">Size: {item.size}</p>}
                 
                 {/* Breakdown (optional) */}
                 <p className="text-xs text-gray-500 mt-1">
-                  {unitPrice.toLocaleString()} × {item.quantity} = {itemTotal.toLocaleString()}
+                  {unitPrice.toLocaleString()} × {item.quantity} = 
+                  <span className='text-primary font-bold'> 
+                    {/* {itemTotal.toLocaleString()}  */}
+                    {formatPrice(itemTotal)}
+                  </span>
                 </p>
 
-                <p className="text-primary font-bold text-lg">
+                {/* <p className="text-primary font-bold text-lg">
                   {formatPrice(itemTotal)}
-                </p>
+                </p> */}
 
                 {/* Unit Price */}
                 {/* <p className="text-sm text-gray-600">
@@ -65,7 +69,7 @@ const Cart = () => {
                 </div>                
               </div>
               
-              <div className="flex items-center space-x-4 ml-4">
+              <div className="flex items-center space-x-2 md:space-x-4 ml-4">
                 <div className="flex items-center bg-dark/10 p-1 rounded-full overflow-hidden">
                   <button 
                     onClick={() => updateQuantity(item.name, item.size, item.quantity - 1)}
@@ -109,7 +113,7 @@ const Cart = () => {
             </button>
           </div>
           
-          <div className='flex items-center gap-4 justify-between'>
+          <div className='flex flex-col-reverse sm:flex-row items-center gap-4 justify-between'>
             <Link 
               to="/menu" 
               className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer"
