@@ -13,8 +13,19 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { itemsByCategory, weeklyMenu } = useContext(MenuContext);
   const searchInputRef = useRef(null);
+  const scrollRef = useRef(0);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const toggleMenu = () => {
+    const newState = !menuOpen;
+    setMenuOpen(newState);
+
+    if (newState) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  };
   
   const toggleSearch = () => {
     const newSearchState = !searchOpen;
@@ -31,7 +42,9 @@ const Navbar = () => {
       // Focus on input when search opens
       setTimeout(() => {
         if (searchInputRef.current) {
-          searchInputRef.current.focus();
+          // searchInputRef.current.focus();          
+          // When opening search
+          scrollRef.current = window.scrollY;
         }
       }, 100);
     } else {
@@ -41,7 +54,10 @@ const Navbar = () => {
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      // When closing search
+      window.scrollTo(0, scrollRef.current);
+
       
       setSearchQuery('');
     }
@@ -64,12 +80,9 @@ const Navbar = () => {
       <nav className='bg-dark py-2 relative z-50'>
         <div className='container flex items-center justify-between'>
           {/* Search Icon */}
-          <span 
-            onClick={toggleSearch}
-            className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2"
-          >
+          <button onClick={toggleSearch} className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
             <MdSearch className='text-xl' />
-          </span>
+          </button>
 
           {/* Logo */}
           <Link to="/">
@@ -77,8 +90,8 @@ const Navbar = () => {
           </Link>
 
           {/* Menu Button */}
-          <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer'>
-            <TbMenu3 className='text-xl' />
+          <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer z-50'>
+            {!menuOpen ? (<TbMenu3 className='text-xl' />) : (<IoMdClose className='text-xl' />)}
           </div>
         </div>
 
@@ -118,20 +131,18 @@ const Navbar = () => {
         )}
 
         {/* Navigation Menu */}
-        {menuOpen && (
-          <div className="container flex items-end justify-end !relative bg-red-500">
-            <div className="fixed top-16 right-0 w-md h-full bg-dark text-light shadow-md z-10 pt-40">
-              {/* <button onClick={toggleMenu} className='fixed top-4 right-4 p-2 bg-light/10 text-primary rounded-full cursor-pointer'>
-                <IoMdClose className='text-xl' />
-              </button> */}
-              <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
-                <Link to="/about" className="hover:text-primary"> About Us </Link>
-                <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
-                <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
-              </ul>
-            </div>
+        <div className="container flex items-end justify-end !relative bg-red-500 overflow-x-hidden">
+        {/* {menuOpen && (
+          <div onClick={toggleMenu} className="fixed inset-0 h-full w-full bg-dark/50 backdrop-blur-sm z-5"></div>
+        )}  */}
+          <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto" } `}>
+            <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
+              <Link to="/about" className="hover:text-primary"> About Us </Link>
+              <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
+              <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
+            </ul>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* Backdrop overlay when search is open */}

@@ -77,7 +77,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <img
               src={currentItem?.image || placeholder}
               alt={currentItem?.name}
-              className="!w-fit mx-auto h-64 object-fit rounded-xl ring-1 ring-dark/50"
+              className="max-h-64 max-w-fit mx-auto object-contain object-center rounded-xl ring-1 ring-dark/50"
             />
           </div>
 
