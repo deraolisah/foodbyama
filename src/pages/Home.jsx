@@ -33,7 +33,7 @@ const Home = () => {
     // alert(`${item.name} added to cart!`);
   };
 
-  if (isLoading) {
+  if (isLoading && !categories) {
     return (
       <div className="container py-8 text-center">
         <p>Loading menu...</p>

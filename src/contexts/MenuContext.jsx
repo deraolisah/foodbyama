@@ -1,8 +1,11 @@
 // contexts/MenuContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import productsData from '../assets/products.json';
+// import productsData from '../assets/products.json';
+import productsData from '../assets/data.js';
+
 
 export const MenuContext = createContext();
+
 
 export const MenuProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
@@ -14,16 +17,18 @@ export const MenuProvider = ({ children }) => {
   useEffect(() => {
     const loadData = () => {
       try {
-        setCategories(productsData.categories);
-        setWeeklyMenu(productsData.weeklyMenu); // Fixed this line
-        setIsLoading(false);
+        // Destructure here after productsData is imported
+        const { categories: importedCategories, products, weeklyMenu: importedWeeklyMenu } = productsData;
+
+        setCategories(importedCategories);
+        setWeeklyMenu(importedWeeklyMenu);
 
         // Start with regular products
-        const mergedItems = {...productsData.products};
+        const mergedItems = JSON.parse(JSON.stringify(products));
 
         // Add items from the weekly menu to their respective categories
-        for (const day in productsData.weeklyMenu) {
-          productsData.weeklyMenu[day].forEach(item => {
+        for (const day in importedWeeklyMenu) {
+          importedWeeklyMenu[day].forEach(item => {
             const category = item.category;
             if (!mergedItems[category]) {
               mergedItems[category] = [];
@@ -73,7 +78,7 @@ export const MenuProvider = ({ children }) => {
       selectedCategory, 
       setSelectedCategory,
       isLoading,
-      searchItems // Add this
+      searchItems 
     }}>
       {children}
     </MenuContext.Provider>

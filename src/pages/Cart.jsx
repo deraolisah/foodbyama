@@ -145,10 +145,7 @@ const Cart = () => {
     <ItemModal 
         item={selectedItem} 
         isOpen={isModalOpen} 
-        onClose={() => {
-          setIsModalOpen(false);
-          onItemSelect();
-        }} 
+        onClose={() => setIsModalOpen(false)} 
       />
     </>
   );
