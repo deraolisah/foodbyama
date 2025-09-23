@@ -1,5 +1,5 @@
 // contexts/CartContext.jsx
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useToast } from './ToastContext';
 
 export const CartContext = createContext();
@@ -8,8 +8,29 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const toast = useToast();
 
+  // Load cart from localStorage on component mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('foodByAma_cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCartItems(parsedCart);
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+        // Clear corrupted data
+        localStorage.removeItem('foodByAma_cart');
+      }
+    }
+  }, []);
+
+  // Save cart to localStorage whenever cartItems changes
+  useEffect(() => {
+    localStorage.setItem('foodByAma_cart', JSON.stringify(cartItems));
+  }, [cartItems]);
+
   // Helper function to extract price from string (e.g., "₦11,000" -> 11000)
   const extractPrice = (priceString) => {
+    if (typeof priceString === 'number') return priceString;
     return parseFloat(priceString.replace(/[^\d.]/g, '')) || 0;
   };
 
@@ -22,11 +43,16 @@ export const CartProvider = ({ children }) => {
       if (existingItem) {
         const newQuantity = existingItem.quantity + quantity;
         toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
-        return prevItems.map(cartItem =>
+        const updatedItems = prevItems.map(cartItem =>
           cartItem.name === item.name && cartItem.size === item.size
-            ? { ...cartItem, quantity: newQuantity }
+            ? { 
+                ...cartItem, 
+                quantity: newQuantity,
+                unitPrice: cartItem.unitPrice || extractPrice(item.price)
+              }
             : cartItem
         );
+        return updatedItems;
       } else {
         toast.success(`Added ${quantity} ${item.name} to cart`);
         return [...prevItems, { 
@@ -64,7 +90,7 @@ export const CartProvider = ({ children }) => {
           ? { 
               ...item, 
               quantity: newQuantity,
-              unitPrice: item.unitPrice || extractPrice(item.price) // Ensure unitPrice exists
+              unitPrice: item.unitPrice || extractPrice(item.price)
             }
           : item
       );
@@ -108,8 +134,8 @@ export const CartProvider = ({ children }) => {
       clearCart,
       getCartTotal,
       getCartItemsCount,
-      getItemTotal, // Add this new function
-      formatPrice   // Add formatting utility
+      getItemTotal,
+      formatPrice
     }}>
       {children}
     </CartContext.Provider>

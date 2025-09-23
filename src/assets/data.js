@@ -42,8 +42,8 @@ const products = {
   ],
   Swallows: [
     { name: "Semovita", size: "2 Wraps", price: "₦2,500", image: "", isAvailable: true },
-    { name: "Garri / Eba", size: "2 Wraps", price: "₦3,000", image: "", isAvailable: true },
-    { name: "Amala", size: "1 Wrap", price: "₦300", image: "", isAvailable: true }
+    { name: "Garri / Eba", size: "2 Wraps", price: "₦300", image: "", isAvailable: true },
+    { name: "Amala", size: "1 Wrap", price: "₦500", image: "", isAvailable: true }
   ]
 };
 

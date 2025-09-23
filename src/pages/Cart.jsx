@@ -120,7 +120,7 @@ const Cart = () => {
             </div>
             <button 
               onClick={clearCart}
-              className="text-red-600 hover:text-red-800 font-medium transition-colors cursor-pointer"
+              className="text-red-600 hover:text-red-800 text-sm font-medium transition-colors cursor-pointer"
             >
               Clear Cart
             </button>
