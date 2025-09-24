@@ -124,7 +124,7 @@ const Checkout = () => {
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Delivery Information Form */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
+        <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6">
           <h2 className="text-2xl font-bold mb-6">Delivery Information</h2>
           
           {/* Order Type Selection */}
@@ -134,7 +134,7 @@ const Checkout = () => {
               <button
                 type="button"
                 onClick={() => handleOrderTypeChange('delivery')}
-                className={`flex-1 flex items-center justify-center p-4 rounded-lg border-2 transition-colors ${
+                className={`flex-1 flex items-center justify-center p-4 py-2.5 rounded-lg border-2 transition-colors ${
                   orderType === 'delivery'
                     ? 'border-primary bg-primary/10 text-primary'
                     : 'border-gray-300 hover:border-primary'
@@ -146,7 +146,7 @@ const Checkout = () => {
               <button
                 type="button"
                 onClick={() => handleOrderTypeChange('pickup')}
-                className={`flex-1 flex items-center justify-center p-4 rounded-lg border-2 transition-colors ${
+                className={`flex-1 flex items-center justify-center p-4 py-2.5 rounded-lg border-2 transition-colors ${
                   orderType === 'pickup'
                     ? 'border-primary bg-primary/10 text-primary'
                     : 'border-gray-300 hover:border-primary'
@@ -222,7 +222,7 @@ const Checkout = () => {
             </div>
 
             {orderType === 'delivery' && (
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="hidden md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="city" className="block text-sm font-medium mb-1">
                     City *
@@ -273,13 +273,13 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-white rounded-2xl shadow-md p-6 h-fit sticky top-4">
+        <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6 h-fit sticky top-4">
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
           
           {/* Cart Items */}
           <div className="space-y-3 mb-6">
             {cartItems.map((item, index) => (
-              <div key={index} className="flex justify-between items-center py-2 border-b">
+              <div key={index} className="flex justify-between items-center py-2 border-b border-dark/10">
                 <div>
                   <p className="font-medium">{item.name}</p>
                   <p className="text-sm text-gray-600">
@@ -312,20 +312,25 @@ const Checkout = () => {
               <span>{formatPrice(serviceFee)}</span>
             </div>
             
-            <div className="flex justify-between text-lg font-bold border-t pt-2">
+            <div className="flex justify-between text-lg font-bold border-t border-dark/10 pt-2.5">
               <span>Total</span>
               <span>{formatPrice(grandTotal)}</span>
             </div>
           </div>
 
           {/* Proceed to Payment Button */}
-          <button
-            onClick={handleSubmit}
-            disabled={isProcessing}
-            className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isProcessing ? 'Processing...' : `Pay ${formatPrice(grandTotal)}`}
-          </button>
+          <div className="space-y-4">
+            <button
+              onClick={handleSubmit}
+              disabled={isProcessing}
+              className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              >
+              {isProcessing ? 'Processing...' : `Pay ${formatPrice(grandTotal)}`}
+            </button>
+            <button onClick={()=> navigate("/cart")} className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 // pages/Cart.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { FaMinus, FaPlus, FaXmark } from "react-icons/fa6";
 import ItemModal from '../components/ItemModal.jsx';
@@ -8,6 +8,7 @@ import ItemModal from '../components/ItemModal.jsx';
 const Cart = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { 
     cartItems, 
@@ -127,12 +128,12 @@ const Cart = () => {
           </div>
           
           <div className='flex flex-col-reverse sm:flex-row items-center gap-4 justify-between mt-4'>
-            <Link 
-              to="/menu" 
+            <button onClick={()=> navigate("/")} 
+              // to="/menu" 
               className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer"
               >
-              Continue Shopping
-            </Link>
+              Back to Shopping
+            </button>
 
             <Link to="/checkout" className="w-full bg-primary text-white text-center py-3 rounded-lg font-semibold hover:bg-primary/90 transition cursor-pointer">
               Proceed to Checkout

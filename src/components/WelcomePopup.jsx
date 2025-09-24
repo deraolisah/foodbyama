@@ -38,7 +38,7 @@ const WelcomePopup = () => {
         <div className="container h-full flex items-end justify-end relative">
           <button
             onClick={handleReopen}
-            className="pointer-events-auto mr-1 z-50 w-12 h-12 bg-primary rounded-full shadow-xl flex items-center justify-center text-white hover:bg-primary/90 transition-all duration-300 hover:scale-110 cursor-pointer group"
+            className="pointer-events-auto mr-1.5 z-50 w-11 h-11 bg-primary rounded-full shadow-xl flex items-center justify-center text-white hover:bg-primary/90 transition-all duration-300 hover:scale-110 cursor-pointer group"
             title="How to order"
             >
             <FaInfoCircle className="text-xl" />
@@ -62,11 +62,11 @@ const WelcomePopup = () => {
       >
         {/* Popup Content */}
         <div 
-          className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto cursor-default scrollbar-hidden"
+          className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[84dvh] md:max-h-[90dvh] overflow-y-auto cursor-default scrollbar-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary to-primary/80 text-white p-6 rounded-t-2xl relative">
+          <div className="bg-gradient-to-bl from-primary to-primary/60 text-white p-6 rounded-t-2xl relative">
             <button
               onClick={handleClose}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors cursor-pointer"
@@ -74,10 +74,7 @@ const WelcomePopup = () => {
               <FaTimes className="text-white" />
             </button>
             
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <FaShoppingCart className="text-2xl" />
-              </div>
+            <div className="flex items-center">
               <div>
                 <h2 className="text-2xl font-bold">Welcome to Food By Ama! 🎉</h2>
                 <p className="text-white/90 mt-1">We're excited to serve you!</p>
@@ -86,70 +83,71 @@ const WelcomePopup = () => {
           </div>
 
           {/* Content */}
-          <div className="p-6 space-y-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-blue-800 font-medium">
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+              <p className="text-dark/80 text-sm">
                 We sell delicious meals, provide catering services and offer Home/Office Deliveries.
               </p>
             </div>
 
             <div>
               <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <FaCheckCircle className="text-green-500" />
-                How to order from this store: 🍰
+                {/* <FaCheckCircle className="text-green-500" /> */}
+                {/* How to order from our store: */}
+                🛒 How to Place Your Order
               </h3>
               
-              <ol className="space-y-3">
+              <ol className="space-y-3 text-sm">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">1</span>
-                  <span>Click on any food that you want to order.</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                  <span> Tap on any dish you'd love to enjoy. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">2</span>
-                  <span>Click the "Add to Cart" button on the bottom corner.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                  <span> Hit the <strong>“Add to Cart”</strong> button at the bottom corner of the product. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">3</span>
-                  <span>Then go to Cart page, and verify the items in your Cart.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                  <span> Head to the <strong>Cart page</strong> to confirm your selected items. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">4</span>
-                  <span>Then click on "Proceed to Checkout" button on the bottom corner.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                  <span> Click the <strong>“Proceed to Checkout”</strong> button to continue. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">5</span>
-                  <span>Type in your Delivery Details and Phone number.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                  <span> Fill in your <strong>delivery address</strong> and <strong>phone number</strong>. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">6</span>
-                  <span>Click the "Pay" button, and make payment to complete your Order.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+                  <span> Click the <strong>“Pay”</strong> button and complete your payment securely. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">7</span>
-                  <span>Send the receipt of payment via <strong>WhatsApp</strong> with a screenshot of you order.</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">7</span>
+                  <span> Share your <strong>payment receipt</strong> and a <strong>screenshot of your order</strong> with us via WhatsApp. </span>
                 </li>
                 
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5 flex-shrink-0">8</span>
-                  <span>Your Order would be delivered. 🚚</span>
+                <li className="flex items-start gap-3 mt-4">
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">8</span>
+                  <span> Your order will be delivered to your doorstep. 🚚✨ </span>
                 </li>
               </ol>
             </div>
 
             {/* WhatsApp Info */}
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <div className="flex items-center gap-2 text-green-800">
+              <div className="flex items-center gap-1.5 text-green-800">
                 <FaWhatsapp className="text-lg" />
-                <span className="font-semibold">WhatsApp Support:</span>
+                <span className="font-semibold">Customer Support:</span>
               </div>
               <p className="text-green-700 text-sm mt-1">
-                Need help? Contact us via WhatsApp for quick assistance with your order!
+                Need help? Contact us via <a className="underline" href='https://wa.me/' target='_blank'>WhatsApp</a> for quick assistance with your order!
               </p>
             </div>
           </div>
@@ -160,7 +158,7 @@ const WelcomePopup = () => {
               onClick={handleClose}
               className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors cursor-pointer"
             >
-              Got it! Let's Start Shopping 🛒
+              Got it! Let's Go Shopping 🛒
             </button>
           </div>
         </div>

@@ -72,7 +72,7 @@ const Menu = () => {
           >
             <img src={placeholderImg} alt='' className='min-w-20 h-20 rounded-lg bg-dark/50' />
             <div className='flex flex-col items-start flex-1'>
-              <h3 className="font-semibold">{item.name}</h3>
+              <h3 className="text-sm md:text-base font-semibold">{item.name}</h3>
               <p className="text-primary font-bold">{item.price}</p>
             </div>
             
