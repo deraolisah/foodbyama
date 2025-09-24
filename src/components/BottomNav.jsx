@@ -62,7 +62,7 @@ const BottomNav = () => {
 
 
   return (
-    <div className='fixed bottom-0 left-1/2 -translate-x-1/2 p-2 w-full h-16 text-center bg-light text-dark border-t border-dark/10'>
+    <div className='fixed z-50 bottom-0 left-1/2 -translate-x-1/2 p-2 w-full h-16 text-center bg-light text-dark border-t border-dark/10'>
       <ul className='container h-full flex items-center justify-between'>
         <NavLink to="/" className={({ isActive }) => `flex flex-col items-center text-xs text-center hover:text-primary ${ isActive ? "text-primary" : "text-gray-500" }` }>
           <GoHomeFill className="text-xl" />

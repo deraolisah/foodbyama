@@ -1,6 +1,8 @@
+// pages/Checkout.jsx
 import React, { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../contexts/CheckoutContext';
+import { useOrder } from '../contexts/OrderContext';
 import { useToast } from '../contexts/ToastContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarkerAlt, FaStore, FaChevronDown } from 'react-icons/fa';
@@ -19,13 +21,27 @@ const Checkout = () => {
     setSelectedLocation,
     setSelectedDeliveryZone,
     validateDeliveryInfo,
-    getDeliveryFee
+    getDeliveryFee,
+    clearCheckoutData
   } = useCheckout();
+  const { initializePaystackPayment, createOrder, isLoading } = useOrder();
   const toast = useToast();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPickupDropdown, setShowPickupDropdown] = useState(false);
   const [showDeliveryDropdown, setShowDeliveryDropdown] = useState(false);
+
+  // Load Paystack script dynamically
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://js.paystack.co/v1/inline.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   if (cartItems.length === 0) {
     return (
@@ -49,7 +65,6 @@ const Checkout = () => {
 
   const handleOrderTypeChange = (type) => {
     setOrderType(type);
-    // Clear selections when switching types
     if (type === 'pickup') {
       setSelectedDeliveryZone('');
     } else {
@@ -60,7 +75,6 @@ const Checkout = () => {
   const handlePickupLocationSelect = (location) => {
     setSelectedLocation(location);
     setShowPickupDropdown(false);
-    // Auto-fill the address field with pickup location
     updateDeliveryInfo({ 
       address: `${location.name}\n${location.address}\nOpen: ${location.hours}` 
     });
@@ -83,57 +97,49 @@ const Checkout = () => {
     setIsProcessing(true);
     
     try {
+      const cartTotal = getCartTotal();
+      const deliveryFee = getDeliveryFee();
+      const serviceFee = Math.round(cartTotal * 0.02);
+      const grandTotal = cartTotal + deliveryFee + serviceFee;
+
       const orderData = {
         items: cartItems,
-        total: getCartTotal(),
+        total: cartTotal,
+        grandTotal: grandTotal,
         deliveryInfo,
         orderType,
         selectedLocation: orderType === 'pickup' ? selectedLocation : null,
         selectedDeliveryZone: orderType === 'delivery' ? selectedDeliveryZone : null,
-        deliveryFee: getDeliveryFee(),
+        deliveryFee: deliveryFee,
+        serviceFee: serviceFee,
         timestamp: new Date().toISOString()
       };
 
-      await initializePaystackPayment(orderData);
+      // Initialize Paystack payment
+      const paymentResponse = await initializePaystackPayment(orderData);
+      
+      // If payment successful, create order
+      if (paymentResponse.reference) {
+        await createOrder(orderData, paymentResponse.reference);
+        
+        // Clear checkout data and redirect
+        clearCheckoutData();
+        toast.success('Order placed successfully! We will contact you shortly.');
+        navigate('/order-success', { 
+          state: { 
+            orderNumber: paymentResponse.reference,
+            grandTotal: grandTotal
+          } 
+        });
+      }
       
     } catch (error) {
       console.error('Checkout error:', error);
-      toast.error('Failed to process payment. Please try again.');
-      setIsProcessing(false);
-    }
-  };
-
-  const initializePaystackPayment = async (orderData) => {
-    // Paystack integration would go here
-    setTimeout(() => {
-      handlePaymentSuccess(orderData);
-    }, 2000);
-  };
-
-  const handlePaymentSuccess = (orderData) => {
-    sendOrderToBackend(orderData);
-    clearCart();
-    toast.success('Order placed successfully! We will contact you shortly.');
-    navigate('/');
-  };
-
-  const sendOrderToBackend = async (orderData) => {
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to save order');
+      if (error.message !== 'Payment cancelled by user') {
+        toast.error(error.message || 'Failed to process payment. Please try again.');
       }
-      
-      console.log('Order saved successfully');
-    } catch (error) {
-      console.error('Error saving order:', error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -142,7 +148,6 @@ const Checkout = () => {
   const serviceFee = Math.round(cartTotal * 0.02);
   const grandTotal = cartTotal + deliveryFee + serviceFee;
 
-  // Get selected delivery zone
   const selectedZone = deliveryZones.find(zone => zone.id === selectedDeliveryZone);
 
   return (
@@ -359,7 +364,7 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6 h-fit sticky top-4">
+        <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6 h-fit sticky space-y-4 top-4">
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
           
           {/* Order Type Badge */}
@@ -427,15 +432,35 @@ const Checkout = () => {
             </div>
           </div>
 
+          {/* Payment Security Notice */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
+            <div className="flex items-center gap-2 text-green-800">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span className="font-semibold">Secure Payment</span>
+            </div>
+            <p className="text-green-700 text-sm mt-1">
+              Your payment is processed securely via Paystack. We never store your card details.
+            </p>
+          </div>
+
           {/* Proceed to Payment Button */}
           <div className="space-y-4">
             <button
+              type="submit"
               onClick={handleSubmit}
+              disabled={isProcessing || isLoading}
+              className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {isProcessing || isLoading ? 'Processing Payment...' : `Pay Securely - ${formatPrice(grandTotal)}`}
+            </button>
+            {/* <button
               disabled={isProcessing}
               className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isProcessing ? 'Processing...' : `Pay ${formatPrice(grandTotal)}`}
-            </button>
+            </button> */}
             <button onClick={() => navigate("/cart")} className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer">
               Cancel
             </button>

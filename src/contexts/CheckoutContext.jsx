@@ -39,9 +39,9 @@ export const CheckoutProvider = ({ children }) => {
 
   // Define pickup locations
   const pickupLocations = [
-    { id: 'main-store', name: 'Main Store - City Center', address: '123 Central Business District', hours: '8AM - 10PM' },
-    { id: 'maitama', name: 'Maitama Branch', address: '456 Maitama District', hours: '9AM - 9PM' },
-    { id: 'gwarinpa', name: 'Gwarinpa Outlet', address: '789 Gwarinpa Estate', hours: '8AM - 8PM' }
+    { id: 'main-store', name: 'Main Store - Ifite', address: 'No.23 Yahoo-Junction Ifite District', hours: '8AM - 10PM' },
+    { id: 'tempsite', name: 'Tempsite Branch', address: '456 Tempsite District', hours: '9AM - 9PM' },
+    // { id: 'gwarinpa', name: 'Gwarinpa Outlet', address: '789 Gwarinpa Estate', hours: '8AM - 8PM' }
   ];
 
   const updateDeliveryInfo = (newInfo) => {

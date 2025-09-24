@@ -13,7 +13,7 @@ const Chatbot = () => {
   const handleClose = () => setIsOpen(false);
 
   const handleSend = () => {
-    const encodedMessage = encodeURIComponent(message || "Hi, I was chatting on your website");
+    const encodedMessage = encodeURIComponent(message || "Hi..");
     window.open(`https://wa.me/2349054414660?text=${encodedMessage}`, "_blank");
   };
 
@@ -66,18 +66,18 @@ const Chatbot = () => {
               </div>
 
 
-              <div className='w-full bg-[#f0f0f0] p-2 flex items-center gap-2'>
+              <div className='w-full h-full bg-[#f0f0f0] p-2 flex items-center gap-2'>
                 <input 
                   type="text" 
                   value={message} 
                   onChange={(e) => setMessage(e.target.value)} 
                   placeholder="Type a message..."
                   required
-                  className="w-full px-3 py-2 text-md bg-light border border-dark/10 rounded-full"
+                  className="w-full h-full px-3 py-2 text-md bg-light border border-dark/10 rounded-lg"
                 />
 
-                <button onClick={handleSend} className="w-fit text-light rounded-md text-sm font-semibold cursor-pointer">
-                    <img src={sendBtn} alt='' className='w-8 pr-2 invert-60' />
+                <button onClick={handleSend} className="w-fit p-2 h-full border border-dark/5 text-light bg-dark/5 rounded-lg text-sm font-semibold cursor-pointer">
+                    <img src={sendBtn} alt='' className='w-6 invert-60' />
                   {/* Continue on WhatsApp */}
                 </button>
               </div>

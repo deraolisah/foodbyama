@@ -9,6 +9,7 @@ import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
 import Profile from '../pages/Profile.jsx';
 import Checkout from '../pages/Checkout.jsx'; // Add this
+import OrderSuccess from '../pages/OrderSuccess.jsx'; // Add this
 // import ItemDetail from '../pages/ItemDetail.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
@@ -24,6 +25,7 @@ const AppRoutes = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} /> {/* Add checkout route */}
+           <Route path="/order-success" element={<OrderSuccess />} /> {/* Add this route */}
           {/* <Route path="/menu/:category/:itemName" element={<ItemDetail />} /> */}
 
           {/* Not Found Page */}

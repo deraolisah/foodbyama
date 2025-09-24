@@ -76,8 +76,8 @@ const WelcomePopup = () => {
             
             <div className="flex items-center">
               <div>
-                <h2 className="text-2xl font-bold">Welcome to Food By Ama! 🎉</h2>
-                <p className="text-white/90 mt-1">We're excited to serve you!</p>
+                <h2 className="text-2xl font-bold"> Welcome to Food By Ama! </h2>
+                <p className="text-white/90 mt-1"> We're excited to serve you! 🎉</p>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ const WelcomePopup = () => {
           <div className="p-4 md:p-6 space-y-4">
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
               <p className="text-dark/80 text-sm">
-                We sell delicious meals, provide catering services and offer Home/Office Deliveries.
+                We sell delicious meals, provide catering services and offer Home/Office Deliveries. 🛒
               </p>
             </div>
 
@@ -94,7 +94,7 @@ const WelcomePopup = () => {
               <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
                 {/* <FaCheckCircle className="text-green-500" /> */}
                 {/* How to order from our store: */}
-                🛒 How to Place Your Order
+                How to Place Your Order
               </h3>
               
               <ol className="space-y-3 text-sm">
@@ -158,7 +158,7 @@ const WelcomePopup = () => {
               onClick={handleClose}
               className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors cursor-pointer"
             >
-              Got it! Let's Go Shopping 🛒
+              Got it! Let's Go Shopping
             </button>
           </div>
         </div>
