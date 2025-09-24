@@ -132,10 +132,9 @@ const Navbar = () => {
 
         {/* Navigation Menu */}
         <div className="container flex items-end justify-end !relative bg-red-500 overflow-x-hidden">
-        {/* {menuOpen && (
-          <div onClick={toggleMenu} className="fixed inset-0 h-full w-full bg-dark/50 backdrop-blur-sm z-5"></div>
-        )}  */}
-          <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto" } `}>
+        {/* {menuOpen && (<div onClick={toggleMenu} className="fixed inset-0 h-full w-full bg-dark/50 backdrop-blur-sm z-5"></div>)} */}
+          <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light text-center shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"}`}>
+            <p className="text-light/60 text-sm italics absolute top-6.5 left-5"> Flat tummy doesn't matter here.. </p>
             <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
               <Link to="/about" className="hover:text-primary"> About Us </Link>
               <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>

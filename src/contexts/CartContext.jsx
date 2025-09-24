@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
     setCartItems(prevItems => {
       const removedItem = prevItems.find(item => item.name === itemName && item.size === size);
       if (removedItem) {
-        toast.info(`Removed ${removedItem.name} from cart`);
+        toast.warning(`Removed ${removedItem.name} from cart`);
       }
       return prevItems.filter(item => !(item.name === itemName && item.size === size));
     });

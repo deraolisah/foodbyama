@@ -64,7 +64,7 @@ const Toast = ({ message, type, onClose }) => {
     <div className={`
       transform transition-all duration-300 ease-in-out pointer-events-auto
       ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}
-      min-w-80 max-w-sm bg-white rounded-lg shadow-lg border-l-4 ${borderColor}
+      min-w-80 max-w-sm bg-white rounded-lg shadow-lg border-l-0 ${borderColor}
       overflow-hidden
     `}>
       {/* Progress Bar */}
@@ -85,11 +85,7 @@ const Toast = ({ message, type, onClose }) => {
           <p className="text-sm font-medium text-gray-900">{message}</p>
         </div>
         
-        <button
-          onClick={onClose}
-          className="ml-4 flex-shrink-0 inline-flex text-gray-400 hover:text-gray-600 
-                   focus:outline-none focus:text-gray-600 transition-colors"
-        >
+        <button onClick={onClose} className="ml-4 flex-shrink-0 inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors">
           <FaTimes className="text-sm" />
         </button>
       </div>

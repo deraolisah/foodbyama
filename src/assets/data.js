@@ -1,4 +1,5 @@
 import egusi2 from "./products/Egwusi-2-litres.jpg";
+import garnishedCroaker from "./products/garnished-peppered-croaker.jpg";
 
 const categories = [
   "Soups", "Stews", "Salads", "Swallows", "Lunch Packs", "Sides & Extras",
@@ -44,7 +45,14 @@ const products = {
     { name: "Semovita", size: "2 Wraps", price: "₦2,500", image: "", isAvailable: true },
     { name: "Garri / Eba", size: "2 Wraps", price: "₦300", image: "", isAvailable: true },
     { name: "Amala", size: "1 Wrap", price: "₦500", image: "", isAvailable: true }
+  ],
+  Drinks: [
+    { name: "Watermelon Fruit Juice", price: "₦1,500", image: "", isAvailable: true},
+  ],
+  "Food Platters": [
+    { name: "Garnished Peppered Croaker", price: "₦1,500", image: garnishedCroaker, isAvailable: true},
   ]
+
 };
 
 const weeklyMenu = {
