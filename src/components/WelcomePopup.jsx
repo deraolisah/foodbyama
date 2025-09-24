@@ -42,9 +42,9 @@ const WelcomePopup = () => {
             title="How to order"
             >
             <FaInfoCircle className="text-xl" />
-            <span className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full text-xs flex items-center justify-center animate-pulse">
+            {/* <span className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full text-xs flex items-center justify-center animate-pulse">
               !
-            </span>
+            </span> */}
           </button>
         </div>
       </div>

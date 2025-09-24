@@ -1,17 +1,31 @@
-// pages/Checkout.jsx
 import React, { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../contexts/CheckoutContext';
 import { useToast } from '../contexts/ToastContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaMapMarkerAlt, FaStore } from 'react-icons/fa';
+import { FaArrowLeft, FaMapMarkerAlt, FaStore, FaChevronDown } from 'react-icons/fa';
 
 const Checkout = () => {
   const { cartItems, getCartTotal, formatPrice, clearCart } = useCart();
-  const { deliveryInfo, orderType, updateDeliveryInfo, setOrderType, validateDeliveryInfo } = useCheckout();
+  const { 
+    deliveryInfo, 
+    orderType, 
+    selectedLocation,
+    selectedDeliveryZone,
+    deliveryZones,
+    pickupLocations,
+    updateDeliveryInfo, 
+    setOrderType,
+    setSelectedLocation,
+    setSelectedDeliveryZone,
+    validateDeliveryInfo,
+    getDeliveryFee
+  } = useCheckout();
   const toast = useToast();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showPickupDropdown, setShowPickupDropdown] = useState(false);
+  const [showDeliveryDropdown, setShowDeliveryDropdown] = useState(false);
 
   if (cartItems.length === 0) {
     return (
@@ -35,6 +49,26 @@ const Checkout = () => {
 
   const handleOrderTypeChange = (type) => {
     setOrderType(type);
+    // Clear selections when switching types
+    if (type === 'pickup') {
+      setSelectedDeliveryZone('');
+    } else {
+      setSelectedLocation('');
+    }
+  };
+
+  const handlePickupLocationSelect = (location) => {
+    setSelectedLocation(location);
+    setShowPickupDropdown(false);
+    // Auto-fill the address field with pickup location
+    updateDeliveryInfo({ 
+      address: `${location.name}\n${location.address}\nOpen: ${location.hours}` 
+    });
+  };
+
+  const handleDeliveryZoneSelect = (zone) => {
+    setSelectedDeliveryZone(zone.id);
+    setShowDeliveryDropdown(false);
   };
 
   const handleSubmit = async (e) => {
@@ -49,16 +83,17 @@ const Checkout = () => {
     setIsProcessing(true);
     
     try {
-      // Prepare order data
       const orderData = {
         items: cartItems,
         total: getCartTotal(),
         deliveryInfo,
         orderType,
+        selectedLocation: orderType === 'pickup' ? selectedLocation : null,
+        selectedDeliveryZone: orderType === 'delivery' ? selectedDeliveryZone : null,
+        deliveryFee: getDeliveryFee(),
         timestamp: new Date().toISOString()
       };
 
-      // Initialize Paystack payment
       await initializePaystackPayment(orderData);
       
     } catch (error) {
@@ -69,28 +104,21 @@ const Checkout = () => {
   };
 
   const initializePaystackPayment = async (orderData) => {
-    // This is where you'll integrate with Paystack
-    // For now, we'll simulate a successful payment
+    // Paystack integration would go here
     setTimeout(() => {
       handlePaymentSuccess(orderData);
     }, 2000);
   };
 
   const handlePaymentSuccess = (orderData) => {
-    // Send order to backend (you'll implement this later)
     sendOrderToBackend(orderData);
-    
-    // Clear cart and show success message
     clearCart();
     toast.success('Order placed successfully! We will contact you shortly.');
-    
-    // Redirect to order confirmation page or home
     navigate('/');
   };
 
   const sendOrderToBackend = async (orderData) => {
     try {
-      // This is where you'll send the order to your backend
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
@@ -106,26 +134,28 @@ const Checkout = () => {
       console.log('Order saved successfully');
     } catch (error) {
       console.error('Error saving order:', error);
-      // You might want to handle this error differently
     }
   };
 
   const cartTotal = getCartTotal();
-  const deliveryFee = orderType === 'delivery' ? 1000 : 0; // Example delivery fee
-  const serviceFee = Math.round(cartTotal * 0.02); // 2% service fee
+  const deliveryFee = getDeliveryFee();
+  const serviceFee = Math.round(cartTotal * 0.02);
   const grandTotal = cartTotal + deliveryFee + serviceFee;
+
+  // Get selected delivery zone
+  const selectedZone = deliveryZones.find(zone => zone.id === selectedDeliveryZone);
 
   return (
     <div className="container py-8">
-      <Link to="/cart" className="inline-flex items-center text-primary hover:underline mb-6">
+      <Link to="/cart" className="inline-flex items-center text-sm text-dark hover:underline mb-6">
         <FaArrowLeft className="mr-2" />
         Back to Cart
       </Link>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Delivery Information Form */}
-        <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6">
-          <h2 className="text-2xl font-bold mb-6">Delivery Information</h2>
+        {/* Order Information Form */}
+        <div className="bg-white h-fit rounded-2xl shadow-md border border-dark/10 p-4 md:p-6">
+          <h2 className="text-2xl font-bold mb-6">Order Information</h2>
           
           {/* Order Type Selection */}
           <div className="mb-6">
@@ -206,53 +236,109 @@ const Checkout = () => {
               />
             </div>
 
+            {/* Delivery Zone Selection */}
+            {orderType === 'delivery' && (
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">
+                  Select Delivery Zone *
+                </label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowDeliveryDropdown(!showDeliveryDropdown)}
+                    className="w-full p-3 border border-gray-300 rounded-lg text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <span>
+                      {selectedZone ? `${selectedZone.name} - ${formatPrice(selectedZone.price)}` : 'Choose a delivery zone'}
+                    </span>
+                    <FaChevronDown className={`transition-transform ${showDeliveryDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {showDeliveryDropdown && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {deliveryZones.map((zone, index) => (
+                        <button
+                          key={zone.id}
+                          type="button"
+                          onClick={() => handleDeliveryZoneSelect(zone)}
+                          className="w-full p-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                        >
+                          <div className="font-medium">{zone.name} - {formatPrice(zone.price)}</div>
+                          <div className="text-sm text-gray-600">{zone.description}</div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {selectedZone && (
+                  <p className="text-sm text-green-600 mt-2">
+                    ✅ Selected: {selectedZone.name} - Delivery fee: {formatPrice(selectedZone.price)}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Pickup Location Selection */}
+            {orderType === 'pickup' && (
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">
+                  Select Pickup Location *
+                </label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowPickupDropdown(!showPickupDropdown)}
+                    className="w-full p-3 border border-gray-300 rounded-lg text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <span>
+                      {selectedLocation ? `${selectedLocation.name} (${selectedLocation.hours})` : 'Choose a pickup location'}
+                    </span>
+                    <FaChevronDown className={`transition-transform ${showPickupDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {showPickupDropdown && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {pickupLocations.map((location, index) => (
+                        <button
+                          key={location.id}
+                          type="button"
+                          onClick={() => handlePickupLocationSelect(location)}
+                          className="w-full p-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                        >
+                          <div className="font-medium">{location.name}</div>
+                          <div className="text-sm text-gray-600">{location.address}</div>
+                          <div className="text-xs text-primary">{location.hours}</div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {selectedLocation && (
+                  <p className="text-sm text-green-600 mt-2">
+                    ✅ Selected: {selectedLocation.name}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Address Textarea */}
+            {orderType === 'delivery' && (
             <div>
               <label htmlFor="address" className="block text-sm font-medium mb-1">
-                {orderType === 'delivery' ? 'Delivery Address *' : 'Pickup Location *'}
+                Delivery Address *
               </label>
-              <input
-                type="text"
+              <textarea
                 id="address"
                 name="address"
                 value={deliveryInfo.address}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                rows={4}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-vertical"
                 required
+                // readOnly={orderType === 'pickup' && selectedLocation}
+                placeholder='Enter your complete delivery address including street, building number, landmarks...'
               />
             </div>
-
-            {orderType === 'delivery' && (
-              <div className="hidden md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium mb-1">
-                    City *
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={deliveryInfo.city}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="state" className="block text-sm font-medium mb-1">
-                    State *
-                  </label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    value={deliveryInfo.state}
-                    onChange={handleInputChange}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
-                </div>
-              </div>
             )}
 
             <div>
@@ -265,8 +351,8 @@ const Checkout = () => {
                 value={deliveryInfo.additionalNotes}
                 onChange={handleInputChange}
                 rows="3"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Any special instructions for delivery..."
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-vertical"
+                placeholder="Any special instructions for your order..."
               />
             </div>
           </form>
@@ -275,6 +361,29 @@ const Checkout = () => {
         {/* Order Summary */}
         <div className="bg-white rounded-2xl shadow-md border border-dark/10 p-4 md:p-6 h-fit sticky top-4">
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+          
+          {/* Order Type Badge */}
+          <div className="mb-4">
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+              orderType === 'delivery' 
+                ? 'bg-blue-100 text-blue-800' 
+                : 'bg-green-100 text-green-800'
+            }`}>
+              {orderType === 'delivery' ? (
+                <>
+                  <FaMapMarkerAlt className="mr-1" />
+                  Delivery
+                  {selectedZone && ` - ${selectedZone.name}`}
+                </>
+              ) : (
+                <>
+                  <FaStore className="mr-1" />
+                  Pickup
+                  {selectedLocation && ` - ${selectedLocation.name}`}
+                </>
+              )}
+            </span>
+          </div>
           
           {/* Cart Items */}
           <div className="space-y-3 mb-6">
@@ -324,10 +433,10 @@ const Checkout = () => {
               onClick={handleSubmit}
               disabled={isProcessing}
               className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              >
+            >
               {isProcessing ? 'Processing...' : `Pay ${formatPrice(grandTotal)}`}
             </button>
-            <button onClick={()=> navigate("/cart")} className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer">
+            <button onClick={() => navigate("/cart")} className="w-full py-3 rounded-lg block text-center text-primary hover:underline transition-colors bg-primary/5 cursor-pointer">
               Cancel
             </button>
           </div>

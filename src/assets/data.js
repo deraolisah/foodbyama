@@ -2,8 +2,8 @@ import egusi2 from "./products/Egwusi-2-litres.jpg";
 import garnishedCroaker from "./products/garnished-peppered-croaker.jpg";
 
 const categories = [
-  "Soups", "Stews", "Salads", "Swallows", "Lunch Packs", "Sides & Extras",
-  "Drinks", "Mini Sets", "Gift Boxes", "Pastries", "Food Platters", "Yoghurts"
+  "Soups", "Stews", "Swallows", "Breakfasts", "Lunch Packs", "Sides & Extras",
+  "Drinks", "Pastries", "Food Platters",
 ];
 
 const products = {
@@ -49,8 +49,11 @@ const products = {
   Drinks: [
     { name: "Watermelon Fruit Juice", price: "₦1,500", image: "", isAvailable: true},
   ],
+  "Sides & Extras": [
+    { name: "Sharwarma", price: "", image: "", isAvailable: true},
+  ],
   "Food Platters": [
-    { name: "Garnished Peppered Croaker", price: "₦1,500", image: garnishedCroaker, isAvailable: true},
+    { name: "Garnished Peppered Croaker", price: "₦15,500", image: garnishedCroaker, isAvailable: true},
   ]
 
 };
