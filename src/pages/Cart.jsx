@@ -115,7 +115,7 @@ const Cart = () => {
           ))}
 
           {/* Cart Summary */}
-          <div className="p-4 md:p-6 bg-dark/5">
+          <div className="p-4 pt-6 md:p-6 bg-dark/5">
             <div className="flex justify-between items-end mb-8">
               <div className="text-lg font-bold flex items-end gap-2">
                 Total:
