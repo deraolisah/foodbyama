@@ -80,7 +80,7 @@ const Menu = () => {
         {menuItems.map((item, index) => (
           <div 
             key={index}
-            className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-white rounded-xl shadow-sm border border-dark/10 p-4 hover:shadow-md transition-shadow cursor-pointer"
             onClick={() => handleItemClick(item)}
           >
             <div className="flex gap-4">

@@ -92,13 +92,13 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <img
               src={normalizedItem.image || placeholder}
               alt={normalizedItem.name}
-              className="w-fit h-60 mx-auto object-cover rounded-lg border-1 border-light"
+              className="w-fit h-64 mx-auto object-cover rounded-xl shadow"
             />
           </div>
 
           {/* Content */}
           <div className="p-6 space-y-4">
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start gap-2">
               <div>
                 <h2 className="text-xl font-bold">{normalizedItem.name}</h2>
                 <p className="text-dark/80 text-sm mt-1">{normalizedItem.desc}</p>
