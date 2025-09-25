@@ -79,9 +79,9 @@ const ItemModal = ({ item, isOpen, onClose }) => {
       
       {/* Modal */}
       <div className="fixed bottom-0 left-0 right-0 z-50 animate-slideUp">
-        <div className="w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
+        <div className={`w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden ${isOpen ? "" : ""}`}>
           {/* Header */}
-          <div className="w-full relative bg-primary p-4 rounded-t-2xl">
+          <div className="w-full relative bg-gradient-to-bl from-primary/80 to-primary p-4 rounded-t-2xl">
             <button
               onClick={onClose}
               className="absolute top-4 right-4 p-2 rounded-full bg-white text-dark hover:bg-gray-100 transition cursor-pointer"
@@ -92,7 +92,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <img
               src={normalizedItem.image || placeholder}
               alt={normalizedItem.name}
-              className="w-fit h-64 mx-auto object-cover rounded-xl shadow"
+              className="w-full h-64 mx-auto object-cover rounded-xl shadow"
             />
           </div>
 

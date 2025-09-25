@@ -27,7 +27,7 @@ const SearchResults = ({ query, onClose }) => {
   return (
     <>
       <div className="py-4 absolute top-full left-0 right-0 bg-dark rounded-lg shadow-lg -mt-1 max-h-96 overflow-y-auto scrollbar-hidden">
-        <div className="container gap-2 grid grid-cols-2">
+        <div className="container gap-2 grid grid-cols-1 md:grid-cols-2">
         {results.map((item, index) => (
           <div
             key={index}
