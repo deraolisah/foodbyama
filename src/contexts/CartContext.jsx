@@ -6,119 +6,121 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const toast = useToast();
+  const toast = useToast(); // ✅
 
-  // Load cart from localStorage on component mount
+  // Load cart from localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem('foodByAma_cart');
     if (savedCart) {
       try {
-        const parsedCart = JSON.parse(savedCart);
-        setCartItems(parsedCart);
+        setCartItems(JSON.parse(savedCart));
       } catch (error) {
-        console.error('Error loading cart from localStorage:', error);
-        // Clear corrupted data
+        console.error('Error loading cart:', error);
         localStorage.removeItem('foodByAma_cart');
       }
     }
   }, []);
 
-  // Save cart to localStorage whenever cartItems changes
+  // Save cart to localStorage
   useEffect(() => {
     localStorage.setItem('foodByAma_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Helper function to extract price from string (e.g., "₦11,000" -> 11000)
+  // Consistent price extraction
   const extractPrice = (priceString) => {
     if (typeof priceString === 'number') return priceString;
-    return parseFloat(priceString.replace(/[^\d.]/g, '')) || 0;
+    if (!priceString) return 0;
+    
+    const numericValue = parseFloat(priceString.replace(/[^\d.]/g, ''));
+    return isNaN(numericValue) ? 0 : numericValue;
+  };
+
+  // Generate unique ID for cart items
+  const generateItemId = (item) => {
+    return `${item.name}-${item.size || 'standard'}`;
   };
 
   const addToCart = (item, quantity = 1) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(cartItem => 
-        cartItem.name === item.name && cartItem.size === item.size
+      const itemId = generateItemId(item);
+      const existingItemIndex = prevItems.findIndex(cartItem => 
+        generateItemId(cartItem) === itemId
       );
       
-      if (existingItem) {
-        const newQuantity = existingItem.quantity + quantity;
+      if (existingItemIndex > -1) {
+        const updatedItems = [...prevItems];
+        const newQuantity = updatedItems[existingItemIndex].quantity + quantity;
+        updatedItems[existingItemIndex] = {
+          ...updatedItems[existingItemIndex],
+          quantity: newQuantity
+        };
+        
+        // toast(`Updated ${item.name} quantity to ${newQuantity}`, 'success');
         toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
-        const updatedItems = prevItems.map(cartItem =>
-          cartItem.name === item.name && cartItem.size === item.size
-            ? { 
-                ...cartItem, 
-                quantity: newQuantity,
-                unitPrice: cartItem.unitPrice || extractPrice(item.price)
-              }
-            : cartItem
-        );
+
         return updatedItems;
       } else {
-        toast.success(`Added ${quantity} ${item.name} to cart`);
-        return [...prevItems, { 
-          ...item, 
+        const newItem = {
+          ...item,
+          id: itemId,
           quantity,
-          unitPrice: extractPrice(item.price) // Store unit price for calculations
-        }];
+          unitPrice: extractPrice(item.price),
+          size: item.size || 'Standard'
+        };
+        
+        // toast(`Added ${item.name} to cart`, 'success');
+        toast.success(`Added ${item.name} to cart`);
+        return [...prevItems, newItem];
       }
     });
   };
 
-  const removeFromCart = (itemName, size) => {
+  const removeFromCart = (itemId) => {
     setCartItems(prevItems => {
-      const removedItem = prevItems.find(item => item.name === itemName && item.size === size);
+      const removedItem = prevItems.find(item => item.id === itemId);
       if (removedItem) {
+        // toast(`Removed ${removedItem.name} from cart`, 'warning');
         toast.warning(`Removed ${removedItem.name} from cart`);
+
       }
-      return prevItems.filter(item => !(item.name === itemName && item.size === size));
+      return prevItems.filter(item => item.id !== itemId);
     });
   };
 
-  const updateQuantity = (itemName, size, newQuantity) => {
+  const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity <= 0) {
-      removeFromCart(itemName, size);
+      removeFromCart(itemId);
       return;
     }
     
-    setCartItems(prevItems => {
-      const updatedItem = prevItems.find(item => item.name === itemName && item.size === size);
-      if (updatedItem && updatedItem.quantity !== newQuantity) {
-        toast.success(`Updated ${updatedItem.name} quantity to ${newQuantity}`);
-      }
-      return prevItems.map(item =>
-        item.name === itemName && item.size === size
-          ? { 
-              ...item, 
-              quantity: newQuantity,
-              unitPrice: item.unitPrice || extractPrice(item.price)
-            }
+    setCartItems(prevItems => 
+      prevItems.map(item =>
+        item.id === itemId
+          ? { ...item, quantity: newQuantity }
           : item
-      );
-    });
+      )
+    );
   };
 
   const clearCart = () => {
     if (cartItems.length > 0) {
-      toast.info('Cart cleared');
+      // toast('Cart cleared', 'info');
+      toast.info(`Cart cleared`);
+
     }
     setCartItems([]);
   };
 
-  // Calculate total for a specific item
   const getItemTotal = (item) => {
-    const unitPrice = item.unitPrice || extractPrice(item.price);
-    return unitPrice * item.quantity;
+    return (item.unitPrice || extractPrice(item.price)) * item.quantity;
   };
 
-  // Format price with Nigerian Naira symbol
   const formatPrice = (amount) => {
     return `₦${amount.toLocaleString()}`;
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => {
-      return total + getItemTotal(item);
-    }, 0);
+    return cartItems.reduce((total, item) => total + getItemTotal(item), 0);
   };
 
   const getCartItemsCount = () => {
@@ -135,7 +137,8 @@ export const CartProvider = ({ children }) => {
       getCartTotal,
       getCartItemsCount,
       getItemTotal,
-      formatPrice
+      formatPrice,
+      generateItemId
     }}>
       {children}
     </CartContext.Provider>

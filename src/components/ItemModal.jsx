@@ -2,149 +2,184 @@
 import React, { useState, useEffect } from 'react';
 import placeholder from "../assets/placeholder.png";
 import { useCart } from '../contexts/CartContext';
-import { FaTimes } from "react-icons/fa";
-import { FaMinus, FaPlus } from "react-icons/fa6";
-// import { useToast } from '../contexts/ToastContext'; // Add this
+import { FaTimes, FaMinus, FaPlus } from "react-icons/fa";
 
 const ItemModal = ({ item, isOpen, onClose }) => {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [currentItem, setCurrentItem] = useState(null);
-  // const toast = useToast(); // Get toast function
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
 
-  // Update current item when modal opens with a new item
   useEffect(() => {
-    if (isOpen && item) {
-      setCurrentItem(item);
-      setQuantity(1); // Reset quantity when new item is selected
+    if (isOpen) {
+      setQuantity(1);
+      setSelectedSizeIndex(0);
       
       // Prevent body scrolling
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     } else {
-      // Restore scrolling when modal closes
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      // Restore scrolling
       document.body.style.overflow = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
-  }, [isOpen, item]);
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Normalize item structure
+  const normalizedItem = item ? {
+    ...item,
+    sizes: item.sizes || [{ size: 'Standard', price: item.price || '₦0' }],
+    isAvailable: item.isAvailable !== false
+  } : null;
 
   const handleAddToCart = () => {
-    if (currentItem) {
-      addToCart(currentItem, quantity);
-      // addToCart(item, quantity);
-      // alert(`${quantity} ${currentItem.name} added to cart!`);
-      onClose();
-    }
+    if (!normalizedItem) return;
+
+    const selectedSize = normalizedItem.sizes[selectedSizeIndex];
+    const cartItem = {
+      ...normalizedItem,
+      name: normalizedItem.name,
+      size: selectedSize.size,
+      price: selectedSize.price,
+      unitPrice: parseFloat(selectedSize.price.replace(/[^\d.]/g, '')) || 0,
+      // Remove sizes array for cart
+      sizes: undefined
+    };
+
+    addToCart(cartItem, quantity);
+    onClose();
   };
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
   const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1));
 
-  // Close modal when escape key is pressed
+  // Close modal on escape key
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.keyCode === 27 && isOpen) {
-        onClose();
-      }
+      if (e.key === 'Escape' && isOpen) onClose();
     };
     
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
+  if (!isOpen || !normalizedItem) return null;
+
+  const selectedSize = normalizedItem.sizes[selectedSizeIndex];
+  const hasMultipleSizes = normalizedItem.sizes.length > 1;
+
   return (
     <>
-      {/* Modal content - Always rendered but hidden */}
-      <div className={`fixed bottom-0 left-0 right-0 z-60 transform transition-all duration-400 ease-in-out ${
-        isOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-25 opacity-0 pointer-events-none"
-      }`}>
-        <div className="container !px-0 !py-0 bg-white rounded-t-3xl max-h-[80vh] md:max-h-[90vh] overflow-y-auto scrollbar-hidden">
-          <div className="relative bg-primary flex items-center justify-center p-4 rounded-t-2xl">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 cursor-pointer"
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 animate-slideUp">
+        <div className="w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
+          {/* Header */}
+          <div className="w-full relative bg-primary p-4 rounded-t-2xl">
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-full bg-dark text-light hover:bg-dark/80 transition cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white text-dark hover:bg-gray-100 transition cursor-pointer"
             >
               <FaTimes />
             </button>
             
             <img
-              src={currentItem?.image || placeholder}
-              alt={currentItem?.name}
-              className="max-h-64 max-w-fit mx-auto object-contain object-center rounded-xl ring-1 ring-dark/50"
+              src={normalizedItem.image || placeholder}
+              alt={normalizedItem.name}
+              className="w-fit h-60 mx-auto object-cover rounded-lg border-1 border-light"
             />
           </div>
 
-          <div className="p-6 space-y-4 md:space-y-6">
-            {currentItem ? (
-              <>
-                <div className='w-full flex items-start justify-between gap-4 mb-6 md:mb-8'>
-                  <h2 className="text-xl md:text-2xl font-bold">{currentItem.name}</h2>
-                  <p className="text-xl text-primary font-bold">{currentItem.price}</p>
+          {/* Content */}
+          <div className="p-6 space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-xl font-bold">{normalizedItem.name}</h2>
+                <p className="text-dark/80 text-sm mt-1">{normalizedItem.desc}</p>
+              </div>
+              <span className="text-xl font-bold text-primary">
+                {selectedSize.price}
+              </span>
+            </div>
+
+            <hr className="border border-dark/10"/>
+
+            {/* Availability */}
+            <p className={`text-sm ${normalizedItem.isAvailable ? "text-green-600" : "text-red-600"}`}>
+              {normalizedItem.isAvailable ? 
+                (
+                  <div className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-green-600 inline-flex"></span>Available 
+                  </div>
+                ) : (
+                "❌ Out of stock"
+              )}
+            </p>
+
+
+            {/* Size Selection */}
+            {hasMultipleSizes && (
+              <div>
+                <label className="block font-medium mb-2">Select Size:</label>
+                <div className="flex gap-2 overflow-x-auto">
+                  {normalizedItem.sizes.map((size, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedSizeIndex(index)}
+                      className={`flex-shrink-0 px-4 py-2 rounded-lg border-2 transition-all cursor-pointer ${
+                        selectedSizeIndex === index
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-gray-300'
+                      }`}
+                    >
+                      <div className="font-medium">{size.size}</div>
+                      <div className="text-sm">{size.price}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          
+            {/* Quantity and Add to Cart */}
+            {normalizedItem.isAvailable && (
+              <div className="space-y-4 mt-8">
+                <div className="flex items-center justify-start gap-2.5">
+                  <span className="font-medium">Quantity:</span>
+                  <div className="flex items-center bg-dark/10 rounded-full p-1">
+                    <button 
+                      onClick={decrementQuantity}
+                      className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
+                    >
+                      <FaMinus size={12} />
+                    </button>
+                    <span className="px-3.5 font-medium">{quantity}</span>
+                    <button 
+                      onClick={incrementQuantity}
+                      className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
+                    >
+                      <FaPlus size={12} />
+                    </button>
+                  </div>
                 </div>
 
-                <hr className='h-px w-full border-none bg-dark/10'/>
-
-                <div>        
-                  {currentItem.size && <p className="text-md text-dark/70 mb-2">Size: {currentItem.size}</p>}
-                  
-                  <p className={`text-sm mb-4 ${currentItem.isAvailable !== false ? "text-green-600" : "text-red-600"}`}>
-                    {currentItem.isAvailable !== false ? "Available" : "Out of stock"}
-                  </p>
-
-                  {currentItem.isAvailable !== false && (
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-4">
-                        <span className="font-semibold">Quantity:</span>
-                        <div className="flex items-center bg-dark/10 p-1 rounded-full overflow-hidden">
-                          <button 
-                            onClick={decrementQuantity}
-                            className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer"
-                          >
-                            <FaMinus />
-                          </button>
-                          <span className="px-4 py-1">{quantity}</span>
-                          <button 
-                            onClick={incrementQuantity}
-                            className="p-2 flex items-center justify-center text-base font-bold rounded-full shadow bg-white cursor-pointer"
-                          >
-                            <FaPlus />
-                          </button>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={handleAddToCart}
-                        className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition cursor-pointer"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-8">
-                <p>Item not found</p>
+                <button
+                  onClick={handleAddToCart}
+                  className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
+                >
+                  Add to Cart - {selectedSize.price}
+                </button>
               </div>
             )}
           </div>
         </div>
       </div>
-
-      {/* Backdrop overlay - Only rendered when modal is open */}
-      {isOpen && (
-        <div 
-          className="fixed top-0 inset-0 h-full w-full bg-dark/50 backdrop-blur-xs z-50 cursor-pointer"
-          onClick={onClose}
-        />
-      )}
     </>
   );
 };

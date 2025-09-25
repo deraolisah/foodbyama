@@ -1,32 +1,29 @@
 // App.js
-import { useState } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { MenuProvider } from './contexts/MenuContext';
 import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
-import { CheckoutProvider } from './contexts/CheckoutContext'; // Add this
+import { CheckoutProvider } from './contexts/CheckoutContext';
 import { OrderProvider } from './contexts/OrderContext';
-
-import AppRoutes from './routes/AppRoutes'
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
-    <>
-      <ToastProvider> {/* ToastProvider should be OUTSIDE CartProvider */}
+    <ToastProvider>
+      <BrowserRouter>
         <MenuProvider>
           <CartProvider>
-            <CheckoutProvider> {/* Add CheckoutProvider */}
-              <OrderProvider> {/* Add OrderProvider */}
-                <BrowserRouter>
-                  <AppRoutes />
-                </BrowserRouter>
+            <CheckoutProvider>
+              <OrderProvider>
+                <AppRoutes />
               </OrderProvider>
             </CheckoutProvider>
           </CartProvider>
         </MenuProvider>
-      </ToastProvider>
-    </>
-  )
+      </BrowserRouter>
+    </ToastProvider>
+  );
 }
 
-export default App
+export default App;

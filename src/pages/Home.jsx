@@ -1,12 +1,12 @@
 // pages/Home.jsx
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import placeholder from "../assets/placeholder.png";
-import { MenuContext } from '../contexts/MenuContext';
+import { useMenu } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
 import ItemModal from '../components/ItemModal';
 
 const Home = () => {
-  const { categories, itemsByCategory, selectedCategory, setSelectedCategory, isLoading } = useContext(MenuContext);
+  const { categories, selectedCategory, setSelectedCategory, isLoading, getUniqueProducts } = useMenu();
   const { addToCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 68);
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -27,83 +27,107 @@ const Home = () => {
   };
 
   const handleQuickAdd = (item, e) => {
-    e.preventDefault();
     e.stopPropagation();
-    addToCart(item); // This will now trigger the toast via CartContext
-    // alert(`${item.name} added to cart!`);
+    
+    const cartItem = {
+      ...item,
+      size: item.sizes[0].size,
+      price: item.sizes[0].price,
+      unitPrice: parseFloat(item.sizes[0].price.replace(/[^\d.]/g, '')) || 0,
+      sizes: undefined
+    };
+    
+    addToCart(cartItem, 1);
   };
 
-  if (isLoading && !categories) {
+  if (isLoading) {
     return (
       <div className="container py-8 text-center">
-        <p>Loading menu...</p>
+        <div className="animate-pulse">Loading menu...</div>
       </div>
     );
   }
 
+  const uniqueProducts = getUniqueProducts();
+  const displayItems = uniqueProducts[selectedCategory] || [];
+
   return (
-    <div className="space-y-0">
-      {/* Horizontal Category List */}
-      <div className={`sticky z-40 top-0 transition-colors duration-300 ${scrolled ? "bg-primary" : "bg-transparent"}`}>
-        <div className='container flex overflow-x-auto space-x-2 py-2.5 md:py-3 scrollbar-hidden'>
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              title={category}
-              className={`relative scroll-snap snap-start px-4.5 py-1.5 rounded-full whitespace-nowrap text-sm cursor-pointer ${
-                selectedCategory === category
-                ? "bg-primary text-light"
-                : scrolled 
-                ? "bg-dark/5 text-light/60 hover:bg-dark/15"
-                : "border border-dark/10 text-dark/80 hover:bg-dark/10"
-              }`}
-            >
-              {category}
-              {/* Dot below active category — only on scroll */}
-              {selectedCategory === category && scrolled && (
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-light"></span>
-              )}
-            </button>
-          ))}
+    <div className="min-h-screen">
+      {/* Category Navigation */}
+      <div className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
+        <div className="container">
+          <div className="flex overflow-x-auto gap-2 py-3 scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4.5 py-1.5 rounded-full text-sm whitespace-nowrap transition-colors border border-dark/10 cursor-pointer ${
+                  selectedCategory === category
+                    ? "bg-primary text-white font-medium border-primary"
+                    : scrolled 
+                    ? "text-gray-700 hover:bg-primary/10"
+                    : "bg-white/80 text-gray-700 hover:bg-primary/10"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Display Items */}
-      <div className='container space-y-6'>
-        <h3 className="text-sm font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-1.5 uppercase mt-2"> All {selectedCategory}</h3>
+      {/* Products Grid */}
+      <div className="container py-6">
+        <h2 className="text-2xl font-bold text-center mb-8">
+          {selectedCategory}
+        </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {itemsByCategory[selectedCategory]?.map((item, index) => (
-            <div 
-              key={index} 
-              className="rounded-2xl bg-primary/20 overflow-hidden relative group cursor-pointer"
-              onClick={() => handleItemClick(item)}
-            >
-              <div className='overflow-hidden rounded-2xl h-[220px] md:h-60'>
-                <img src={item.image || placeholder} alt="" className='h-full w-full object-cover object-center outline-0 border-0 group-hover:scale-[1.04] transition-all duration-300' />
+        {displayItems.length === 0 ? (
+          <div className="text-center py-2 text-gray-500">
+            No items available in this category
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {displayItems.map((item, index) => (
+              <div 
+                key={`${item.name}-${index}`}
+                className="bg-white rounded-xl shadow-sm border border-dark/10 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => handleItemClick(item)}
+              >
+                <div className="aspect-square overflow-hidden relative rounded-b-xl">
+                  <img 
+                    src={item.image || placeholder} 
+                    alt={item.name}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <h3 className="w-full h-fit absolute bottom-0 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs rounded-b-xl p-2.5 px-4 font-semibold text-light text-sm">{item.name}</h3>
+                </div>
+                
+                <div className="p-2.5 px-4">
+                  <p className="text-dark font-bold text-sm">
+                    {item.sizes.length > 1 
+                      ? `From ${item.sizes[0].price}` 
+                      : item.sizes[0].price
+                    }
+                  </p>
+                  
+                  {/* <button
+                    onClick={(e) => handleQuickAdd(item, e)}
+                    className="w-full mt-2 bg-primary text-white py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    Quick Add
+                  </button> */}
+                </div>
               </div>
-
-              <h3 className="text-sm md:text-base font-semibold p-2 px-4 absolute bottom-9 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs text-light w-full rounded-b-2xl">
-                {item.name}
-                {item.size && (
-                  <span className="text-sm font-normal text-light/80"> x {item.size}</span>
-                )}
-              </h3>
-
-              <div className='p-4 py-1.5 flex justify-between items-center'>
-                <p className="text-dark font-bold">{item.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Item Modal */}
       <ItemModal 
-        item={selectedItem} 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        item={selectedItem}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );

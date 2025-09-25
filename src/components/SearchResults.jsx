@@ -1,77 +1,69 @@
-import React, { useContext, useState } from 'react';
-import { MenuContext } from '../contexts/MenuContext';
+// components/SearchResults.jsx
+import React, { useState } from 'react';
+import { useMenu } from '../contexts/MenuContext';
 import placeholder from "../assets/placeholder.png";
 import ItemModal from './ItemModal';
 
-const SearchResults = ({ query, onItemSelect }) => {
-  const { itemsByCategory, weeklyMenu } = useContext(MenuContext);
+const SearchResults = ({ query, onClose }) => {
+  const { searchItems } = useMenu();
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Flatten all items from categories
-  const allItems = Object.values(itemsByCategory).flat();
-  
-  // Flatten all items from weekly menu
-  const weeklyItems = Object.values(weeklyMenu).flat();
-  
-  // Combine all items
-  const allMenuItems = [...allItems, ...weeklyItems];
-  
-  // Filter items based on search query
-  const filteredItems = allMenuItems.filter(item => 
-    item.name.toLowerCase().includes(query.toLowerCase()) ||
-    (item.category && item.category.toLowerCase().includes(query.toLowerCase()))
-  );
+  const results = searchItems(query);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
 
-  if (filteredItems.length === 0) {
+  if (results.length === 0) {
     return (
-      <div className="mt-4 p-4 bg-dark rounded-lg text-center text-light/70">
-        No results found for "{query}"
+      <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 p-4">
+        <p className="text-gray-500 text-center">No results found for "{query}"</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="mt-4 max-h-96 overflow-y-auto rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {filteredItems.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => handleItemClick(item)}
-              className="p-3 bg-light/5 hover:bg-light/10 rounded-lg cursor-pointer transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <img
-                  src={item.image || placeholder}
-                  alt={item.name}
-                  className="w-12 h-12 object-cover rounded"
-                />
-                <div className="flex-1">
-                  <h4 className="text-light font-medium">{item.name}</h4>
-                  <div className="flex justify-between items-center text-sm text-light/70">
-                    <span>{item?.category || item?.size}</span>
-                    <span className="font-semibold text-primary">{item.price}</span>
-                  </div>
+      <div className="py-4 absolute top-full left-0 right-0 bg-dark rounded-lg shadow-lg -mt-1 max-h-96 overflow-y-auto scrollbar-hidden">
+        <div className="container gap-2 grid grid-cols-2">
+        {results.map((item, index) => (
+          <div
+            key={index}
+            onClick={() => handleItemClick(item)}
+            className="p-3 text-light bg-light/5 rounded-lg hover:bg-light/10 cursor-pointer transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <img
+                src={item.image || placeholder}
+                alt={item.name}
+                className="w-12 h-12 object-cover rounded"
+              />
+              <div className="flex-1">
+                <h4 className="font-medium text-sm">{item.name}</h4>
+                <div className="flex items-center justify-between">
+                  <p className="text-light/60 text-xs">
+                    {item.category} • {item.sizes ? `${item.sizes.length} size(s)` : 'Standard'}
+                  </p>
+                  <p className="text-primary font-bold text-sm">
+                    {item.sizes?.[0]?.price || item.price}
+                  </p>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
         </div>
       </div>
-      
+
       <ItemModal 
-        item={selectedItem} 
-        isOpen={isModalOpen} 
+        item={selectedItem}
+        isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
-          onItemSelect();
-        }} 
+          onClose();
+        }}
       />
     </>
   );

@@ -62,7 +62,7 @@ const WelcomePopup = () => {
       >
         {/* Popup Content */}
         <div 
-          className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[84dvh] md:max-h-[90dvh] overflow-y-auto cursor-default scrollbar-hidden"
+          className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[84svh] md:max-h-[90dvh] overflow-y-auto cursor-default scrollbar-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -77,7 +77,8 @@ const WelcomePopup = () => {
             <div className="flex items-center">
               <div>
                 <h2 className="text-2xl font-bold"> Welcome to Food By Ama! </h2>
-                <p className="text-white/90 mt-1"> We're excited to serve you! 🎉</p>
+                {/* <p className="text-white/90 mt-1"> We're excited to serve you! 🎉</p> */}
+                <p className="text-sm text-white/90 mt-1"> Flat tummy doesn't matter in Heaven.. </p>
               </div>
             </div>
           </div>

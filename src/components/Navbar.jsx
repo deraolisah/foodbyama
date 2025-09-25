@@ -15,7 +15,6 @@ const Navbar = () => {
   const searchInputRef = useRef(null);
   const scrollRef = useRef(0);
 
-
   const toggleMenu = () => {
     const newState = !menuOpen;
     setMenuOpen(newState);
@@ -42,8 +41,6 @@ const Navbar = () => {
       // Focus on input when search opens
       setTimeout(() => {
         if (searchInputRef.current) {
-          // searchInputRef.current.focus();          
-          // When opening search
           scrollRef.current = window.scrollY;
         }
       }, 100);
@@ -54,26 +51,31 @@ const Navbar = () => {
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
-      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      // When closing search
       window.scrollTo(0, scrollRef.current);
-
-      
       setSearchQuery('');
     }
   };
 
-  // Close search when escape key is pressed
+  // Function to handle menu item clicks
+  const handleMenuItemClick = () => {
+    toggleMenu(); // Close the menu when a menu item is clicked
+  };
+
+  // Close menu when escape key is pressed
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.keyCode === 27 && searchOpen) {
-        toggleSearch();
+      if (e.keyCode === 27) {
+        if (searchOpen) {
+          toggleSearch();
+        } else if (menuOpen) {
+          toggleMenu();
+        }
       }
     };
     
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [searchOpen]);
+  }, [searchOpen, menuOpen]);
 
   return (
     <>
@@ -85,7 +87,7 @@ const Navbar = () => {
           </button>
 
           {/* Logo */}
-          <Link to="/">
+          <Link to="/" onClick={() => menuOpen && toggleMenu()}>
             <img src={logo} alt='FoodByAma Logo' className='rounded-lg w-24' />
           </Link>
 
@@ -104,7 +106,7 @@ const Navbar = () => {
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search for dishes, soups, stews..."
-                  className="w-full p-4 py-2.5 pr-12 rounded-lg bg-light/10 text-light placeholder-light/70 border border-light/20 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-4 py-2.5 pr-12 rounded-lg bg-light/10 text-light placeholder-light/70 border border-light/20 focus:outline-none"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
@@ -131,14 +133,31 @@ const Navbar = () => {
         )}
 
         {/* Navigation Menu */}
-        <div className="container flex items-end justify-end !relative bg-red-500 overflow-x-hidden">
-        {/* {menuOpen && (<div onClick={toggleMenu} className="fixed inset-0 h-full w-full bg-dark/50 backdrop-blur-sm z-5"></div>)} */}
+        <div className="container flex items-end justify-end !relative overflow-x-hidden">
           <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light text-center shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"}`}>
-            <p className="text-light/60 text-sm italics absolute top-6.5 left-5"> Flat tummy doesn't matter here.. </p>
+            <p className="text-light/60 text-sm italics absolute top-6.5 left-5"> Flat tummy doesn't matter in Heaven.. </p>
             <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
-              <Link to="/about" className="hover:text-primary"> About Us </Link>
-              <Link to="/testimonials" className="hover:text-primary"> Testimonials </Link>
-              <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
+              <Link 
+                to="/about" 
+                className="hover:text-primary transition-colors" 
+                onClick={handleMenuItemClick}
+              >
+                About Us
+              </Link>
+              <Link 
+                to="/testimonials" 
+                className="hover:text-primary transition-colors" 
+                onClick={handleMenuItemClick}
+              >
+                Testimonials
+              </Link>
+              <Link 
+                to="/contact" 
+                className="hover:text-primary transition-colors" 
+                onClick={handleMenuItemClick}
+              >
+                Contact Us
+              </Link>
             </ul>
           </div>
         </div>
@@ -149,6 +168,14 @@ const Navbar = () => {
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-45"
           onClick={toggleSearch}
+        />
+      )}
+
+      {/* Backdrop overlay when menu is open - click to close */}
+      {menuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-5"
+          onClick={toggleMenu}
         />
       )}
     </>

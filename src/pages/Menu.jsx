@@ -1,29 +1,29 @@
 // pages/Menu.jsx
-import React, { useState, useContext } from 'react';
-import { FaArrowLeft, FaArrowRight, FaShoppingCart } from "react-icons/fa";
+import React, { useState } from 'react';
+import { FaChevronLeft, FaChevronRight, FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../contexts/CartContext';
-import { MenuContext } from '../contexts/MenuContext';
+import { useMenu } from '../contexts/MenuContext';
 import placeholderImg from "../assets/placeholder.png";
 import ItemModal from '../components/ItemModal';
 
 const Menu = () => {
-  const { weeklyMenu } = useContext(MenuContext);
+  const { weeklyMenu } = useMenu();
   const { addToCart } = useCart();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const days = Object.keys(weeklyMenu);
+  const currentDay = days[currentDayIndex];
+  const menuItems = weeklyMenu[currentDay] || [];
+
   const nextDay = () => {
-    setCurrentIndex((prev) => (prev + 1) % days.length);
+    setCurrentDayIndex((prev) => (prev + 1) % days.length);
   };
 
   const prevDay = () => {
-    setCurrentIndex((prev) => (prev - 1 + days.length) % days.length);
+    setCurrentDayIndex((prev) => (prev - 1 + days.length) % days.length);
   };
-
-  const currentDay = days[currentIndex];
-  const menuItems = weeklyMenu[currentDay] || [];
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
@@ -31,76 +31,101 @@ const Menu = () => {
   };
 
   const handleQuickAdd = (item, e) => {
-    e.preventDefault();
     e.stopPropagation();
-    addToCart(item);
-    // alert(`${item.name} added to cart!`);
+    
+    const cartItem = {
+      ...item,
+      size: item.sizes[0].size,
+      price: item.sizes[0].price,
+      unitPrice: parseFloat(item.sizes[0].price.replace(/[^\d.]/g, '')) || 0,
+      sizes: undefined
+    };
+    
+    addToCart(cartItem, 1);
   };
 
   if (days.length === 0) {
     return (
-      <div className="container mx-auto px-4 pt-4 md:pt-8">
-        <div className='bg-white rounded-2xl shadow-md p-4 md:p-6 text-center'>
-          <p>No weekly menu available. Check back later!</p>
-        </div>
+      <div className="container py-8 text-center">
+        <p className="text-gray-500">No weekly menu available. Check back later!</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto space-y-0 px-4 pt-4 md:pt-8">
-      {/* Carousel Controls */}
-      <div className="flex justify-between items-center mb-4">
-        <button onClick={prevDay} className="p-2.5 bg-primary/10 text-dark text-xs hover:bg-primary hover:text-light rounded-full cursor-pointer"> 
-          <FaArrowLeft /> 
+    <div className="container py-6">
+      {/* Day Navigation */}
+      <div className="flex items-center justify-between mb-8">
+        <button 
+          onClick={prevDay}
+          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+        >
+          <FaChevronLeft />
         </button>
-        <h3 className="text-sm font-bold text-center rounded-full bg-primary/10 w-fit mx-auto px-4 py-1.5 uppercase"> 
-          {currentDay} Menu
-        </h3>
-        <button onClick={nextDay} className="p-2.5 bg-primary/10 text-dark text-xs hover:bg-primary hover:text-light rounded-full cursor-pointer"> 
-          <FaArrowRight /> 
+        
+        <h2 className="text-2xl font-bold text-center">
+          {currentDay} Specials
+        </h2>
+        
+        <button 
+          onClick={nextDay}
+          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+        >
+          <FaChevronRight />
         </button>
       </div>
 
       {/* Menu Items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+      <div className="grid md:grid-cols-2 gap-4 mb-8">
         {menuItems.map((item, index) => (
           <div 
-            key={index} 
-            className="bg-light/5 border border-dark/5 p-4 rounded-xl shadow flex items-start gap-2.5 relative group cursor-pointer"
+            key={index}
+            className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow cursor-pointer"
             onClick={() => handleItemClick(item)}
           >
-            <img src={placeholderImg} alt='' className='min-w-20 h-20 rounded-lg bg-dark/50' />
-            <div className='flex flex-col items-start flex-1'>
-              <h3 className="text-sm md:text-base font-semibold">{item.name}</h3>
-              <p className="text-primary font-bold">{item.price}</p>
+            <div className="flex gap-4">
+              <img 
+                src={item.image || placeholderImg} 
+                alt={item.name}
+                className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+              />
+              
+              <div className="flex-1">
+                <h3 className="font-semibold mb-1">{item.name}</h3>
+                {/* <p className="text-gray-600 text-xs mb-2 line-clamp-2">
+                  {item.desc} ({item.category})
+                </p> */}
+                <div className="flex justify-between items-center">
+                  <span className="text-primary font-bold">
+                    {item.sizes[0].price}
+                  </span>
+                  {/* <button
+                    onClick={(e) => handleQuickAdd(item, e)}
+                    className="p-2 bg-primary text-white rounded-full hover:bg-primary/90 transition"
+                  >
+                    <FaShoppingCart size={14} />
+                  </button> */}
+                </div>
+              </div>
             </div>
-            
-            {/* Quick Add to Cart Button */}
-            <button
-              onClick={(e) => handleQuickAdd(item, e)}
-              className="absolute top-2 right-2 p-2 bg-primary text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              title="Quick add to cart"
-            >
-              <FaShoppingCart size={14} />
-            </button>
           </div>
         ))}
       </div>
 
-
-      {/*  */}
-      <div className='bg-primary text-light text-center border border-dark/5 rounded-xl shadow flex flex-col gap-1 p-4 my-4'>
-        <p className='font-semibold'> Thank you for shopping with FoodByAma! 🎉🎉 </p>
-        <p className='font-lighter text-light/80'> Please remember to place your order for each day, atleast 12 hours beforehand. </p>
+      {/* Info Box */}
+      <div className="bg-primary/10 border border-primary rounded-xl p-4 py-6 text-center">
+        <p className="font-semibold text-primary mb-1">
+          Thank you for shopping with FoodByAma! 🎉
+        </p>
+        <p className="text-primary text-sm">
+          Please remember to place your order for each day at least 12 hours in advance.
+        </p>
       </div>
 
-
-      {/* Item Modal */}
       <ItemModal 
-        item={selectedItem} 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        item={selectedItem}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );
