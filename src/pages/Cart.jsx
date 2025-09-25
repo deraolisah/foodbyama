@@ -72,7 +72,7 @@ const Cart = () => {
                 {/* <p className="text-sm text-gray-600">
                   Size: {item.size}
                 </p> */}
-                <p className="text-gray-500 text-xs mt-1">
+                <p className="text-gray-500 text-xs text-wrap mt-1">
                   {formatPrice(item.unitPrice)} × {item.quantity} = 
                   <span className="text-primary font-bold"> {formatPrice(getItemTotal(item))} </span>
                 </p>
@@ -115,18 +115,18 @@ const Cart = () => {
           ))}
 
           {/* Cart Summary */}
-          <div className="p-6 bg-dark/5">
-            <div className="flex justify-between items-center mb-8">
+          <div className="p-4 md:p-6 bg-dark/5">
+            <div className="flex justify-between items-end mb-8">
               <div className="text-lg font-bold flex items-end gap-2">
                 Total:
                 <span className="text-2xl font-bold text-primary">
                   {formatPrice(getCartTotal())}
                 </span>
               </div>
-              <button onClick={clearCart} className="text-sm text-primary font-medium cursor-pointer"> Clear Cart </button>
+              <button onClick={clearCart} className="text-sm text-primary hover:underline font-medium cursor-pointer"> Clear Cart </button>
             </div>
 
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 flex-wrap">
               <button 
                 onClick={()=> navigate("/")}
                 className="flex-1 py-3 bg-primary/10 rounded-lg text-primary hover:bg-gray-50 transition cursor-pointer text-nowrap">
