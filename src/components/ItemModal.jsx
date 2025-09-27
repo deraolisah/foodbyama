@@ -64,22 +64,27 @@ const ItemModal = ({ item, isOpen, onClose }) => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
-  if (!isOpen || !normalizedItem) return null;
+  // Don't return null - keep the modal in DOM but hidden
+  if (!normalizedItem) return null;
 
   const selectedSize = normalizedItem.sizes[selectedSizeIndex];
   const hasMultipleSizes = normalizedItem.sizes.length > 1;
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop - always in DOM but conditionally visible */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 cursor-pointer"
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 cursor-pointer transition-all duration-400 ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
         onClick={onClose}
       />
       
-      {/* Modal */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 animate-slideUp">
-        <div className={`w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden ${isOpen ? "" : ""}`}>
+      {/* Modal - always in DOM but conditionally visible */}
+      <div className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+        isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-10 pointer-events-none"
+      }`}>
+        <div className="w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
           {/* Header */}
           <div className="w-full relative bg-gradient-to-bl from-primary/80 to-primary p-4 rounded-t-2xl">
             <button
@@ -92,7 +97,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <img
               src={normalizedItem.image || placeholder}
               alt={normalizedItem.name}
-              className="w-full h-64 mx-auto object-cover rounded-xl shadow"
+              className="w-full md:w-fit h-66 mx-auto object-cover rounded-2xl shadow"
             />
           </div>
 
@@ -121,7 +126,6 @@ const ItemModal = ({ item, isOpen, onClose }) => {
                 "❌ Out of stock"
               )}
             </p>
-
 
             {/* Size Selection */}
             {hasMultipleSizes && (

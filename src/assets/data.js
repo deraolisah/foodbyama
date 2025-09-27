@@ -1,5 +1,6 @@
 import egusi2 from "./products/Egwusi-2-litres.jpg";
 import garnishedCroaker from "./products/garnished-peppered-croaker.jpg";
+import semovita from "./products/semovita.jpg";
 
 const categories = [
   "Soups", "Stews", "Swallows", "Breakfasts", "Lunch Packs", "Sides & Extras",
@@ -118,7 +119,7 @@ const products = {
         { size: "2 Wraps", price: "₦2,500" },
         { size: "4 Wraps", price: "₦4,500" }
       ],
-      image: "", 
+      image: semovita, 
       isAvailable: true 
     },
     { 

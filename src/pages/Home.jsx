@@ -100,10 +100,10 @@ const Home = () => {
                     alt={item.name}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
-                  <h3 className="w-full h-fit absolute bottom-0 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs rounded-b-xl p-2.5 px-4 font-semibold text-light text-sm">{item.name}</h3>
+                  <h3 className="w-full h-fit absolute bottom-0 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs rounded-b-xl py-2.5 px-4 font-semibold text-light text-sm">{item.name}</h3>
                 </div>
                 
-                <div className="p-2.5 px-4">
+                <div className="py-2 md:py-2.5 px-4">
                   <p className="text-dark font-bold text-sm">
                     {item.sizes.length > 1 
                       ? `From ${item.sizes[0].price}` 

@@ -58,7 +58,8 @@ const Cart = () => {
               <img 
                 src={item.image || placeholder} 
                 alt={item.name}
-                className="w-16 h-16 object-cover rounded-lg"
+                className="w-16 h-16 object-cover rounded-lg cursor-pointer"
+                onClick={() => handleItemClick(item)}
               />
               
               <div className="flex-1 truncate">
