@@ -11,6 +11,7 @@ import Profile from '../pages/Profile.jsx';
 import Checkout from '../pages/Checkout.jsx'; // Add this
 import OrderSuccess from '../pages/OrderSuccess.jsx'; // Add this
 // import ItemDetail from '../pages/ItemDetail.jsx';
+import Orders from '../pages/Orders.jsx';
 import NotFound from '../pages/NotFound.jsx';
 
 const AppRoutes = () => {
@@ -26,6 +27,7 @@ const AppRoutes = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} /> {/* Add checkout route */}
            <Route path="/order-success" element={<OrderSuccess />} /> {/* Add this route */}
+           <Route path="/orders/:orderId" element={<Orders />} />
           {/* <Route path="/menu/:category/:itemName" element={<ItemDetail />} /> */}
 
           {/* Not Found Page */}

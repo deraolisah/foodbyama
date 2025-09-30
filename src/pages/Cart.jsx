@@ -73,7 +73,7 @@ const Cart = () => {
                 {/* <p className="text-sm text-gray-600">
                   Size: {item.size}
                 </p> */}
-                <p className="text-gray-500 text-xs text-wrap mt-1">
+                <p className="text-gray-500 text-xs !text-wrap truncate mt-1">
                   {formatPrice(item.unitPrice)} × {item.quantity} = 
                   <span className="text-primary font-bold"> {formatPrice(getItemTotal(item))} </span>
                 </p>

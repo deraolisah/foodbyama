@@ -26,12 +26,12 @@ const Chatbot = () => {
         </button>
 
         {/* Notification Dot */}
-        {!isOpen && (
+        {/* {!isOpen && (
           <span className='z-50'>
             <span className="absolute top-0.5 right-3 w-3 h-3 rounded-full bg-primary animate-pulse"></span>
             <span className="absolute top-0.5 right-3 w-3 h-3 rounded-full bg-primary animate-ping"></span>
           </span>
-        )}
+        )} */}
 
         {/* Popup Chat Window */}
         {/* {isOpen && ( */}
@@ -49,7 +49,6 @@ const Chatbot = () => {
                 <p className='text-xs text-light/80 font-lighter'> Typically replies in minutes </p>
               </div>
               <button onClick={handleClose} className="text-sm font-bold cursor-pointer p-2 bg-light/10 hover:bg-light/15 rounded-full">
-                {/* ✕ */}
                 <IoMdClose />
               </button>
             </div>
@@ -77,8 +76,7 @@ const Chatbot = () => {
                 />
 
                 <button onClick={handleSend} className="w-fit p-2 h-full border border-dark/5 text-light bg-dark/5 rounded-lg text-sm font-semibold cursor-pointer">
-                    <img src={sendBtn} alt='' className='w-6 invert-60' />
-                  {/* Continue on WhatsApp */}
+                  <img src={sendBtn} alt='' className='w-6 invert-60' />
                 </button>
               </div>
             </div>

@@ -1,6 +1,15 @@
-import egusi2 from "./products/Egwusi-2-litres.jpg";
+import egusi from "./products/egusi-soup.jpg";
+import ogbono from "./products/ogbono-soup.jpeg";
+import okro from "./products/okro-soup.jpg";
+
 import garnishedCroaker from "./products/garnished-peppered-croaker.jpg";
+
 import semovita from "./products/semovita.jpg";
+
+import watermelon from "./products/watermelon-juice.jpg";
+
+import beefSharwarma from "./products/beef-sharwarma.jpg";
+import chickenSharwarma from "./products/chicken-sharwarma.jpeg";
 
 const categories = [
   "Soups", "Stews", "Swallows", "Breakfasts", "Lunch Packs", "Sides & Extras",
@@ -17,7 +26,7 @@ const products = {
         { size: "3 Litres", price: "₦16,000" },
         { size: "5 Litres", price: "₦26,000" }
       ],
-      image: egusi2, 
+      image: egusi, 
       isAvailable: true 
     },
     { 
@@ -39,7 +48,7 @@ const products = {
         { size: "3 Litres", price: "₦16,000" },
         { size: "5 Litres", price: "₦26,000" }
       ],
-      image: "", 
+      image: ogbono, 
       isAvailable: true 
     },
     { 
@@ -54,14 +63,14 @@ const products = {
       isAvailable: true 
     },
     { 
-      name: "Okra Soup", 
-      desc: "Fresh okra soup with your choice of protein.", 
+      name: "Okro Soup", 
+      desc: "Fresh okro soup with your choice of protein.", 
       sizes: [
         { size: "2 Litres", price: "₦11,000" },
         { size: "3 Litres", price: "₦16,000" },
         { size: "5 Litres", price: "₦26,000" }
       ],
-      image: "", 
+      image: okro, 
       isAvailable: true 
     },
     { 
@@ -151,7 +160,7 @@ const products = {
         { size: "500ml", price: "₦1,500" },
         { size: "1 Litre", price: "₦2,500" }
       ],
-      image: "", 
+      image: watermelon, 
       isAvailable: true 
     },
   ],
@@ -163,7 +172,7 @@ const products = {
         { size: "Regular", price: "₦2,500" },
         { size: "Large", price: "₦3,500" }
       ],
-      image: "", 
+      image: beefSharwarma, 
       isAvailable: true 
     },
     { 
@@ -173,7 +182,7 @@ const products = {
         { size: "Regular", price: "₦2,800" },
         { size: "Large", price: "₦3,800" }
       ],
-      image: "", 
+      image: chickenSharwarma, 
       isAvailable: true 
     },
   ],

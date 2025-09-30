@@ -81,10 +81,10 @@ const ItemModal = ({ item, isOpen, onClose }) => {
       />
       
       {/* Modal - always in DOM but conditionally visible */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-10 pointer-events-none"
       }`}>
-        <div className="w-full mx-auto max-w-2xl !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
+        <div className="w-full !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
           {/* Header */}
           <div className="w-full relative bg-gradient-to-bl from-primary/80 to-primary p-4 rounded-t-2xl">
             <button
@@ -116,16 +116,16 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <hr className="border border-dark/10"/>
 
             {/* Availability */}
-            <p className={`text-sm ${normalizedItem.isAvailable ? "text-green-600" : "text-red-600"}`}>
+            <div className={`text-sm ${normalizedItem.isAvailable ? "text-green-600" : "text-red-600"}`}>
               {normalizedItem.isAvailable ? 
                 (
-                  <div className="flex items-center gap-1">
+                  <p className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-green-600 inline-flex"></span>Available 
-                  </div>
+                  </p>
                 ) : (
                 "❌ Out of stock"
               )}
-            </p>
+            </div>
 
             {/* Size Selection */}
             {hasMultipleSizes && (

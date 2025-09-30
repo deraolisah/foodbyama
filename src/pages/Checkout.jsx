@@ -24,7 +24,7 @@ const Checkout = () => {
     getDeliveryFee,
     clearCheckoutData
   } = useCheckout();
-  const { initializePaystackPayment, createOrder, isLoading } = useOrder();
+  const { initializePaystackPayment, createOrder, verifyPayment, isLoading } = useOrder();
   const toast = useToast();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -32,14 +32,23 @@ const Checkout = () => {
   const [showDeliveryDropdown, setShowDeliveryDropdown] = useState(false);
 
   // Load Paystack script dynamically
+  // In Checkout.jsx, update the useEffect:
   React.useEffect(() => {
+    if (typeof window.PaystackPop !== 'undefined') {
+      return; // Already loaded
+    }
+
     const script = document.createElement('script');
     script.src = 'https://js.paystack.co/v1/inline.js';
     script.async = true;
+    // script.onload = () => console.log('Paystack script loaded');
+    script.onerror = () => console.error('Failed to load Paystack script');
     document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
@@ -85,6 +94,8 @@ const Checkout = () => {
     setShowDeliveryDropdown(false);
   };
 
+
+  // In Checkout.jsx - update the handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -118,20 +129,21 @@ const Checkout = () => {
       // Initialize Paystack payment
       const paymentResponse = await initializePaystackPayment(orderData);
       
-      // If payment successful, create order
-      if (paymentResponse.reference) {
-        await createOrder(orderData, paymentResponse.reference);
-        
-        // Clear checkout data and redirect
-        clearCheckoutData();
-        toast.success('Order placed successfully! We will contact you shortly.');
-        navigate('/order-success', { 
-          state: { 
-            orderNumber: paymentResponse.reference,
-            grandTotal: grandTotal
-          } 
-        });
-      }
+      // Create order and get user info
+      const orderResult = await createOrder(orderData, paymentResponse.reference);
+      
+      // ✅ FIXED: Pass user data to OrderSuccess
+      clearCheckoutData();
+      toast.success('Order placed successfully! Account created automatically.');
+      
+      navigate('/order-success', { 
+        state: { 
+          orderNumber: paymentResponse.reference,
+          grandTotal: grandTotal,
+          userId: orderResult.userId, // ✅ Add this
+          isGuest: orderResult.isGuest // ✅ Add this
+        } 
+      });
       
     } catch (error) {
       console.error('Checkout error:', error);
@@ -393,14 +405,14 @@ const Checkout = () => {
           {/* Cart Items */}
           <div className="space-y-3 mb-6">
             {cartItems.map((item, index) => (
-              <div key={index} className="flex justify-between items-center py-2 border-b border-dark/10">
+              <div key={index} className="flex justify-between items-start py-2 border-b border-dark/10">
                 <div>
                   <p className="font-medium">{item.name}</p>
                   <p className="text-sm text-gray-600">
                     {formatPrice(item.unitPrice || parseFloat(item.price.replace(/[^\d.]/g, '')))} × {item.quantity}
                   </p>
                 </div>
-                <p className="font-semibold">
+                <p className="font-medium">
                   {formatPrice((item.unitPrice || parseFloat(item.price.replace(/[^\d.]/g, ''))) * item.quantity)}
                 </p>
               </div>

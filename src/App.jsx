@@ -6,22 +6,25 @@ import { CartProvider } from './contexts/CartContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { CheckoutProvider } from './contexts/CheckoutContext';
 import { OrderProvider } from './contexts/OrderContext';
+import { AuthProvider } from './contexts/AuthContext';
 import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
     <ToastProvider>
-      <BrowserRouter>
-        <MenuProvider>
-          <CartProvider>
-            <CheckoutProvider>
-              <OrderProvider>
-                <AppRoutes />
-              </OrderProvider>
-            </CheckoutProvider>
-          </CartProvider>
-        </MenuProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <CheckoutProvider>
+            <OrderProvider>
+              <BrowserRouter>
+                <MenuProvider>
+                  <AppRoutes />
+                </MenuProvider>
+              </BrowserRouter>
+            </OrderProvider>
+          </CheckoutProvider>
+        </CartProvider>
+      </AuthProvider>
     </ToastProvider>
   );
 }

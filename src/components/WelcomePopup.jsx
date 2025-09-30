@@ -87,7 +87,7 @@ const WelcomePopup = () => {
           <div className="p-4 md:p-6 space-y-4">
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
               <p className="text-dark/80 text-sm">
-                We sell delicious meals, provide catering services and offer Home/Office Deliveries. 🛒
+                We sell delicious meals, provide catering services and offer Home/Office Deliveries in <strong>Awka</strong>. 🛒
               </p>
             </div>
 

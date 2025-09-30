@@ -13,6 +13,10 @@ export const OrderProvider = ({ children }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
+  if (!PAYSTACK_PUBLIC_KEY) {
+    console.error('Paystack public key not found in environment variables');
+  }
+
   // Initialize Paystack payment
   const initializePaystackPayment = async (orderData) => {
     return new Promise((resolve, reject) => {
@@ -63,7 +67,7 @@ export const OrderProvider = ({ children }) => {
   // Verify Paystack payment
   const verifyPayment = async (reference) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/verify-payment`, {
+      const response = await fetch(`${API_BASE_URL}/payments/verify-payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +111,7 @@ export const OrderProvider = ({ children }) => {
       };
 
       // Save order to database
-      const response = await fetch(`${API_BASE_URL}/orders`, {
+      const response = await fetch(`${API_BASE_URL}/orders/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +129,12 @@ export const OrderProvider = ({ children }) => {
       clearCart();
       
       toast.success('Order placed successfully! Payment verified.');
-      return result;
+      // Return user info along with order info
+      return {
+        ...result,
+        userId: result.userId,
+        isGuest: result.isGuest
+      };
 
     } catch (error) {
       console.error('Order creation error:', error);

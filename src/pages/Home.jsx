@@ -54,7 +54,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Category Navigation */}
-      <div className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
+      <div className={`sticky top-0 z-40 bg-light transition-all duration-300 ${scrolled ? "shadow-md" : ""}`}>
         <div className="container">
           <div className="flex overflow-x-auto gap-2 py-3 scrollbar-hide">
             {categories.map((category) => (
@@ -83,7 +83,7 @@ const Home = () => {
         </h2>
 
         {displayItems.length === 0 ? (
-          <div className="text-center py-2 text-gray-500">
+          <div className="text-center text-gray-500">
             No items available in this category
           </div>
         ) : (
@@ -104,7 +104,7 @@ const Home = () => {
                 </div>
                 
                 <div className="py-2 md:py-2.5 px-4">
-                  <p className="text-dark font-bold text-sm">
+                  <p className="text-dark font-semibold text-sm">
                     {item.sizes.length > 1 
                       ? `From ${item.sizes[0].price}` 
                       : item.sizes[0].price

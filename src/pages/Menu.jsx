@@ -58,7 +58,7 @@ const Menu = () => {
       <div className="flex items-center justify-between mb-8">
         <button 
           onClick={prevDay}
-          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition cursor-pointer"
         >
           <FaChevronLeft />
         </button>
@@ -69,7 +69,7 @@ const Menu = () => {
         
         <button 
           onClick={nextDay}
-          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
+          className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition cursor-pointer"
         >
           <FaChevronRight />
         </button>
