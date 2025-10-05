@@ -58,7 +58,7 @@ const Cart = () => {
               <img 
                 src={item.image || placeholder} 
                 alt={item.name}
-                className="w-16 h-16 object-cover rounded-lg cursor-pointer"
+                className="w-16 h-16 hidden sm:flex object-cover rounded-lg cursor-pointer"
                 onClick={() => handleItemClick(item)}
               />
               
@@ -107,7 +107,7 @@ const Cart = () => {
                 {/* Remove Button */}
                 <button 
                   onClick={() => removeFromCart(item.id)}
-                  className="p-2.5 text-primary bg-dark/10 hover:bg-primary/20 rounded-full transition cursor-pointer"
+                  className="p-2.5 text-primary bg-dark/10 hover:bg-primary/20 rounded-full shadow transition cursor-pointer"
                 >
                   <FaTrash className='text-sm'size={14} />
                 </button>

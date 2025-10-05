@@ -1,6 +1,18 @@
+// SOUPS
 import egusi from "./products/egusi-soup.jpg";
-import ogbono from "./products/ogbono-soup.jpeg";
-import okro from "./products/okro-soup.jpg";
+import nsala from "./products/nsala.png";
+import ogbono from "./products/ogbono.png";
+import oha from "./products/oha.png";
+import okro from "./products/okro.png";
+import vegetable from "./products/vegetable.png";
+
+// STEWS
+import beef_stew from "./products/beef-stew.png";
+import chicken_stew from "./products/chicken-stew.png";
+
+import fried_rice_with_plantain_and_turkey from "./products/fried-rice-with-plantain-and-turkey.png";
+import fried_rice_with_plantain_and_chicken from "./products/fried-rice-with-plantain-and-chicken.png";
+
 
 import garnishedCroaker from "./products/garnished-peppered-croaker.jpg";
 
@@ -8,8 +20,9 @@ import semovita from "./products/semovita.jpg";
 
 import watermelon from "./products/watermelon-juice.jpg";
 
-import beefSharwarma from "./products/beef-sharwarma.jpg";
-import chickenSharwarma from "./products/chicken-sharwarma.jpeg";
+// 
+import beef_sharwarma from "./products/beef-sharwarma.jpg";
+import chicken_sharwarma from "./products/chicken-sharwarma.jpeg";
 
 const categories = [
   "Soups", "Stews", "Swallows", "Breakfasts", "Lunch Packs", "Sides & Extras",
@@ -37,7 +50,7 @@ const products = {
         { size: "3 Litres", price: "₦16,000" },
         { size: "5 Litres", price: "₦26,000" }
       ],
-      image: "", 
+      image: nsala, 
       isAvailable: true 
     },
     { 
@@ -59,7 +72,7 @@ const products = {
         { size: "3 Litres", price: "₦17,000" },
         { size: "5 Litres", price: "₦27,000" }
       ],
-      image: "", 
+      image: oha, 
       isAvailable: true 
     },
     { 
@@ -81,7 +94,7 @@ const products = {
         { size: "3 Litres", price: "₦17,000" },
         { size: "5 Litres", price: "₦27,000" }
       ],
-      image: "", 
+      image: vegetable, 
       isAvailable: true 
     }
   ],
@@ -94,7 +107,7 @@ const products = {
         { size: "3 Litres", price: "₦13,500" },
         { size: "5 Litres", price: "₦20,000" }
       ],
-      image: "", 
+      image: beef_stew, 
       isAvailable: true 
     },
     { 
@@ -116,7 +129,7 @@ const products = {
         { size: "3 Litres", price: "₦16,000" },
         { size: "5 Litres", price: "₦26,000" }
       ],
-      image: "", 
+      image: chicken_stew, 
       isAvailable: true 
     }
   ],
@@ -172,7 +185,7 @@ const products = {
         { size: "Regular", price: "₦2,500" },
         { size: "Large", price: "₦3,500" }
       ],
-      image: beefSharwarma, 
+      image: beef_sharwarma, 
       isAvailable: true 
     },
     { 
@@ -182,7 +195,7 @@ const products = {
         { size: "Regular", price: "₦2,800" },
         { size: "Large", price: "₦3,800" }
       ],
-      image: chickenSharwarma, 
+      image: chicken_sharwarma, 
       isAvailable: true 
     },
   ],
@@ -208,6 +221,7 @@ const weeklyMenu = {
       sizes: [
         { size: "Standard", price: "₦4,600" }
       ], 
+      image: fried_rice_with_plantain_and_turkey,
       category: "Lunch Packs" 
     },
     { 
@@ -216,6 +230,7 @@ const weeklyMenu = {
       sizes: [
         { size: "Standard", price: "₦4,500"}
       ], 
+      image: fried_rice_with_plantain_and_chicken,
       category: "Lunch Packs" 
     },
     { 
@@ -224,6 +239,7 @@ const weeklyMenu = {
       sizes: [
         { size: "Standard", price: "₦4,500"}
       ], 
+      iamge: "",
       category: "Lunch Packs" 
     },
     { 
@@ -232,6 +248,7 @@ const weeklyMenu = {
       sizes: [
         { size: "Standard", price: "₦4,000"}
       ], 
+      iamge: "",
       category: "Lunch Packs" 
     },
     { 
@@ -240,6 +257,7 @@ const weeklyMenu = {
       sizes: [
         { size: "Standard", price: "₦3,000"}
       ], 
+       iamge: "",
       category: "Lunch Packs" 
     }
   ],

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaShoppingBag, FaStar, FaHistory, FaSpinner } from 'react-icons/fa';
 
 const Profile = () => {
-  const { user, setUser, getUserProfile, getUserOrders, isLoading } = useAuth();
+  const { user, setUser, getUserProfile, getUserOrders, isLoading, logout } = useAuth();
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
   const [profileLoading, setProfileLoading] = useState(false);
@@ -24,7 +24,7 @@ const Profile = () => {
       // Load full user profile if we only have basic user data
       if (!user.fullName || !user.email) {
         const userProfile = await getUserProfile(user.id);
-        console.log('✅ User profile loaded:', userProfile);
+        // console.log('✅ User profile loaded:', userProfile);
       }
       
       // Load user orders
@@ -56,17 +56,7 @@ const Profile = () => {
     checkStoredUser();
   }, [user, setUser]);
 
-  if (!user) {
-    return (
-      <div className="container py-8 text-center">
-        <h2 className="text-2xl font-bold mb-4">Please Log In</h2>
-        <p className="mb-6">You need to be logged in to view your profile.</p>
-        <Link to="/auth" className="bg-primary text-white px-6 py-3 rounded-lg font-semibold">
-          Login / Sign Up
-        </Link>
-      </div>
-    );
-  }
+
 
   if (profileLoading) {
     return (
@@ -77,16 +67,30 @@ const Profile = () => {
     );
   }
 
+
+  if (!user) {
+    return (
+      <div className="container py-8 text-center">
+        <h2 className="text-2xl font-bold mb-4">Please Log In</h2>
+        <p className="mb-6">You need to be logged in to view your profile.</p>
+        <Link to="/auth" className="bg-primary text-white px-6 py-3 rounded-lg font-semibold">
+          Login / Sign Up
+        </Link>
+      </div>
+    )
+  }
+  
+
   return (
     <div className="container py-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between gap-4">
             <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
               {user.fullName?.charAt(0)?.toUpperCase() || user.email?.charAt(0)?.toUpperCase() || 'U'}
             </div>
-            <div>
+            <div className="flex-1">
               <h1 className="text-2xl font-bold">
                 {user.fullName || 'FoodByAma Customer'}
               </h1>
@@ -95,13 +99,14 @@ const Profile = () => {
                 {user.isGuest ? 'Guest Account' : 'Member'} • {orders.length} orders
               </p>
               {user.isGuest && (
-                <div className="mt-2 bg-yellow-50 border border-yellow-200 rounded-lg p-2">
+                <div className="mt-1 w-fit bg-yellow-50 border border-yellow-200 rounded-lg p-2">
                   <p className="text-yellow-800 text-xs">
                     <strong>Guest Account:</strong> Create a password to secure your account.
                   </p>
                 </div>
               )}
             </div>
+            <button onClick={() => logout()} className="cursor-pointer"> Logout </button>
           </div>
         </div>
 

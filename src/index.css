@@ -1,3 +1,4 @@
+/* @import url('https://db.onlinewebfonts.com/c/29ade7ff8c214b65cc217f50bccacb6b?family=Sharp+Grotesk+PE+Trial+Medium+20'); */
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
 
 @import "tailwindcss";
@@ -14,6 +15,7 @@
 
 
   --font-body: "Funnel Display", sans-serif;
+  /* --font-body: "Sharp Grotesk PE Trial Medium 20"; */
 }
 
 

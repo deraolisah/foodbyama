@@ -17,7 +17,7 @@ const OrderSuccess = () => {
         isGuest: isGuest || true
       };
       setUser(userData);
-      console.log('✅ User data stored:', userData);
+      // console.log('✅ User data stored:', userData);
     }
   }, [userId, isGuest, setUser]);
 
