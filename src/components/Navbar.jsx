@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import logo from "../assets/logo.jpg";
+import logo from "../assets/favicon.png";
 import { Link } from 'react-router-dom';
 import { MdSearch } from "react-icons/md";
 import { TbMenu3 } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
 import { MenuContext } from '../contexts/MenuContext';
 import SearchResults from './SearchResults';
+import { Menu } from 'lucide-react';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -79,26 +80,29 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className='bg-dark py-2 relative z-50'>
-        <div className='container flex items-center justify-between'>
+      <nav className='bg-dark h-10 relative z-50'>
+        <div className='container bg-red-400 h-full flex items-center justify-between'>
           {/* Search Icon */}
-          <button onClick={toggleSearch} className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
+          {/* <button onClick={toggleSearch} className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
             <MdSearch className='text-xl' />
-          </button>
+          </button> */}
 
           {/* Logo */}
-          <Link to="/" onClick={() => menuOpen && toggleMenu()}>
-            <img src={logo} alt='FoodByAma Logo' className='rounded-lg w-24' />
+          <Link to="/">
+            <img src={logo} alt='FoodByAma Logo' className='rounded-full w-12' />
           </Link>
 
           {/* Menu Button */}
-          <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer z-50'>
+          {/* <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer z-50'>
             {!menuOpen ? (<TbMenu3 className='text-xl' />) : (<IoMdClose className='text-xl' />)}
-          </div>
+          </div> */}
+          <button type='button' onClick={toggleMenu()}>
+            <Menu />
+          </button>
         </div>
 
         {/* Search Bar - Fixed at top when open */}
-        {searchOpen && (
+        {/* {searchOpen && (
           <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-500 animate-slide-down">
             <div className="container py-3">
               <div className="relative">
@@ -119,7 +123,6 @@ const Navbar = () => {
                 </button>
               </div>
               
-              {/* Search Results */}
               {searchQuery && (
                 <SearchResults 
                   query={searchQuery} 
@@ -130,10 +133,10 @@ const Navbar = () => {
               )}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Navigation Menu */}
-        <div className="container flex items-end justify-end !relative overflow-x-hidden">
+        {/* <div className="container flex items-end justify-end !relative overflow-x-hidden">
           <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light text-center shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"}`}>
             <p className="text-light/60 text-xs md:text-sm italics absolute top-6.5 left-5"> Flat tummy doesn't matter in Heaven.. </p>
             <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
@@ -160,24 +163,24 @@ const Navbar = () => {
               </Link>
             </ul>
           </div>
-        </div>
+        </div> */}
       </nav>
 
       {/* Backdrop overlay when search is open */}
-      {searchOpen && (
+      {/* {searchOpen && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-45"
           onClick={toggleSearch}
         />
-      )}
+      )} */}
 
       {/* Backdrop overlay when menu is open - click to close */}
-      {menuOpen && (
+      {/* {menuOpen && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-5"
           onClick={toggleMenu}
         />
-      )}
+      )} */}
     </>
   );
 };

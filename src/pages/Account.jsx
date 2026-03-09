@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { FaUser, FaShoppingBag, FaStar, FaHistory, FaSpinner } from 'react-icons/fa';
 
-const Profile = () => {
+const Account = () => {
   const { user, setUser, getUserProfile, getUserOrders, isLoading, logout } = useAuth();
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState('overview');
@@ -72,7 +72,7 @@ const Profile = () => {
     return (
       <div className="container py-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Please Log In</h2>
-        <p className="mb-6">You need to be logged in to view your profile.</p>
+        <p className="mb-6">You need to be logged in to view your account.</p>
         <Link to="/auth" className="bg-primary text-white px-6 py-3 rounded-lg font-semibold">
           Login / Sign Up
         </Link>
@@ -267,4 +267,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Account;
