@@ -55,11 +55,11 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           <Link title='Shop' to="/shop"> <Soup size={20} strokeWidth={1.5} /> </Link>
           <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link>
-          <Link title='Cart' to="/cart"> 
+          <Link title='Cart' to="/cart" className="relative"> 
             <ShoppingCart size={20} strokeWidth={1.5} /> 
             {/* Cart badge */}
             {cartItemsCount > 0 && (
-              <span className="absolute top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+              <span className="absolute -top-1 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
                 {cartItemsCount}
               </span>
             )}
