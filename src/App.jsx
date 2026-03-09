@@ -1,9 +1,9 @@
 // App.js
 import React from 'react';
+import { ToastProvider } from './contexts/ToastContext';
 import { BrowserRouter } from 'react-router-dom';
 import { MenuProvider } from './contexts/MenuContext';
 import { CartProvider } from './contexts/CartContext';
-import { ToastProvider } from './contexts/ToastContext';
 import { CheckoutProvider } from './contexts/CheckoutContext';
 import { OrderProvider } from './contexts/OrderContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -16,11 +16,11 @@ function App() {
         <CartProvider>
           <CheckoutProvider>
             <OrderProvider>
-              <BrowserRouter>
-                <MenuProvider>
+              <MenuProvider>
+                <BrowserRouter>
                   <AppRoutes />
-                </MenuProvider>
-              </BrowserRouter>
+                </BrowserRouter>
+              </MenuProvider>
             </OrderProvider>
           </CheckoutProvider>
         </CartProvider>

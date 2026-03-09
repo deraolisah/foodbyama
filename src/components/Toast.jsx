@@ -19,7 +19,7 @@ const Toast = ({ message, type, onClose }) => {
     // Progress bar animation
     const interval = setInterval(() => {
       setProgress(prev => Math.max(prev - 1, 0));
-    }, 40); // Adjust for 4000ms total duration
+    }, 80); // Adjust for 8,000ms total duration
 
     return () => clearInterval(interval);
   }, []);
@@ -77,7 +77,7 @@ const Toast = ({ message, type, onClose }) => {
       
       {/* Toast Content */}
       <div className="flex items-start p-4">
-        <div className={`flex-shrink-0 ${textColor}`}>
+        <div className={`shrink-0 ${textColor}`}>
           <Icon className="text-lg" />
         </div>
         
@@ -85,7 +85,7 @@ const Toast = ({ message, type, onClose }) => {
           <p className="text-sm font-medium text-gray-900">{message}</p>
         </div>
         
-        <button onClick={onClose} className="ml-4 flex-shrink-0 inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors">
+        <button onClick={onClose} className="ml-4 shrink-0 inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors">
           <FaTimes className="text-sm" />
         </button>
       </div>
