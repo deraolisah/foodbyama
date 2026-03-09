@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Item from "./Item";
 import ItemModal from './ItemModal';
-import placeholder from "../assets/placeholder.png";
 import { useMenu } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
 

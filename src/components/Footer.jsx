@@ -16,6 +16,12 @@ Refund Policy
 |
 Store Information
 
+
+      <br/><br/>
+      <div>
+        ©2026. FoodByAma. All Rights Reserved.
+      </div>
+
     </footer>
   )
 }

@@ -71,7 +71,7 @@ const BottomNav = () => {
           Home
         </NavLink>
 
-        <NavLink to="/menu" className={({ isActive }) => `flex flex-col items-center text-[11px] text-center hover:text-primary ${ isActive ? "text-primary" : "text-dark/80" }` }>
+        <NavLink to="/search" className={({ isActive }) => `flex flex-col items-center text-[11px] text-center hover:text-primary ${ isActive ? "text-primary" : "text-dark/80" }` }>
           {/* <RiFileList2Fill className="text-xl" /> */}
           {/* <FaBowlFood className='text-xl' /> */}
           <Search size={21} strokeWidth={1.5} />

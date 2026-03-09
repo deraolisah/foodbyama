@@ -34,10 +34,10 @@ const Cart = () => {
           <h2 className="text-2xl font-bold mb-2">Your Cart is Empty</h2>
           <p className="text-gray-600 mb-6">Add some delicious items from our menu!</p>
           <Link 
-            to="/menu" 
+            to="/shop" 
             className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
           >
-            Browse Menu
+            Shop Now
           </Link>
         </div>
       </div>

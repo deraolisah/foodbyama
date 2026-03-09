@@ -101,39 +101,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Search Bar - Fixed at top when open */}
-        {/* {searchOpen && (
-          <div className="fixed top-0 left-0 w-full bg-dark shadow-md z-500 animate-slide-down">
-            <div className="container py-3">
-              <div className="relative">
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder="Search for dishes, soups, stews..."
-                  className="w-full p-4 py-2.5 pr-12 rounded-lg bg-light/10 text-light placeholder-light/70 border border-light/20 focus:outline-none"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                />
-                <button
-                  onClick={toggleSearch}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-light/70 hover:text-light"
-                >
-                  <IoMdClose className="text-xl" />
-                </button>
-              </div>
-              
-              {searchQuery && (
-                <SearchResults 
-                  query={searchQuery} 
-                  onItemSelect={() => {
-                    toggleSearch();
-                  }} 
-                />
-              )}
-            </div>
-          </div>
-        )} */}
+  
 
         {/* Navigation Menu */}
         {/* <div className="container flex items-end justify-end !relative overflow-x-hidden">
@@ -166,13 +134,7 @@ const Navbar = () => {
         </div> */}
       </nav>
 
-      {/* Backdrop overlay when search is open */}
-      {/* {searchOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-45"
-          onClick={toggleSearch}
-        />
-      )} */}
+  
 
       {/* Backdrop overlay when menu is open - click to close */}
       {/* {menuOpen && (

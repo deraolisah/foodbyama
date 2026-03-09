@@ -17,7 +17,7 @@ const Categories = () => {
 
 
   return (
-    <div className={`container sticky top-12 z-40 bg-light border-y border-transparent transition-all duration-300 ${scrolled ? "border-gray-200/80!" : ""}`}>
+    <div className={`container sticky top-12 z-40 bg-light border-b border-transparent transition-all duration-300 ${scrolled ? "border-gray-200/80!" : ""}`}>
       <div className="flex items-center md:justify-center overflow-y-hidden overflow-x-auto gap-1.5 h-12 scrollbar-hidden relative!">
         {categories.map((category) => (
           <button

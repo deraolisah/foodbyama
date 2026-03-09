@@ -74,14 +74,14 @@ const ItemModal = ({ item, isOpen, onClose }) => {
     <>
       {/* Backdrop - always in DOM but conditionally visible */}
       <div 
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 cursor-pointer transition-all duration-400 ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-100 cursor-pointer transition-all duration-400 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
       />
       
       {/* Modal - always in DOM but conditionally visible */}
-      <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-150 transition-all duration-400 ${
         isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-10 pointer-events-none"
       }`}>
         <div className="w-full !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">

@@ -18,20 +18,8 @@ const Header = () => {
     setIsmenuOpen(!isMenuOpen);
   }
 
-
-  // useEffect(() => {
-  //   // Sticky Header
-  //   const handleScroll = () => {
-  //     window.scrollY > 240 ? setIsSticy(true) : setIsSticy(false);
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-  //   // return () => window.removeEventListener('scroll', handleScroll);
-  // }, []);
-
-
   return (
-    <nav className={`sticky z-100 bg-white container flex items-center justify-between h-12 py-2 top-0 transition-all duration-500`}>
+    <nav className={`sticky border-b border-gray-200 z-90 bg-white container flex items-center justify-between h-12 py-2 top-0 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
@@ -69,7 +57,10 @@ const Header = () => {
       </div>
 
 
-      <ul className={` w-full h-full flex-col items-center justify-center gap-4 fixed inset-0 z-50 bg-light text-dark  ${isMenuOpen ? "flex" : "hidden" } `}>
+      <ul className={`fixed inset-0 w-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-4 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+        isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
+      }`}>
+      {/* <ul className={` w-full h-full flex-col items-center justify-center gap-4 fixed inset-0 z-50 bg-light text-dark  ${isMenuOpen ? "flex" : "hidden" } `}> */}
         {navLinks.map((item) => (
           <li key={item.name}>
             <Link to={item.href}> {item.name} </Link>

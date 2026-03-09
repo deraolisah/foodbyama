@@ -73,7 +73,7 @@ const Account = () => {
       <div className="container py-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Please Log In</h2>
         <p className="mb-6">You need to be logged in to view your account.</p>
-        <Link to="/auth" className="bg-primary text-white px-6 py-3 rounded-lg font-semibold">
+        <Link to="/login" className="bg-primary text-white px-6 py-3 rounded-lg font-semibold">
           Login / Sign Up
         </Link>
       </div>

@@ -19,10 +19,11 @@ const About = () => {
           We use fresh, locally-sourced ingredients to create our dishes, and we're always experimenting with new flavor combinations to keep things interesting. Whether you're vegan, gluten-free, or just looking for a tasty meal, we've got something for you.
 
           <br/><br/>
-          Thanks for checking us out! We can't wait to serve you.
-          
+          Join us on this journey, and let's create something truly special together.
+
           <br/><br/>
-          You can leave us a feedback about your order below, we would appreciate your honest review... Thank you.
+          Thanks for checking us out! We can't wait to serve YOU.
+
         </p>
       </div>
     </div>

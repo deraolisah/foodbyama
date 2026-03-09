@@ -74,15 +74,51 @@ export const MenuProvider = ({ children }) => {
     return [...regularItems, ...weeklyItems];
   };
 
+  // const searchItems = (query) => {
+  //   const allItems = getAllItems();
+  //   return allItems.filter(item => 
+  //     item.name.toLowerCase().includes(query.toLowerCase()) ||
+  //     (item.category && item.category.toLowerCase().includes(query.toLowerCase())) ||
+  //     (item.desc && item.desc.toLowerCase().includes(query.toLowerCase()))
+  //   );
+  // };
+
+  // const searchItems = (query) => {
+  //   const allItems = getAllItems();
+  //   return allItems.filter(item => {
+  //     // Add safety checks for each property
+  //     const nameMatch = item.name && item.name.toLowerCase().includes(query.toLowerCase());
+  //     const categoryMatch = item.category && item.category.toLowerCase().includes(query.toLowerCase());
+  //     const descMatch = item.desc && item.desc.toLowerCase().includes(query.toLowerCase());
+      
+  //     return nameMatch || categoryMatch || descMatch;
+  //   });
+  // };
+
+ // contexts/MenuContext.jsx
   const searchItems = (query) => {
+    if (!query || query.trim() === '') return [];
+    
     const allItems = getAllItems();
-    return allItems.filter(item => 
-      item.name.toLowerCase().includes(query.toLowerCase()) ||
-      (item.category && item.category.toLowerCase().includes(query.toLowerCase())) ||
-      (item.desc && item.desc.toLowerCase().includes(query.toLowerCase()))
-    );
+    const searchTerm = query.toLowerCase().trim();
+    
+    return allItems.filter(item => {
+      if (!item) return false;
+      
+      try {
+        const nameMatch = item.name?.toLowerCase().includes(searchTerm) || false;
+        const categoryMatch = item.category?.toLowerCase().includes(searchTerm) || false;
+        const descMatch = item.desc?.toLowerCase().includes(searchTerm) || false;
+        
+        return nameMatch || categoryMatch || descMatch;
+      } catch (error) {
+        console.warn('Error searching item:', item);
+        return false;
+      }
+    });
   };
 
+  
   return (
     <MenuContext.Provider value={{ 
       categories, 
