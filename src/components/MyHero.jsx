@@ -1,7 +1,7 @@
 import React from 'react';
 import bgHero from "../assets/hero-bg.png";
 
-const Hero = () => {
+const MyHero = () => {
   return (
     <div className="container px-8! h-60! md:h-80! text-white flex flex-col items-center justify-center" style={{
       backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url(${bgHero})`,
@@ -17,4 +17,4 @@ const Hero = () => {
   )
 }
 
-export default Hero;
+export default MyHero;
