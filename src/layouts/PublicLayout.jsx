@@ -11,9 +11,9 @@ const PublicLayout = () => {
   return (
     <div className="pb-16 md:pb-0">
       <Header />
-      {/* <WelcomePopup /> */}
+      <WelcomePopup />
       <Chatbot />
-      <main className='min-h-screen flex flex-col'>
+      <main className='min-h-100 flex flex-col'>
         <Outlet />
       </main>
       <Footer />

@@ -87,7 +87,7 @@ const Shop = () => {
               <img 
                 src={item.image || placeholderImg} 
                 alt={item.name}
-                className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                className="w-20 h-20 object-cover rounded-lg shrink-0"
               />
               
               <div className="flex-1">

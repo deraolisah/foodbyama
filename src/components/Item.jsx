@@ -9,13 +9,13 @@ const Item = ({ item, index, handleItemClick }) => {
       className="bg-white rounded-xl shadow-sm border border-dark/10 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
       onClick={() => handleItemClick(item)}
     >
-      <div className="aspect-square overflow-hidden relative rounded-b-xl">
+      <div className="aspect-4/5 overflow-hidden relative rounded-b-xl">
         <img 
           src={item.image || placeholder} 
           alt={item.name}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
-        <h3 className="w-full h-fit absolute bottom-0 bg-gradient-to-b from-transparent via-dark to-dark backdrop-blur-xs rounded-b-xl py-2.5 px-4 font-semibold text-light text-sm">{item.name}</h3>
+        <h3 className="w-full h-fit absolute bottom-0 bg-linear-to-b from-transparent via-dark to-dark backdrop-blur-xs rounded-b-xl py-2.5 px-4 font-semibold text-light text-sm">{item.name}</h3>
       </div>
       
       <div className="py-2 md:py-2.5 px-4">

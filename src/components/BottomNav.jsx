@@ -18,13 +18,13 @@ const BottomNav = () => {
   const cartItemsCount = getCartItemsCount();
 
   return (
-    <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 text-center bg-light text-dark border-t border-dark/30 flex md:hidden items-center justify-center '>
+    <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 text-center bg-light text-dark border-t border-gray-300 flex md:hidden items-center justify-center '>
       <ul className='container h-full flex items-center justify-between px-5!'>
         <NavLink to="/" className="relative h-full text-[11px] text-center">
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <House size={20} strokeWidth={1.5} />
-              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
+              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               Home
             </div>
           )}
@@ -34,7 +34,7 @@ const BottomNav = () => {
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <Search size={21} strokeWidth={1.5} />
-              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
+              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               Search
             </div>
           )}
@@ -44,7 +44,7 @@ const BottomNav = () => {
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <Soup size={21} strokeWidth={1.5} />
-              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
+              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               Shop
             </div>
           )}
@@ -54,7 +54,7 @@ const BottomNav = () => {
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <ShoppingCart size={21} strokeWidth={1.5} />
-              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
+              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               {/* Cart badge */}
               {cartItemsCount > 0 && (
                 <span className="absolute top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
@@ -70,7 +70,7 @@ const BottomNav = () => {
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <UserRound size={21} strokeWidth={1.5} />
-              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
+              {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               Account
             </div>
           )}

@@ -34,11 +34,11 @@ const WelcomePopup = () => {
   // Don't show anything if popup is closed and user has seen it
   if (!isOpen && hasSeenPopup) {
     return (
-      <div className="fixed bottom-36 left-0 w-full h-full z-40 pointer-events-none">
+      <div className="fixed bottom-34 md:bottom-26 left-0 w-full h-full z-40 pointer-events-none">
         <div className="container h-full flex items-end justify-end relative">
           <button
             onClick={handleReopen}
-            className="pointer-events-auto mr-1.5 z-50 w-11 h-11 bg-primary rounded-full shadow-xl flex items-center justify-center text-white hover:bg-primary/90 transition-all duration-300 hover:scale-110 cursor-pointer group"
+            className="pointer-events-auto mr-0.5 z-50 w-11 h-11 bg-primary rounded-full shadow-xl flex items-center justify-center text-white hover:bg-primary/90 transition-all duration-300 hover:scale-110 cursor-pointer group"
             title="How to order"
             >
             <FaInfoCircle className="text-xl" />
@@ -66,7 +66,7 @@ const WelcomePopup = () => {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-bl from-primary to-primary/60 text-white p-6 rounded-t-2xl relative">
+          <div className="bg-linear-to-bl from-primary to-primary/60 text-white p-6 rounded-t-2xl relative">
             <button
               onClick={handleClose}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors cursor-pointer"
@@ -100,42 +100,42 @@ const WelcomePopup = () => {
               
               <ol className="space-y-3 text-sm">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">1</span>
                   <span> Tap on any dish you'd love to enjoy. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">2</span>
                   <span> Hit the <strong>“Add to Cart”</strong> button at the bottom corner of the product. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">3</span>
                   <span> Head to the <strong>Cart page</strong> to confirm your selected items. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">4</span>
                   <span> Click the <strong>“Proceed to Checkout”</strong> button to continue. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">5</span>
                   <span> Fill in your <strong>delivery address</strong> and <strong>phone number</strong>. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">6</span>
                   <span> Click the <strong>“Pay”</strong> button and complete your payment securely. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">7</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">7</span>
                   <span> Share your <strong>payment receipt</strong> and a <strong>screenshot of your order</strong> with us via WhatsApp. </span>
                 </li>
                 
                 <li className="flex items-start gap-3 mt-4">
-                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">8</span>
+                  <span className="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">8</span>
                   <span> Your order will be delivered to your doorstep. 🚚✨ </span>
                 </li>
               </ol>

@@ -42,7 +42,7 @@ const ItemGrid = () => {
   return (
     <div className="container pt-3 pb-12">
       <div>
-        <h2 className="text-2xl font-bold text-center mb-4 md:mb-8">
+        <h2 className="text-2xl font-bold text-center mb-4 md:mb-6">
           {selectedCategory}
         </h2>
 
@@ -51,7 +51,7 @@ const ItemGrid = () => {
             No items available in this category
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
             {displayItems.map((item, index) => (
               <Item item={item} index={index} handleItemClick={handleItemClick} />
             ))}
