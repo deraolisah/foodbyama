@@ -41,6 +41,11 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (item, quantity = 1) => {
+    // Check if item exists before updating state
+    const itemExists = cartItems.some(cartItem => 
+      generateItemId(cartItem) === generateItemId(item)
+    );
+    
     setCartItems(prevItems => {
       const itemId = generateItemId(item);
       const existingItemIndex = prevItems.findIndex(cartItem => 
@@ -54,10 +59,6 @@ export const CartProvider = ({ children }) => {
           ...updatedItems[existingItemIndex],
           quantity: newQuantity
         };
-        
-        // toast(`Updated ${item.name} quantity to ${newQuantity}`, 'success');
-        toast.success(`Updated ${item.name} quantity to ${newQuantity}`);
-
         return updatedItems;
       } else {
         const newItem = {
@@ -67,24 +68,28 @@ export const CartProvider = ({ children }) => {
           unitPrice: extractPrice(item.price),
           size: item.size || 'Standard'
         };
-        
-        // toast(`Added ${item.name} to cart`, 'success');
-        toast.success(`Added ${item.name} to cart`);
         return [...prevItems, newItem];
       }
     });
+
+    // Show appropriate toast based on whether item existed
+    if (itemExists) {
+      toast.success(`Updated ${item.name} quantity`);
+    } else {
+      toast.success(`Added ${item.name} to cart`);
+    }
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems(prevItems => {
-      const removedItem = prevItems.find(item => item.id === itemId);
-      if (removedItem) {
-        // toast(`Removed ${removedItem.name} from cart`, 'warning');
-        toast.warning(`Removed ${removedItem.name} from cart`);
-
-      }
-      return prevItems.filter(item => item.id !== itemId);
-    });
+    // Find the item first (outside of setState)
+    const removedItem = cartItems.find(item => item.id === itemId);
+    
+    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+    
+    // Show toast after state update (or before, doesn't matter as long as it's outside setState)
+    if (removedItem) {
+      toast.warning(`Removed ${removedItem.name} from cart`);
+    }
   };
 
   const updateQuantity = (itemId, newQuantity) => {

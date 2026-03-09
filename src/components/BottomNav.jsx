@@ -56,11 +56,11 @@ const BottomNav = () => {
               <ShoppingCart size={21} strokeWidth={1.5} />
               {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-b-full" />}
               {/* Cart badge */}
-                {cartItemsCount > 0 && (
-                  <span className="absolute top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
-                    {cartItemsCount}
-                  </span>
-                )}
+              {cartItemsCount > 0 && (
+                <span className="absolute top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                  {cartItemsCount}
+                </span>
+              )}
               Cart
             </div>
           )}

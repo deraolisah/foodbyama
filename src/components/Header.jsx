@@ -3,8 +3,12 @@ import logo from "../assets/favicon.png";
 import { href, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
+import { useCart } from '../contexts/CartContext';
 
 const Header = () => {
+  const { getCartItemsCount } = useCart();
+  const cartItemsCount = getCartItemsCount();
+
   const navLinks = [
     {name: "Home", href: "/" },
     {name: "About", href: "/about" },
@@ -51,7 +55,15 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           <Link title='Shop' to="/shop"> <Soup size={20} strokeWidth={1.5} /> </Link>
           <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link>
-          <Link title='Cart' to="/cart"> <ShoppingCart size={20} strokeWidth={1.5} /> </Link>
+          <Link title='Cart' to="/cart"> 
+            <ShoppingCart size={20} strokeWidth={1.5} /> 
+            {/* Cart badge */}
+            {cartItemsCount > 0 && (
+              <span className="absolute top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                {cartItemsCount}
+              </span>
+            )}
+          </Link>
           <Link title='Account' to="/account"> <UserRound size={20} strokeWidth={1.5} /> </Link>
         </div>
       </div>
