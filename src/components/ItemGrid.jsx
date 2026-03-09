@@ -40,20 +40,13 @@ const ItemGrid = () => {
   ]
 
   return (
-    <div className="container pt-3 pb-8">
-      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-        {items.map((item, index) => (
-          <Item item={item} />
-        ))}
-      </div> */}
+    <div className="container pt-3 pb-12">
+      <div>
+        <h2 className="text-2xl font-bold text-center mb-4 md:mb-8">
+          {selectedCategory}
+        </h2>
 
-      {/* Products Grid */}
-     <div className="">
-      <h2 className="text-2xl font-bold text-center mb-8">
-       {selectedCategory}
-         </h2>
-
-         {displayItems.length === 0 ? (
+        {displayItems.length === 0 ? (
           <div className="text-center text-gray-500">
             No items available in this category
           </div>
@@ -72,7 +65,6 @@ const ItemGrid = () => {
         onClose={() => setIsModalOpen(false)}
       />
     </div>
-    // </div>
   )
 }
 

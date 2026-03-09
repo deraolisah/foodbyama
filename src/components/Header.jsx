@@ -19,7 +19,7 @@ const Header = () => {
   }
 
   return (
-    <nav className={`sticky border-b border-gray-200 z-90 bg-white container flex items-center justify-between h-12 py-2 top-0 transition-all duration-500`}>
+    <nav className={`sticky border-b border-gray-200 z-90 bg-white container flex items-center justify-between min-h-12 py-2 top-0 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
@@ -30,7 +30,7 @@ const Header = () => {
 
       <div className="w-full h-full">
         <Link to="/" className="w-full h-full text-dark flex items-center justify-start md:justify-center gap-2 text-xs font-medium z-60 relative">
-          <img src={logo} alt='' className="w-fit mr-auto h-full object-cover rounded-full" />
+          <img src={logo} alt='' className="w-9 h-9 object-cover rounded-full" />
           FoodByAma
         </Link>
       </div>

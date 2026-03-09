@@ -22,7 +22,7 @@ const Chatbot = () => {
       <div className="container flex justify-end items-center relative">
         {/* WhatsApp Icon */}
         <button onClick={handleOpen} className="z-40 pointer-events-auto cursor-pointer bg-[#25d366] p-2.5 rounded-full shadow">
-          <FaWhatsapp className='text-light text-2xl' />
+          <FaWhatsapp className='text-light text-3xl' />
         </button>
 
         {/* Notification Dot */}

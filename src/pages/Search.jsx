@@ -21,22 +21,22 @@ const Search = () => {
   };
 
   return (
-    <div className="container py-8">
-      <h1 className="text-2xl font-bold mb-6">Search Menu</h1>
+    <div className="container py-4">
+      <h1 className="text-2xl font-bold mb-6 text-center">Search Menu</h1>
       
       <form onSubmit={handleSearch} className="mb-8">
-        <div className="relative max-w-2xl">
+        <div className="relative max-w-2xl mx-auto">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for dishes, soups, stews..."
-            className="w-full p-4 pl-12 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
+            className="w-full p-4 pl-12 pr-4 rounded-xl border border-gray-300 focus:outline-none focus:border-primary"
           />
           <IoMdSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
           <button
             type="submit"
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90"
           >
             Search
           </button>
