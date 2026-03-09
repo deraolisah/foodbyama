@@ -64,7 +64,7 @@ const BottomNav = () => {
 
   return (
     <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 p-2 w-full h-16 text-center bg-light text-dark border-t border-dark/30 flex md:hidden'>
-      <ul className='container h-full flex items-center justify-between px-6!'>
+      <ul className='container h-full flex items-center justify-between px-5!'>
         <NavLink to="/" className={({ isActive }) => `flex flex-col items-center text-[11px] text-center hover:text-primary ${ isActive ? "text-primary" : "text-dark/80" }` }>
           {/* <GoHomeFill className="text-xl" /> */}
           <House size={21} strokeWidth={1.5} />

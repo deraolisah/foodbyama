@@ -30,7 +30,7 @@ const Header = () => {
 
       <div className="w-full h-full">
         <Link to="/" className="w-full h-full text-dark flex items-center justify-start md:justify-center gap-2 text-xs font-medium z-60 relative">
-          <img src={logo} alt='' className="w-fit h-full object-cover rounded-full" />
+          <img src={logo} alt='' className="w-fit mr-auto h-full object-cover rounded-full" />
           FoodByAma
         </Link>
       </div>
