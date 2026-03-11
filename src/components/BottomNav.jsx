@@ -19,10 +19,10 @@ const BottomNav = () => {
 
   return (
     <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 text-center bg-light text-dark border-t border-gray-300 flex md:hidden items-center justify-center '>
-      <ul className='container h-full flex items-center justify-between px-5!'>
-        <NavLink to="/" className="relative h-full text-[11px] text-center">
+      <ul className='container h-full flex items-center justify-between px-6!'>
+        <NavLink to="/" className="relative h-full text-[11px] text-center flex items-center justify-center">
           {({ isActive }) => (
-            <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
+            <div className={`w-full h-fit flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <House size={20} strokeWidth={1.5} />
               {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full" />}
               Home
@@ -30,7 +30,7 @@ const BottomNav = () => {
           )}
         </NavLink>
 
-        <NavLink to="/search" className="relative h-full text-[11px] text-center">
+        {/* <NavLink to="/search" className="relative h-full text-[11px] text-center">
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <Search size={21} strokeWidth={1.5} />
@@ -38,7 +38,7 @@ const BottomNav = () => {
               Search
             </div>
           )}
-        </NavLink>
+        </NavLink> */}
 
         <NavLink to="/shop" className="relative h-full text-[11px] text-center">
           {({ isActive }) => (

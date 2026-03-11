@@ -6,6 +6,7 @@ import { useMenu } from '../contexts/MenuContext';
 import placeholderImg from "../assets/placeholder.png";
 import ItemModal from '../components/ItemModal';
 import Item from '../components/Item';
+import { Filter, FilterIcon, FilterX, List, ListFilter, Search, SortDesc } from 'lucide-react';
 
 const Shop = () => {
   const { itemsByCategory, categories, weeklyMenu, getUniqueProducts } = useMenu();
@@ -163,24 +164,30 @@ const Shop = () => {
         {/* Filters Sidebar - Left */}
         <div className={`
           lg:w-72 shrink-0
-          ${isFilterOpen ? 'block' : 'hidden lg:block'}
-          fixed top-12 lg:static inset-0 z-150 lg:z-auto bg-white/60 backdrop-blur-xs lg:bg-transparent py-8 p-4 lg:p-0
+          ${isFilterOpen ? 'flex md:block' : 'hidden lg:block'}
+          fixed top-29 left-0 lg:static lg:top-none inset-0 z-150 lg:z-auto bg-white lg:bg-transparent p-4 pt-0 lg:p-0
           overflow-y-auto lg:overflow-visible
           max-h-screen lg:max-h-none
           `}>
           {/* Mobile Close Button */}
-          <button 
+          {/* <button 
             onClick={() => setIsFilterOpen(false)}
-            className="lg:hidden absolute top-4 right-4 text-2xl"
+            className="lg:hidden top-6 right-8 text-2xl"
+            >
+            ×
+          </button> */}
+        {/* </div> */}
+
+        <div className="w-full bg-white md:rounded-lg shadow-sm border border-dark/10 p-4 lg:sticky lg:top-22 overflow-hidden">
+          {/* Filters Header */}
+          <div className="flex items-center justify-between mb-4">
+            <button 
+            onClick={() => setIsFilterOpen(false)}
+            className="lg:hidden top-6 right-8 text-2xl cursor-pointer"
             >
             ×
           </button>
-        {/* </div> */}
-
-        <div className="bg-white rounded-lg shadow-sm border border-dark/10 p-4 lg:sticky lg:top-22">
-          {/* Filters Header */}
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-lg">Filters</h3>
+            <h3 className="hidden md:flex font-semibold text-lg">Filters</h3>
             {activeFilterCount > 0 && (
               <button 
                 onClick={clearFilters}
@@ -331,15 +338,23 @@ const Shop = () => {
         {/* Main Content - Right */}
         <div className="flex-1">
           {/* Sort and Results Count */}
-          <div className="sticky w-[calc([100% + 12px])] top-13 z-20 flex justify-between items-center gap-4 py-4 bg-white">
+          <div className="sticky top-13 z-20 flex justify-between items-center gap-2 bg-white h-16">
+            <button className="flex items-center gap-2 p-2.5 text-sm bg-gray-100 rounded-md cursor-pointer">
+              <Search size={16} />
+              {/* <span> Search </span> */}
+            </button>
             {/* Mobile Filter Button */}
+            <div className="flex-1">
+
             <button 
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md"
+              className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 rounded-md cursor-pointer"
+              title='Filter'
               >
-              <FaFilter />
+              <ListFilter size={16} />
               <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
             </button>
+                </div>
 
             <p className="hidden lg:flex text-sm text-gray-600">
               {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
@@ -349,7 +364,7 @@ const Shop = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-white border border-dark/10 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+                className="appearance-none bg-white border border-dark/10 text-sm rounded-lg px-4 py-2 pr-10 focus:outline-none focus:border-primary cursor-pointer"
                 >
                 <option value="alphabetical">Sort: Alphabetically A-Z</option>
                 <option value="price-low">Sort: Price: Low to High</option>
