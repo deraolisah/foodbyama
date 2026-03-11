@@ -21,6 +21,7 @@ import Login from '../pages/Login.jsx';
 // 
 import NotFound from '../pages/NotFound.jsx';
 import Search from '../pages/Search.jsx';
+import Feedback from '../pages/Feedback.jsx';
 
 const AppRoutes = () => {
   return (
@@ -37,6 +38,7 @@ const AppRoutes = () => {
           <Route path="/order-success" element={<OrderSuccess />} />
           <Route path="/orders/:orderId" element={<Orders />} />
           <Route path='/search' element={<Search /> } />
+          <Route path="/feedback" element={<Feedback />} />
 
 
           <Route path='login' element={<Login />} />

@@ -148,20 +148,6 @@ const Home = () => {
       <MyHero />
       <Categories />
       <ItemGrid />
-      {/* <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1>
-      <h1 className="text-7xl text-center"> Hello World </h1> */}
     </>
   )
 }

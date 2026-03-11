@@ -54,7 +54,7 @@ const Cart = () => {
 
         <div className="bg-white rounded-xl shadow-sm border border-dark/10 overflow-hidden">
           {cartItems.map((item) => (
-            <div key={item.id} className="flex items-center gap-2 p-4 border-b border-dark/10 last:border-b-0">
+            <div key={item.id} className="flex flex-wrap items-center gap-4 p-4 border-b border-dark/10 last:border-b-0">
               <img 
                 src={item.image || placeholder} 
                 alt={item.name}
@@ -62,7 +62,7 @@ const Cart = () => {
                 onClick={() => handleItemClick(item)}
               />
               
-              <div className="flex-1 truncate">
+              <div className="flex-1 flex flex-col gap-2">
                 <h3 
                   className="font-semibold hover:text-primary cursor-pointer transition-colors overflow-hidden truncate group"
                   onClick={() => handleItemClick(item)}
@@ -73,7 +73,7 @@ const Cart = () => {
                 {/* <p className="text-sm text-gray-600">
                   Size: {item.size}
                 </p> */}
-                <p className="text-gray-500 text-xs !text-wrap truncate mt-1">
+                <p className="text-gray-500 text-xs text-wrap! truncate">
                   {formatPrice(item.unitPrice)} × {item.quantity} = 
                   <span className="text-primary font-bold"> {formatPrice(getItemTotal(item))} </span>
                 </p>
@@ -92,7 +92,7 @@ const Cart = () => {
                   >
                     <FaMinus size={12} />
                   </button>
-                  <span className="px-3 font-medium min-w-[2rem] text-center">
+                  <span className="px-3 font-medium min-w-8 text-center">
                     {item.quantity}
                   </span>
                   <button 
@@ -129,7 +129,7 @@ const Cart = () => {
 
             <div className="flex flex-col-reverse sm:flex-row gap-3 flex-wrap">
               <button 
-                onClick={()=> navigate("/")}
+                onClick={()=> navigate("/shop")}
                 className="flex-1 py-3 bg-primary/10 rounded-lg text-primary hover:bg-gray-50 transition cursor-pointer text-nowrap">
                 Continue Shopping
               </button>

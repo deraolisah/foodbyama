@@ -6,8 +6,8 @@ const About = () => {
       
       {/*  */}
       <div className='container py-8'>
-        <h2 className='text-xl md:text-2xl font-semibold'> Welcome to Food By Ama! 🎉 </h2>
-        <br/>
+        <h2 className='text-xl md:text-2xl font-semibold mb-4'> Welcome to Food By Ama! 🎉 </h2>
+        {/* <br/> */}
         {/* We're a food business that's all about good food and good vibes.  */}
         <p className="font-light">
           We believe that eating healthy doesn't have to be boring, and we're here to prove it!
@@ -23,7 +23,11 @@ const About = () => {
 
           <br/><br/>
           Thanks for checking us out! We can't wait to serve YOU.
+        </p>
 
+        <br/><br/>
+        <p>
+          Need to speak with us? If you need help with an order or a direct response, please visit our Help section for Contact Us and Customer Services.
         </p>
       </div>
     </div>

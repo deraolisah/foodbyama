@@ -84,9 +84,9 @@ const ItemModal = ({ item, isOpen, onClose }) => {
       <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-150 transition-all duration-400 ${
         isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-10 pointer-events-none"
       }`}>
-        <div className="w-full !px-0 bg-white rounded-t-3xl max-h-[80svh] overflow-y-auto scrollbar-hidden">
+        <div className="w-full px-0! bg-white rounded-t-3xl max-h-[88svh] overflow-y-auto scrollbar-hidden">
           {/* Header */}
-          <div className="w-full relative bg-gradient-to-bl from-primary/80 to-primary p-4 rounded-t-2xl">
+          <div className="w-full relative bg-linear-to-bl from-primary/80 to-primary p-4 rounded-t-2xl">
             <button
               onClick={onClose}
               className="absolute top-4 right-4 p-2 rounded-full bg-white text-dark hover:bg-gray-100 transition cursor-pointer"
@@ -136,7 +136,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
                     <button
                       key={index}
                       onClick={() => setSelectedSizeIndex(index)}
-                      className={`flex-shrink-0 px-4 py-2 rounded-lg border-2 transition-all cursor-pointer ${
+                      className={`shrink-0 px-4 py-2 rounded-lg border-2 transition-all cursor-pointer ${
                         selectedSizeIndex === index
                           ? 'border-primary bg-primary/10 text-primary'
                           : 'border-gray-300'

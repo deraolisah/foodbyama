@@ -34,7 +34,7 @@ const WelcomePopup = () => {
   // Don't show anything if popup is closed and user has seen it
   if (!isOpen && hasSeenPopup) {
     return (
-      <div className="fixed bottom-34 md:bottom-26 left-0 w-full h-full z-40 pointer-events-none">
+      <div className="hidden fixed bottom-34 md:bottom-26 left-0 w-full h-full z-40 pointer-events-none">
         <div className="container h-full flex items-end justify-end relative">
           <button
             onClick={handleReopen}
@@ -57,7 +57,7 @@ const WelcomePopup = () => {
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 cursor-pointer"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-100 hidden items-center justify-center p-4 cursor-pointer"
         onClick={handleClose}
       >
         {/* Popup Content */}

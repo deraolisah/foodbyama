@@ -260,6 +260,114 @@ const weeklyMenu = {
       image: "", // Fixed typo: was "iamge"
       category: "Lunch Packs" 
     }
+  ],
+  Tuesday: [
+    { 
+      name: "Yam Porridge with Smoked Fish",
+      desc: "Hearty yam porridge with smoked fish",
+      sizes: [
+        { size: "Standard", price: "₦3,500" }
+      ],
+      category: "Lunch Packs" 
+    },
+    { 
+      name: "Jollof Spaghetti with Chicken",
+      desc: "Jollof spaghetti with chicken",
+      sizes: [
+        { size: "Standard", price: "₦4,000" }
+      ],
+      category: "Lunch Packs" 
+    }
+  ],
+  Wednesday: [
+    { 
+      name: "White Rice with Stew and Beef",
+      desc: "White rice with stew and beef",
+      sizes: [
+        { size: "Standard", price: "₦3,800" }
+      ],
+      category: "Lunch Packs" 
+    },
+    { 
+      name: "Fried Rice with Plantain and Fish",
+      desc: "Fried rice with plantain and fish",
+      sizes: [
+        { size: "Standard", price: "₦4,200" }
+      ],
+      category: "Lunch Packs" 
+    }
+  ],
+  Thursday: [
+    { 
+      name: "Coconut Rice with Chicken",
+      desc: "Coconut rice with chicken",
+      sizes: [
+        { size: "Standard", price: "₦4,500" }
+      ],
+      category: "Lunch Packs" 
+    },
+    { 
+      name: "Ofada Rice with Assorted Meat",
+      desc: "Ofada rice with assorted meat",
+      sizes: [
+        { size: "Standard", price: "₦4,800" }
+      ],
+      category: "Lunch Packs" 
+    }
+  ],
+  Friday: [
+    { 
+      name: "Eba with Egusi Soup",
+      desc: "Eba with egusi soup",
+      sizes: [
+        { size: "Standard", price: "₦3,200" }
+      ],
+      category: "Swallows" 
+    },
+    { 
+      name: "Pounded Yam with Ogbono Soup",
+      desc: "Pounded yam with ogbono soup",
+      sizes: [
+        { size: "Standard", price: "₦3,500" }
+      ],
+      category: "Swallows" 
+    }
+  ],
+  Saturday: [
+    { 
+      name: "Special Jollof Rice Party Pack", 
+      desc: "Special jollof rice party pack",
+      sizes: [
+        { size: "Standard", price: "₦12,000" }
+      ], 
+      category: "Food Platters" 
+    },
+    { 
+      name: "Small Chops Platter",
+      desc: "Small chops platter",
+      sizes: [
+        { size: "Standard", price: "₦8,500" }
+      ],
+      category: "Food Platters" 
+    }
+  ],
+  Sunday: [
+    { 
+      name: "Sunday Special Rice and Stew",
+      desc: "Sunday special rice and stew",
+      sizes: [
+        { size: "Standard", price: "₦4,000" }
+      ], 
+      category: "Lunch Packs" 
+    },
+    { 
+      name: "Sunday Special Soup",
+      desc: "Sunday special soup",
+      sizes: [
+        { size: "Standard", price: "₦3,800" }
+      ], 
+      category: "Soups" 
+    }
   ]
 };
 

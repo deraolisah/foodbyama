@@ -6,7 +6,7 @@ const Item = ({ item, index, handleItemClick }) => {
   return (
     <div 
       key={`${item.name}-${index}`}
-      className="bg-white rounded-xl shadow-sm border border-dark/10 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+      className="bg-white rounded-xl border border-dark/10 overflow-hidden transition-shadow cursor-pointer group"
       onClick={() => handleItemClick(item)}
     >
       <div className="aspect-4/5 overflow-hidden relative rounded-b-xl">

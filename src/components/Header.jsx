@@ -51,7 +51,9 @@ const Header = () => {
 
       <div className="w-full flex items-center justify-end gap-4">
         {isMenuOpen ? (
-          <X className='z-100 cursor-pointer' size={20} strokeWidth={1.5} onClick={() => {toggleMenu()}} />
+          <button className="flex md:hidden cursor-pointer z-100 rounded-full transition-all duration-300 -mr-1">
+            <X size={20} strokeWidth={1.5} onClick={() => {toggleMenu()}} />
+          </button>
         ) : (
           <button className="flex md:hidden flex-col space-y-1 cursor-pointer rounded-full transition-all duration-300 z-60 group p-2 -mr-2" type='button' onClick={() => {toggleMenu()}}>
             {/* <Menu /> */}
@@ -69,7 +71,7 @@ const Header = () => {
             {openHelp && (
               <div className="border border-gray-300 bg-light shadow-md text-xs w-fit rounded-lg absolute right-0 flex flex-col overflow-hidden">
                 <span className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> How To Order </span>
-                <span className="p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </span>
+                <Link to="/feedback" className="p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </Link>
               </div>
             )}
             </div>
@@ -88,7 +90,7 @@ const Header = () => {
       </div>
 
 
-      <ul className={`fixed inset-0 w-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-4 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <ul className={`fixed inset-0 w-full max-w-2xl mx-auto flex md:hidden flex-col items-center justify-center gap-4 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
       }`}>
         {navLinks.map((item) => (
