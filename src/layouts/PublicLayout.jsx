@@ -13,7 +13,7 @@ const PublicLayout = () => {
       <Header />
       <WelcomePopup />
       <Chatbot />
-      <main className='min-h-100 flex flex-col'>
+      <main className='min-h-svh flex flex-col'>
         <Outlet />
       </main>
       <Footer />

@@ -19,7 +19,7 @@ const BottomNav = () => {
 
   return (
     <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 text-center bg-light text-dark border-t border-gray-300 flex md:hidden items-center justify-center '>
-      <ul className='container h-full flex items-center justify-between px-6!'>
+      <ul className='container h-full flex items-center justify-evenly px-0!'>
         <NavLink to="/" className="relative h-full text-[11px] text-center flex items-center justify-center">
           {({ isActive }) => (
             <div className={`w-full h-fit flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>

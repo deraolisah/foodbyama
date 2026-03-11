@@ -366,9 +366,9 @@ const Shop = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="appearance-none bg-white border border-dark/10 text-sm rounded-lg px-4 py-2 pr-10 focus:outline-none focus:border-primary cursor-pointer"
                 >
-                <option value="alphabetical">Sort: Alphabetically A-Z</option>
-                <option value="price-low">Sort: Price: Low to High</option>
-                <option value="price-high">Sort: Price: High to Low</option>
+                <option value="alphabetical"> Alphabetically A-Z</option>
+                <option value="price-low"> Price: Low to High</option>
+                <option value="price-high"> Price: High to Low</option>
               </select>
               <FaChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={12} />
             </div>
