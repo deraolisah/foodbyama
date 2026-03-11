@@ -18,20 +18,26 @@ export const CheckoutProvider = ({ children }) => {
   // Define delivery zones and prices
   const deliveryZones = [
     { 
-      id: 'city-center', 
-      name: 'City Center', 
-      price: 500, 
-      description: 'Central Business District, Maitama, Asokoro' 
+      id: 'temp-site', 
+      name: 'Temp Site', 
+      price: 1500, 
+      description: 'From TempSite Junction, down to Living Faith - Okpuno' 
     },
     { 
-      id: 'suburban', 
-      name: 'Suburban Areas', 
+      id: 'ifite', 
+      name: 'Ifite Areas', 
       price: 800, 
-      description: 'Gwarinpa, Kubwa, Lugbe, Karu' 
+      description: 'Ifite, Down School, Miracle Junction, Yahoo Juction, Second Market, Aroma' 
     },
     { 
-      id: 'outskirts', 
-      name: 'Outskirts', 
+      id: 'amawbia', 
+      name: 'Amawbia', 
+      price: 1200, 
+      description: 'Amawbia, Eke-Awka Market, etc' 
+    },
+    { 
+      id: 'awka-outskirts', 
+      name: 'Awka Outskirts', 
       price: 1200, 
       description: 'Nyanya, Mararaba, Kuje, Bwari' 
     }
