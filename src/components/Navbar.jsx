@@ -83,9 +83,9 @@ const Navbar = () => {
       <nav className='bg-dark h-10 relative z-50'>
         <div className='container bg-red-400 h-full flex items-center justify-between'>
           {/* Search Icon */}
-          {/* <button onClick={toggleSearch} className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
+          <button onClick={toggleSearch} className="text-light bg-light/10 rounded-full flex items-center justify-center cursor-pointer p-2">
             <MdSearch className='text-xl' />
-          </button> */}
+          </button>
 
           {/* Logo */}
           <Link to="/">
@@ -93,9 +93,9 @@ const Navbar = () => {
           </Link>
 
           {/* Menu Button */}
-          {/* <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer z-50'>
+          <div onClick={toggleMenu} className='p-2 flex flex-col items-start justify-center gap-1 bg-light/10 text-light rounded-full cursor-pointer z-50'>
             {!menuOpen ? (<TbMenu3 className='text-xl' />) : (<IoMdClose className='text-xl' />)}
-          </div> */}
+          </div>
           <button type='button' onClick={toggleMenu()}>
             <Menu />
           </button>
@@ -104,7 +104,7 @@ const Navbar = () => {
   
 
         {/* Navigation Menu */}
-        {/* <div className="container flex items-end justify-end !relative overflow-x-hidden">
+        <div className="container flex items-end justify-end relative! overflow-x-hidden">
           <div className={`fixed top-0 left-0 w-full h-full bg-dark text-light text-center shadow-md z-10 pt-40 transition-all duration-400 ${!menuOpen ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"}`}>
             <p className="text-light/60 text-xs md:text-sm italics absolute top-6.5 left-5"> Flat tummy doesn't matter in Heaven.. </p>
             <ul className="flex flex-col items-center p-4 gap-4 text-3xl">
@@ -131,18 +131,18 @@ const Navbar = () => {
               </Link>
             </ul>
           </div>
-        </div> */}
+        </div>
       </nav>
 
   
 
       {/* Backdrop overlay when menu is open - click to close */}
-      {/* {menuOpen && (
+      {menuOpen && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-5"
           onClick={toggleMenu}
         />
-      )} */}
+      )}
     </>
   );
 };

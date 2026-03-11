@@ -9,7 +9,7 @@ const Item = ({ item, index, handleItemClick }) => {
       className="bg-white rounded-xl border border-dark/10 overflow-hidden transition-shadow cursor-pointer group"
       onClick={() => handleItemClick(item)}
     >
-      <div className="aspect-4/5 overflow-hidden relative rounded-b-xl">
+      <div className="aspect-4/5 md:aspect-square overflow-hidden relative rounded-b-xl">
         <img 
           src={item.image || placeholder} 
           alt={item.name}

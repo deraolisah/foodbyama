@@ -75,7 +75,7 @@ const Header = () => {
               </div>
             )}
             </div>
-          <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link>
+          {/* <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link> */}
           <Link title='Cart' to="/cart" className="relative"> 
             <ShoppingCart size={20} strokeWidth={1.5} /> 
             {/* Cart badge */}

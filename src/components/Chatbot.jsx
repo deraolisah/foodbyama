@@ -55,7 +55,7 @@ const Chatbot = () => {
 
             {/* Body */}
             <div className='flex flex-col p-0 bg-[#eae6df]' style={{ backgroundImage: `url(${whatsappBg})`}}>
-              <div className='py-8 px-4 space-y-4'>
+              <div className='py-8 px-4 space-y-4 pb-10'>
                 <p className="w-fit p-2.5 mr-8 text-xs bg-light rounded-lg shadow"> Hi there 👋 <br/> Thanks for reaching out to us. What would you like to order today? </p>
                 <p className='flex items-center gap-1 bg-light p-2.5 rounded-lg shadow w-fit ml-auto'>
                   <span className='w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce'></span>
@@ -72,11 +72,11 @@ const Chatbot = () => {
                   onChange={(e) => setMessage(e.target.value)} 
                   placeholder="Type a message..."
                   required
-                  className="w-full h-full px-3 py-2 text-md bg-light border border-dark/10 rounded-lg"
+                  className="w-full h-full px-3 py-2 text-md bg-light border border-dark/10 rounded-lg placeholder:italic"
                 />
 
-                <button onClick={handleSend} className="w-fit p-2 h-full border border-dark/5 text-light bg-dark/5 rounded-lg text-sm font-semibold cursor-pointer">
-                  <img src={sendBtn} alt='' className='w-6 invert-60' />
+                <button onClick={handleSend} className="w-fit p-2 h-full border border-dark/5 text-light bg-dark/5 rounded-lg text-sm font-semibold cursor-pointer hover:bg-primary group">
+                  <img src={sendBtn} alt='' className='w-6 invert-60 group-hover:invert-100' />
                 </button>
               </div>
             </div>

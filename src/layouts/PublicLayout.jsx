@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 const PublicLayout = () => {
   return (
     <div className="pb-16 md:pb-0">
+      {/* <Navbar /> */}
       <Header />
       <WelcomePopup />
       <Chatbot />

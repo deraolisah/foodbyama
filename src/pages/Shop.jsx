@@ -3,16 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaFilter } from "react-icons/fa";
 import { useCart } from '../contexts/CartContext';
 import { useMenu } from '../contexts/MenuContext';
-import placeholderImg from "../assets/placeholder.png";
+// import placeholderImg from "../assets/placeholder.png";
 import ItemModal from '../components/ItemModal';
 import Item from '../components/Item';
-import { Filter, FilterIcon, FilterX, List, ListFilter, Search, SortDesc } from 'lucide-react';
+import { ListFilter, Search, X } from 'lucide-react';
 
 const Shop = () => {
   const { itemsByCategory, categories, weeklyMenu, getUniqueProducts } = useMenu();
   const { addToCart } = useCart();
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     days: [],
     categories: [],
@@ -88,8 +90,50 @@ const Shop = () => {
     });
   };
 
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (!isSearchOpen) {
+      // Focus the input after it appears
+      setTimeout(() => {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.focus();
+      }, 100);
+    } else {
+      setSearchQuery(''); // Clear search when closing
+    }
+  };
+
   const getFilteredAndSortedProducts = () => {
     let filtered = [...allProducts];
+
+    // Apply search filter
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(item => {
+        // Search in name
+        const nameMatch = item.name.toLowerCase().includes(query);
+        
+        // Search in description (if available)
+        const descriptionMatch = item.description ? item.description.toLowerCase().includes(query) : false;
+        
+        // Search in category
+        const categoryMatch = item.category ? item.category.toLowerCase().includes(query) : false;
+        
+        // Search in ingredients (if available)
+        const ingredientsMatch = item.ingredients ? 
+          item.ingredients.some(ing => ing.toLowerCase().includes(query)) : false;
+        
+        // Search in dietary tags (if available)
+        const dietaryMatch = item.dietary ? 
+          item.dietary.some(diet => diet.toLowerCase().includes(query)) : false;
+        
+        return nameMatch || descriptionMatch || categoryMatch || ingredientsMatch || dietaryMatch;
+      });
+    }
 
     // Apply sorting
     switch(sortBy) {
@@ -117,9 +161,6 @@ const Shop = () => {
     // Apply day filters
     if (selectedFilters.days.length > 0) {
       filtered = filtered.filter(item => {
-        // Check if item is available on selected days
-        // This assumes items might have a 'availableDays' property
-        // For now, we'll check against weekly menu
         const isInWeeklyMenu = Object.entries(weeklyMenu).some(([day, items]) => 
           selectedFilters.days.includes(day) && items.some(menuItem => menuItem.name === item.name)
         );
@@ -153,7 +194,7 @@ const Shop = () => {
 
   const filteredProducts = getFilteredAndSortedProducts();
 
-  // Count active filters
+  // Count active filters (excluding search)
   const activeFilterCount = Object.values(selectedFilters).reduce(
     (acc, curr) => acc + curr.length, 0
   );
@@ -168,15 +209,8 @@ const Shop = () => {
           fixed top-29 left-0 lg:static lg:top-none inset-0 z-150 lg:z-auto bg-white lg:bg-transparent p-4 pt-0 lg:p-0
           overflow-y-auto lg:overflow-visible
           max-h-screen lg:max-h-none
-          `}>
-          {/* Mobile Close Button */}
-          {/* <button 
-            onClick={() => setIsFilterOpen(false)}
-            className="lg:hidden top-6 right-8 text-2xl"
-            >
-            ×
-          </button> */}
-        {/* </div> */}
+          `}
+          >
 
         <div className="w-full bg-white md:rounded-lg shadow-sm border border-dark/10 p-4 lg:sticky lg:top-22 overflow-hidden">
           {/* Filters Header */}
@@ -236,60 +270,6 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Meal Types */}
-            {/* <div className="border-b border-dark/10 pb-4">
-              <h4 className="font-medium mb-2">Meal Type</h4>
-              <div className="space-y-2">
-                {['Breakfast', 'Lunch', 'Dinner', 'Small Chops', 'Dessert'].map(type => (
-                  <label key={type} className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={selectedFilters.mealTypes.includes(type)}
-                      onChange={() => handleFilterChange('mealTypes', type)}
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
-                    />
-                    <span className="text-sm">{type}</span>
-                  </label>
-                ))}
-              </div>
-            </div> */}
-
-            {/* Dietary Preferences */}
-            {/* <div className="border-b border-dark/10 pb-4">
-              <h4 className="font-medium mb-2">Dietary</h4>
-              <div className="space-y-2">
-                {['Vegetarian', 'Vegan', 'Gluten-Free', 'Halal', 'Low-Carb'].map(diet => (
-                  <label key={diet} className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={selectedFilters.dietary.includes(diet)}
-                      onChange={() => handleFilterChange('dietary', diet)}
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
-                    />
-                    <span className="text-sm">{diet}</span>
-                  </label>
-                ))}
-              </div>
-            </div> */}
-
-            {/* Protein Options */}
-            {/* <div className="border-b border-dark/10 pb-4">
-              <h4 className="font-medium mb-2">Protein</h4>
-              <div className="space-y-2">
-                {['Chicken', 'Beef', 'Goat Meat', 'Fish', 'Turkey', 'Eggs', 'Shrimp'].map(protein => (
-                  <label key={protein} className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={selectedFilters.protein.includes(protein)}
-                      onChange={() => handleFilterChange('protein', protein)}
-                      className="rounded border-gray-300 text-primary focus:ring-primary"
-                    />
-                    <span className="text-sm">{protein}</span>
-                  </label>
-                ))}
-              </div>
-            </div> */}
-
             {/* Price Range */}
             <div className="pb-4">
               <h4 className="font-medium mb-2">Price Range</h4>
@@ -312,78 +292,119 @@ const Shop = () => {
                 ))}
               </div>
             </div>
-
-            {/* Special Options */}
-            {/* <div className="pt-2">
-              <h4 className="font-medium mb-2">Special</h4>
-              <div className="space-y-2">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" />
-                  <span className="text-sm">Family Size</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" />
-                  <span className="text-sm">Party Jumbo</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded border-gray-300 text-primary focus:ring-primary" />
-                  <span className="text-sm">Pre-order Only</span>
-                </label>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
 
         {/* Main Content - Right */}
         <div className="flex-1">
-          {/* Sort and Results Count */}
-          <div className="sticky top-13 z-20 flex justify-between items-center gap-2 bg-white h-16">
-            <button className="flex items-center gap-2 p-2.5 text-sm bg-gray-100 rounded-md cursor-pointer">
-              <Search size={16} />
-              {/* <span> Search </span> */}
-            </button>
-            {/* Mobile Filter Button */}
-            <div className="flex-1">
-
-            <button 
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 rounded-md cursor-pointer"
-              title='Filter'
-              >
-              <ListFilter size={16} />
-              <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
-            </button>
+          {/* Sort, Search and Results Count */}
+          <div className="sticky top-13 z-20 bg-white py-1 space-y-1">
+            {/* Search Bar - appears when search is open */}
+            <div className={`
+              transition-all duration-300 ease-in-out overflow-hidden
+              ${isSearchOpen ? 'max-h-16 opacity-100 mt-2' : 'max-h-0 opacity-0'}
+            `}>
+              <div className="relative">
+                <input
+                  id="search-input"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by name, category, ingredients, or dietary preferences..."
+                  className="w-full px-4 py-3 pl-10 pr-10 border border-primary/30 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                {searchQuery && (
+                  <button
+                    onClick={clearSearch}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
+              
+              {/* Search results info */}
+              {/* {searchQuery && (
+                <div className="text-xs text-gray-500 mt-1 ml-1 relative">
+                  Found {filteredProducts.length} {filteredProducts.length === 1 ? 'result' : 'results'} for "{searchQuery}"
                 </div>
+              )} */}
+            </div>
 
-            <p className="hidden lg:flex text-sm text-gray-600">
-              {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
-            </p>
-            
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-white border border-dark/10 text-sm rounded-lg px-4 py-2 pr-10 focus:outline-none focus:border-primary cursor-pointer"
+            {/* Header with buttons */}
+            <div className="flex justify-between items-center gap-2 h-14">
+              <button 
+                onClick={toggleSearch}
+                className={`flex items-center gap-2 p-2.5 text-sm rounded-md cursor-pointer group transition-colors duration-200
+                  ${isSearchOpen 
+                    ? 'bg-primary text-white hover:bg-primary/90' 
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-700'
+                  }`}
+              >
+                <Search size={16} />
+                {/* <span className="text-xs"> {isSearchOpen ? 'Close' : 'Search'} </span> */}
+              </button>
+              
+              {/* Mobile Filter Button and Results Count */}
+              <div className="flex-1 flex items-center gap-2">
+                <button 
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 hover:text-gray-700 transition-all duration-300 rounded-md cursor-pointer"
+                  title='Filter'
                 >
-                <option value="alphabetical"> Alphabetically A-Z</option>
-                <option value="price-low"> Price: Low to High</option>
-                <option value="price-high"> Price: High to Low</option>
-              </select>
-              <FaChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={12} />
+                  <ListFilter size={16} />
+                  <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
+                </button>
+                <p className="hidden lg:flex text-sm text-gray-600 ml-1">
+                  {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
+                  {searchQuery && ` for "${searchQuery}"`}
+                </p>
+              </div>
+
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="appearance-none bg-gray-100 border border-dark/10 text-sm text-gray-600 rounded-lg px-4 py-2 pr-10 hover:text-gray-700 hover:bg-gray-200 focus:outline-none focus:border-primary cursor-pointer"
+                  title='Sort'
+                >
+                  <option value="alphabetical"> Alphabetically A-Z</option>
+                  <option value="price-low"> Price: Low to High</option>
+                  <option value="price-high"> Price: High to Low</option>
+                </select>
+                <FaChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={12} />
+              </div>
             </div>
           </div>
 
           {/* Products Grid */}
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 rounded-xl">
-              <p className="text-gray-500 mb-2">No products found matching your filters.</p>
-              <button 
-                onClick={clearFilters}
-                className="text-primary hover:underline"
-              >
-                Clear all filters
-              </button>
+              <p className="text-gray-500 mb-2">
+                {searchQuery 
+                  ? `No products found matching "${searchQuery}"` 
+                  : 'No products found matching your filters.'}
+              </p>
+              <div className="space-x-4">
+                {searchQuery && (
+                  <button 
+                    onClick={clearSearch}
+                    className="text-primary hover:underline"
+                  >
+                    Clear search
+                  </button>
+                )}
+                {activeFilterCount > 0 && (
+                  <button 
+                    onClick={clearFilters}
+                    className="text-primary hover:underline"
+                  >
+                    Clear filters
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
