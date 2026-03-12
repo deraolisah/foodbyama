@@ -20,7 +20,7 @@ const BottomNav = () => {
   return (
     <div className='fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 text-center bg-light text-dark border-t border-gray-300 flex md:hidden items-center justify-center '>
       <ul className='container h-full flex items-center justify-evenly px-0!'>
-        <NavLink to="/" className="relative h-full text-[11px] text-center flex items-center justify-center">
+        <NavLink to="/" className="relative h-full text-[11px] text-center flex items-center justify-center" onClick={() => { scrollTo(0,0); }}>
           {({ isActive }) => (
             <div className={`w-full h-fit flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <House size={20} strokeWidth={1.5} />
@@ -40,7 +40,7 @@ const BottomNav = () => {
           )}
         </NavLink> */}
 
-        <NavLink to="/shop" className="relative h-full text-[11px] text-center">
+        <NavLink to="/shop" className="relative h-full text-[11px] text-center" onClick={() => { scrollTo(0,0); }}>
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <Soup size={21} strokeWidth={1.5} />
@@ -50,7 +50,7 @@ const BottomNav = () => {
           )}
         </NavLink>
 
-        <NavLink to="/cart" className="relative h-full text-[11px] text-center">
+        <NavLink to="/cart" className="relative h-full text-[11px] text-center" onClick={() => { scrollTo(0,0); }}>
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <ShoppingCart size={21} strokeWidth={1.5} />
@@ -66,7 +66,7 @@ const BottomNav = () => {
           )}
         </NavLink>
 
-        <NavLink to="/account" className="relative h-full text-[11px] text-center">
+        <NavLink to="/account" className="relative h-full text-[11px] text-center" onClick={() => { scrollTo(0,0); }}>
           {({ isActive }) => (
             <div className={`w-full h-full flex flex-col items-center justify-center text-center ${isActive ? "text-primary" : "text-dark/80"}`}>
               <UserRound size={21} strokeWidth={1.5} />

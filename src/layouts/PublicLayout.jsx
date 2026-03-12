@@ -1,6 +1,7 @@
 import React from 'react'
 // import Navbar from '../components/Navbar';
-import WelcomePopup from '../components/WelcomePopup';
+import TopNav from '../components/TopNav';
+// import WelcomePopup from '../components/WelcomePopup';
 import { Outlet } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import Chatbot from '../components/Chatbot';
@@ -11,8 +12,9 @@ const PublicLayout = () => {
   return (
     <div className="pb-16 md:pb-0">
       {/* <Navbar /> */}
+      <TopNav />
       <Header />
-      <WelcomePopup />
+      {/* <WelcomePopup /> */}
       <Chatbot />
       <main className='min-h-svh flex flex-col'>
         <Outlet />

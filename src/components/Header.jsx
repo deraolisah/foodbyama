@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/favicon.png";
 import { href, Link } from 'react-router-dom';
 import { Info, Menu, X } from 'lucide-react';
 import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import WelcomePopup from './WelcomePopup';
 
 const Header = () => {
   const { getCartItemsCount } = useCart();
@@ -19,6 +20,7 @@ const Header = () => {
   const [isSticky, setIsSticy] = useState(false);
   const [isMenuOpen, setIsmenuOpen] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
 
   // Menu
   const toggleMenu = () => {
@@ -31,12 +33,36 @@ const Header = () => {
     setOpenHelp(!openHelp);
   }
 
+  // Popup
+  const togglePopup = () => {
+    setOpenPopup(!openPopup);
+  }
+
+  const dropdownRef = useRef();
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if help is open and click is outside the dropdownRef
+      if (openHelp && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenHelp(false);
+      }
+    };
+
+    // Add event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    // Cleanup
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openHelp]); 
+
   return (
     <nav className={`sticky border-b border-gray-200 z-90 bg-white container flex items-center justify-between min-h-12 py-2 top-0 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
-            <Link to={item.href}> {item.name} </Link>
+            <Link to={item.href} onClick={() => { scrollTo(0,0); }}> {item.name} </Link>
           </li>
         ))}
       </ul>   
@@ -64,19 +90,20 @@ const Header = () => {
         )}
 
         <div className="hidden md:flex items-center gap-4">
-          <div className="relative -mb-2">
+          <div ref={dropdownRef} className="relative -mb-2">
             <button title='Info' type='button' onClick={() => {toggleHelp()}} className="cursor-pointer"> 
               <Info size={20} strokeWidth={1.5} /> 
             </button>
             {openHelp && (
               <div className="border border-gray-300 bg-light shadow-md text-xs w-fit rounded-lg absolute right-0 flex flex-col overflow-hidden">
-                <span className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> How To Order </span>
+                <button type='button' onClick={() => {togglePopup()}} className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> How To Order </button>
+                { openPopup && (<WelcomePopup />) }
                 <Link to="/feedback" className="p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </Link>
               </div>
             )}
-            </div>
+          </div>
           {/* <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link> */}
-          <Link title='Cart' to="/cart" className="relative"> 
+          <Link title='Cart' to="/cart" className="relative" onClick={() => { scrollTo(0,0); }}> 
             <ShoppingCart size={20} strokeWidth={1.5} /> 
             {/* Cart badge */}
             {cartItemsCount > 0 && (
@@ -85,19 +112,25 @@ const Header = () => {
               </span>
             )}
           </Link>
-          <Link title='Account' to="/account"> <UserRound size={20} strokeWidth={1.5} /> </Link>
+          <Link title='Account' to="/account" onClick={() => { scrollTo(0,0); }}> <UserRound size={20} strokeWidth={1.5} /> </Link>
         </div>
       </div>
 
 
-      <ul className={`fixed inset-0 w-full max-w-2xl mx-auto flex md:hidden flex-col items-center justify-center gap-4 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <ul className={`fixed inset-0 w-full max-w-3xl ml-auto flex md:hidden flex-col items-start justify-start gap-0 px-4 pt-20 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
       }`}>
         {navLinks.map((item) => (
-          <li key={item.name}>
-            <Link to={item.href}> {item.name} </Link>
+          <li key={item.name} className="border-b border-gray-300 w-full">
+            <Link to={item.href} className="w-full flex py-3"> 
+              {item.name} 
+            </Link>
           </li>
         ))}
+
+        <span className="fixed bottom-4 border-t border-gray-300 w-full py-2 text-wrap"> 
+          © FoodByAma. All Rights Reserved.
+        </span>
       </ul>      
     </nav>
   )

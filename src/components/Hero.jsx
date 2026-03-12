@@ -1,9 +1,9 @@
 import React from 'react';
 import bgHero from "../assets/hero-bg.png";
 
-const MyHero = () => {
+const Hero = () => {
   return (
-    <div className="container px-8! h-60! md:h-80! text-white flex flex-col items-center justify-center" style={{
+    <div className="container px-8! h-48! md:h-68! text-white flex flex-col items-center justify-center" style={{
       backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.68)), url(${bgHero})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -17,4 +17,4 @@ const MyHero = () => {
   )
 }
 
-export default MyHero;
+export default Hero;

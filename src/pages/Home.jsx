@@ -138,14 +138,14 @@
 
 
 import React from 'react';
-import MyHero from "../components/MyHero.jsx";
+import Hero from "../components/Hero.jsx";
 import Categories from '../components/Categories.jsx';
 import ItemGrid from '../components/ItemGrid.jsx';
 
 const Home = () => {
   return (
     <>
-      <MyHero />
+      <Hero />
       <Categories />
       <ItemGrid />
     </>
