@@ -5,7 +5,7 @@ import { LocateIcon, MapIcon, Pin } from 'lucide-react';
 const Hero = () => {
   return (
     <div className="container px-8! h-50! md:h-68! text-white flex flex-col gap-2 items-center justify-center bg-top md:bg-center" style={{
-      backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.68)), url(${bgHero})`,
+      backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.48), rgba(0,0,0,0.6)), url(${bgHero})`,
       backgroundSize: "cover",
       // backgroundPosition: "top",
       backgroundRepeat: "no-repeat",

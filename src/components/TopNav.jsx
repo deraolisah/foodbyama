@@ -26,7 +26,9 @@ const TopNav = () => {
         <a title='Instagram' href="https://www.instagram.com/foodbyama__/" target='_blank' className="hover:text-primary"> 
           <Instagram size={16} />
         </a>
-        {/* <a href=''>  </a> */}
+        <a title='Tiktok' href='https://www.tiktok.com/@foodbyama22' target='_blank' className="hover:text-primary"> 
+          TikTok
+        </a>
       </div>
     </div>
   )
