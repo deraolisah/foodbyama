@@ -62,7 +62,9 @@ const Header = () => {
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
-            <Link to={item.href} onClick={() => { scrollTo(0,0); }}> {item.name} </Link>
+            <Link to={item.href} onClick={() => { scrollTo(0,0); }} className="hover:text-primary hover:underline"> 
+              {item.name} 
+            </Link>
           </li>
         ))}
       </ul>   
@@ -97,13 +99,13 @@ const Header = () => {
             {openHelp && (
               <div className="border border-gray-300 bg-light shadow-md text-xs w-fit rounded-lg absolute right-0 flex flex-col overflow-hidden">
                 <button type='button' onClick={() => {togglePopup()}} className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> How To Order </button>
-                { openPopup && (<WelcomePopup />) }
+                { openPopup && (<WelcomePopup setOpenPopup={setOpenPopup} />) }
                 <Link to="/feedback" className="p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </Link>
               </div>
             )}
           </div>
           {/* <Link title='Search' to="/search"> <Search size={20} strokeWidth={1.5} /> </Link> */}
-          <Link title='Cart' to="/cart" className="relative" onClick={() => { scrollTo(0,0); }}> 
+          <Link title='Cart' to="/cart" className="relative hover:text-primary" onClick={() => { scrollTo(0,0); }}> 
             <ShoppingCart size={20} strokeWidth={1.5} /> 
             {/* Cart badge */}
             {cartItemsCount > 0 && (
@@ -112,7 +114,7 @@ const Header = () => {
               </span>
             )}
           </Link>
-          <Link title='Account' to="/account" onClick={() => { scrollTo(0,0); }}> <UserRound size={20} strokeWidth={1.5} /> </Link>
+          <Link title='Account' to="/account" className="hover:text-primary" onClick={() => { scrollTo(0,0); }}> <UserRound size={20} strokeWidth={1.5} /> </Link>
         </div>
       </div>
 
@@ -123,7 +125,7 @@ const Header = () => {
         <span className="w-full">
           {navLinks.map((item) => (
             <li key={item.name} className="border-b border-gray-300 w-full">
-              <Link to={item.href} className="w-full flex py-2.5"> 
+              <Link to={item.href} className="w-full flex py-2.5 hover:text-primary"> 
                 {item.name} 
               </Link>
             </li>

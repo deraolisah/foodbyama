@@ -4,14 +4,28 @@ import React from 'react'
 const TopNav = () => {
   return (
     <div className="container hidden md:flex items-center justify-between gap-4 h-10 border-b border-gray-200 text-xs">
-      <div className="flex items-center gap-4">
-        <a href='tel:+2349054414660'> 09054414660 </a>
-        <a href='mailto:foodbyama4@gmail.com'> foodbyama4@gmail.com </a>
+
+      <div className="w-full flex items-center justify-start gap-4">
+        <a title='Phone' href='tel:+2349054414660' target='_blank' className="hover:text-primary"> 
+          09054414660
+        </a>
+        <a title='Mail' href='mailto:foodbyama4@gmail.com' target='_blank' className="hover:text-primary"> 
+          foodbyama4@gmail.com 
+        </a>
       </div>
 
-      <div className="flex items-center gap-4">
-        <a href=""> <Facebook size={14} /></a>
-        <a href=""> <Instagram size={14} /> </a>
+      <div className="w-full text-center">
+        {/* Open  */}
+        7AM - 6PM 
+      </div>
+
+      <div className="w-full flex items-center justify-end gap-4">
+        <a title='Facebook' href="" target='_blank' className="hover:text-primary"> 
+          <Facebook size={16} />
+        </a>
+        <a title='Instagram' href="https://www.instagram.com/foodbyama__/" target='_blank' className="hover:text-primary"> 
+          <Instagram size={16} />
+        </a>
         {/* <a href=''>  </a> */}
       </div>
     </div>

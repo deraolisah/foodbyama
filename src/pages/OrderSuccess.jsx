@@ -50,7 +50,7 @@ const OrderSuccess = () => {
         {userId && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <div className="flex items-start gap-3">
-              <FaInfoCircle className="text-blue-600 text-xl mt-0.5 flex-shrink-0" />
+              <FaInfoCircle className="text-blue-600 text-xl mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-semibold text-blue-800">Account Created Automatically! 🎉</h3>
                 <p className="text-blue-700 text-sm mt-1">

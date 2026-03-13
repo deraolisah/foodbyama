@@ -22,6 +22,10 @@ import Login from '../pages/Login.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import Search from '../pages/Search.jsx';
 import Feedback from '../pages/Feedback.jsx';
+import Privacy from '../pages/Privacy.jsx';
+import Terms from '../pages/Terms.jsx';
+import Returns from '../pages/Returns.jsx';
+import Faqs from '../pages/Faqs.jsx';
 
 const AppRoutes = () => {
   return (
@@ -39,6 +43,12 @@ const AppRoutes = () => {
           <Route path="/orders/:orderId" element={<Orders />} />
           <Route path='/search' element={<Search /> } />
           <Route path="/feedback" element={<Feedback />} />
+
+          {/* Legal Pages */}
+          <Route path='/privacy' element={<Privacy />} />
+          <Route path='/terms' element={<Terms />} />
+          <Route path='/returns' element={<Returns />} />
+          <Route path='/faqs' element={<Faqs />} />
 
 
           <Route path='login' element={<Login />} />

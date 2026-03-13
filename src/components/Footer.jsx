@@ -13,8 +13,12 @@ const Footer = () => {
           Terms & Condition
         </Link>
         |
-        <Link to="/refunds" className="text-nowrap">
-          Refund Policy
+        <Link to="/returns" className="text-nowrap">
+          Returns Policy
+        </Link>
+        |
+        <Link to="/faqs" className="text-nowrap">
+          Frequently Asked Questions
         </Link>
       </div>
       

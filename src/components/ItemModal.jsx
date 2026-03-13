@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import placeholder from "../assets/placeholder.png";
 import { useCart } from '../contexts/CartContext';
 import { FaTimes, FaMinus, FaPlus } from "react-icons/fa";
+import { Share } from 'lucide-react';
 
 const ItemModal = ({ item, isOpen, onClose }) => {
   const { addToCart } = useCart();
@@ -74,14 +75,14 @@ const ItemModal = ({ item, isOpen, onClose }) => {
     <>
       {/* Backdrop - always in DOM but conditionally visible */}
       <div 
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-100 cursor-pointer transition-all duration-400 ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-1000 cursor-pointer transition-all duration-400 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
       />
       
       {/* Modal - always in DOM but conditionally visible */}
-      <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-150 transition-all duration-400 ${
+      <div className={`fixed w-full max-w-2xl mx-auto bottom-0 left-0 right-0 z-1500 transition-all duration-400 ${
         isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-10 pointer-events-none"
       }`}>
         <div className="w-full px-0! bg-white rounded-t-3xl max-h-[88svh] overflow-y-auto scrollbar-hidden">
@@ -102,7 +103,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
           </div>
 
           {/* Content */}
-          <div className="p-6 space-y-4">
+          <div className="p-6 space-y-6">
             <div className="flex justify-between items-start gap-2">
               <div>
                 <h2 className="text-xl font-bold">{normalizedItem.name}</h2>
@@ -113,71 +114,82 @@ const ItemModal = ({ item, isOpen, onClose }) => {
               </span>
             </div>
 
-            <hr className="border border-dark/10"/>
+            <hr className="h-0.5 border-none bg-primary/10"/>
 
             {/* Availability */}
-            <div className={`text-sm ${normalizedItem.isAvailable ? "text-green-600" : "text-red-600"}`}>
+            <div>
               {normalizedItem.isAvailable ? 
                 (
-                  <p className="flex items-center gap-1">
+                  <p className={`text-sm flex items-center gap-1 mb-2 ${normalizedItem.isAvailable ? "text-green-600" : "text-red-600"}`}>
                     <span className="w-2 h-2 rounded-full bg-green-600 inline-flex"></span>Available 
                   </p>
                 ) : (
                 "❌ Out of stock"
               )}
-            </div>
 
-            {/* Size Selection */}
-            {hasMultipleSizes && (
-              <div>
-                <label className="block font-medium mb-2">Select Size:</label>
-                <div className="flex gap-2 overflow-x-auto">
-                  {normalizedItem.sizes.map((size, index) => (
-                    <button
+              {/* Size Selection */}
+              {hasMultipleSizes && (
+                <div>
+                  <label className="block font-medium mb-2">Select Size:</label>
+                  <div className="flex gap-2 overflow-x-auto">
+                    {normalizedItem.sizes.map((size, index) => (
+                      <button
                       key={index}
                       onClick={() => setSelectedSizeIndex(index)}
                       className={`shrink-0 px-4 py-2 rounded-lg border-2 transition-all cursor-pointer ${
                         selectedSizeIndex === index
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-gray-300'
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-gray-300'
                       }`}
-                    >
-                      <div className="font-medium">{size.size}</div>
-                      <div className="text-sm">{size.price}</div>
-                    </button>
-                  ))}
+                      >
+                        <div className="font-medium">{size.size}</div>
+                        <div className="text-sm">{size.price}</div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+
+            <hr className=" w-full h-0.5 border-none bg-primary/10"/>
 
           
             {/* Quantity and Add to Cart */}
             {normalizedItem.isAvailable && (
-              <div className="space-y-4 mt-8">
-                <div className="flex items-center justify-start gap-2.5">
-                  <span className="font-medium">Quantity:</span>
-                  <div className="flex items-center bg-dark/10 rounded-full p-1">
-                    <button 
-                      onClick={decrementQuantity}
-                      className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
-                    >
-                      <FaMinus size={12} />
-                    </button>
-                    <span className="px-3.5 font-medium">{quantity}</span>
-                    <button 
-                      onClick={incrementQuantity}
-                      className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
-                    >
-                      <FaPlus size={12} />
-                    </button>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center justify-start gap-2.5">
+                    <span className="font-medium">Quantity:</span>
+                    <div className="flex items-center bg-dark/10 rounded-full p-1">
+                      <button 
+                        onClick={decrementQuantity}
+                        className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
+                      >
+                        <FaMinus size={12} />
+                      </button>
+                      <span className="px-3.5 font-medium">{quantity}</span>
+                      <button 
+                        onClick={incrementQuantity}
+                        className="p-2 rounded-full shadow bg-light hover:bg-primary/20 transition cursor-pointer"
+                      >
+                        <FaPlus size={12} />
+                      </button>
+                    </div>
                   </div>
+
+                  <button className="flex items-center gap-2 cursor-pointer" title='Share'>
+                    <Share size={16} />
+                    Share
+                  </button>
                 </div>
 
                 <button
                   onClick={handleAddToCart}
                   className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
                 >
-                  Add to Cart - {selectedSize.price}
+                  Add to Cart 
+                  {/* - {selectedSize.price} */}
                 </button>
               </div>
             )}

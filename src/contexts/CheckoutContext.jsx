@@ -32,7 +32,7 @@ export const CheckoutProvider = ({ children }) => {
     { 
       id: 'amawbia', 
       name: 'Amawbia', 
-      price: 1200, 
+      price: 2200, 
       description: 'Amawbia, Eke-Awka Market, etc' 
     },
     { 

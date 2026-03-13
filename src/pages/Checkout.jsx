@@ -58,10 +58,10 @@ const Checkout = () => {
         <h2 className="text-2xl font-bold mb-4">Your Cart is Empty</h2>
         <p className="mb-6">Add some items to your cart before checkout</p>
         <Link 
-          to="/menu" 
+          to="/cart" 
           className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
         >
-          Browse Menu
+          Back to Cart
         </Link>
       </div>
     );
@@ -169,9 +169,9 @@ const Checkout = () => {
         Back to Cart
       </Link>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-4">
         {/* Order Information Form */}
-        <div className="bg-white h-fit rounded-2xl shadow-md border border-dark/10 p-4 md:p-6">
+        <div className="bg-white h-fit rounded-2xl md:shadow-md md:border border-dark/10 p-0 md:p-6">
           <h2 className="text-2xl font-bold mb-6">Order Information</h2>
           
           {/* Order Type Selection */}
@@ -191,12 +191,13 @@ const Checkout = () => {
                 Delivery
               </button>
               <button
+                disabled
                 type="button"
                 onClick={() => handleOrderTypeChange('pickup')}
                 className={`flex-1 flex items-center justify-center p-4 py-2.5 rounded-lg border-2 transition-colors ${
                   orderType === 'pickup'
                     ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-gray-300 hover:border-primary'
+                    : 'border-gray-300 hover:border-gray-300'
                 }`}
               >
                 <FaStore className="mr-2" />
@@ -287,11 +288,11 @@ const Checkout = () => {
                     </div>
                   )}
                 </div>
-                {selectedZone && (
-                  <p className="text-sm text-green-600 mt-2">
+                {/* {selectedZone && (
+                  <p className="text-xs text-green-600 mt-1">
                     ✅ Selected: {selectedZone.name} - Delivery fee: {formatPrice(selectedZone.price)}
                   </p>
-                )}
+                )} */}
               </div>
             )}
 
@@ -381,17 +382,22 @@ const Checkout = () => {
           
           {/* Order Type Badge */}
           <div className="mb-4">
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+            <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
               orderType === 'delivery' 
                 ? 'bg-blue-100 text-blue-800' 
                 : 'bg-green-100 text-green-800'
             }`}>
               {orderType === 'delivery' ? (
-                <>
-                  <FaMapMarkerAlt className="mr-1" />
-                  Delivery
-                  {selectedZone && ` - ${selectedZone.name}`}
-                </>
+                <p className="flex items-center gap-0">
+                  <FaMapMarkerAlt className="mr-1 text-xs" />
+                  
+                  <span className="flex items-center gap-1">
+                    <span> Delivery </span>
+                    <span> {selectedZone && `- ${selectedZone.name} - ${formatPrice(selectedZone.price)}`}</span>
+                    
+                    {/* <span>- {formatPrice(selectedZone.price)} </span> */}
+                  </span>
+                </p>
               ) : (
                 <>
                   <FaStore className="mr-1" />
@@ -399,7 +405,7 @@ const Checkout = () => {
                   {selectedLocation && ` - ${selectedLocation.name}`}
                 </>
               )}
-            </span>
+            </div>
           </div>
           
           {/* Cart Items */}
@@ -434,7 +440,11 @@ const Checkout = () => {
             )}
             
             <div className="flex justify-between">
-              <span>Service Fee (2%)</span>
+              <span>
+                Service Fee 
+                <abbr title="There's a 2 percent service charge for using our website to place an order.">(2%)</abbr> 
+                {/* <abbr title="2% service charge applies" aria-label="2 percent service charge">(2%)</abbr> */}
+              </span>
               <span>{formatPrice(serviceFee)}</span>
             </div>
             
