@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/favicon.png";
 import { href, Link } from 'react-router-dom';
-import { Info, Menu, X } from 'lucide-react';
+import { Facebook, Info, Instagram, Menu, X } from 'lucide-react';
 import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import WelcomePopup from './WelcomePopup';
@@ -58,7 +58,7 @@ const Header = () => {
   }, [openHelp]); 
 
   return (
-    <nav className={`sticky border-b border-gray-200 z-90 bg-white container flex items-center justify-between min-h-12 py-2 top-0 transition-all duration-500`}>
+    <nav className={`sticky border-b border-gray-200 z-900 bg-white container flex items-center justify-between min-h-12 py-2 top-0 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
@@ -117,20 +117,31 @@ const Header = () => {
       </div>
 
 
-      <ul className={`fixed inset-0 w-full max-w-3xl ml-auto flex md:hidden flex-col items-start justify-start gap-0 px-4 pt-20 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <ul className={`fixed inset-0 w-full max-w-3xl ml-auto overflow-y-auto flex md:hidden flex-col items-start justify-between gap-10 px-4 pt-20 pb-10 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
       }`}>
-        {navLinks.map((item) => (
-          <li key={item.name} className="border-b border-gray-300 w-full">
-            <Link to={item.href} className="w-full flex py-3"> 
-              {item.name} 
-            </Link>
-          </li>
-        ))}
-
-        <span className="fixed bottom-4 border-t border-gray-300 w-full py-2 text-wrap"> 
-          © FoodByAma. All Rights Reserved.
+        <span className="w-full">
+          {navLinks.map((item) => (
+            <li key={item.name} className="border-b border-gray-300 w-full">
+              <Link to={item.href} className="w-full flex py-2.5"> 
+                {item.name} 
+              </Link>
+            </li>
+          ))}
         </span>
+
+        <div className="h-fit w-full text-sm flex flex-col">
+          <div className="flex flex-wrap items-center gap-2.5 py-2.5 border-t border-gray-300">
+            <a href='tel:+2349054414660'> 09054414660 </a> |
+            <a href='mailto:foodbyama4@gmail.com'> foodbyama4@gmail.com </a> |
+            <a href=""> <Facebook size={16} /></a> |
+            <a href=""> <Instagram size={16} /> </a> 
+          </div>
+          <div className="border-t border-gray-300 w-full py-2.5 text-wrap"> 
+            © FoodByAma. All Rights Reserved.
+          </div>
+        </div>
+
       </ul>      
     </nav>
   )
