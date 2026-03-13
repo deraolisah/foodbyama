@@ -125,7 +125,7 @@ const Header = () => {
         <span className="w-full">
           {navLinks.map((item) => (
             <li key={item.name} className="border-b border-gray-300 w-full">
-              <Link to={item.href} className="w-full flex py-2.5 hover:text-primary"> 
+              <Link to={item.href} onClick={() => { scrollTo(0,0); setIsmenuOpen(false) }} className="w-full flex py-2.5 hover:text-primary"> 
                 {item.name} 
               </Link>
             </li>
@@ -133,11 +133,22 @@ const Header = () => {
         </span>
 
         <div className="h-fit w-full text-sm flex flex-col">
-          <div className="flex flex-wrap items-center gap-2.5 py-2.5 border-t border-gray-300">
-            <a href='tel:+2349054414660'> 09054414660 </a> |
-            <a href='mailto:foodbyama4@gmail.com'> foodbyama4@gmail.com </a> |
-            <a href=""> <Facebook size={16} /></a> |
-            <a href=""> <Instagram size={16} /> </a> 
+          <div className="w-full flex flex-wrap items-center gap-2.5 py-2.5 border-t border-gray-300">
+            <a title='Phone' href='tel:+2349054414660' target='_blank' className="hover:text-primary"> 
+              09054414660
+            </a> |
+            <a title='Mail' href='mailto:foodbyama4@gmail.com' target='_blank' className="hover:text-primary"> 
+              foodbyama4@gmail.com
+            </a> |
+            <a title='Facebook' href="" target='_blank' className="hover:text-primary"> 
+              <Facebook size={16} />
+            </a> |
+            <a title='Instagram' href="https://www.instagram.com/foodbyama__/" target='_blank' className="hover:text-primary"> 
+              <Instagram size={16} />
+            </a> |
+            <a title='Tiktok' href='https://www.tiktok.com/@foodbyama22' target='_blank' className="hover:text-primary"> 
+              TikTok
+            </a>
           </div>
           <div className="border-t border-gray-300 w-full py-2.5 text-wrap"> 
             © FoodByAma. All Rights Reserved.
