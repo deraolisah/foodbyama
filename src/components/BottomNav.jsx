@@ -30,7 +30,7 @@ const BottomNav = ({ cartItemsCount }) => {
 
   return (
     <div className="fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 bg-light text-dark border-t border-gray-300 flex md:hidden items-center justify-center">
-      <ul ref={navRef} className="flex items-center justify-between w-full px-6 relative gap-0">
+      <ul ref={navRef} className="flex items-center justify-between w-full relative gap-0">
         {navItems.map((item, index) => (
           <li
             key={index}
