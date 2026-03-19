@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { House, Soup, ShoppingCart, UserRound } from "lucide-react";
 import { useCart } from '../contexts/CartContext';
 
+
 const BottomNav = () => {
+  const location = useLocation();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [itemWidth, setItemWidth] = useState(0);
   const navRef = useRef(null);
@@ -32,6 +35,14 @@ const BottomNav = () => {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
+  useEffect(() => {
+    const currentIndex = navItems.findIndex(item => item.to === location.pathname);
+    if (currentIndex !== -1) {
+      setActiveIndex(currentIndex);
+    }
+  }, [location.pathname]);
+
+
   return (
     <div className="fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 bg-light text-dark border-t border-gray-200 flex md:hidden items-center justify-center">
       <ul ref={navRef} className="flex items-center justify-between w-full relative gap-0">
@@ -53,12 +64,12 @@ const BottomNav = () => {
                   }`}
                 >
                   {item.icon}
-                  <span className="flex items-center">
+                  <span className="flex items-center justify-center">
                     {item.label}
                     {/* Cart badge */}
                     {item.label === "Cart" && cartItemsCount > 0 && (
-                      <span className="absolute translate-x-[calc(100%+10px)]  text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
-                        ({cartItemsCount})
+                      <span className="absolute translate-x-[calc(100%+10px)] bg-primary text-white text-[10px] min-w-4 min-h-4 p-px flex items-center justify-center rounded-full">
+                        {cartItemsCount}
                       </span>
                     )}
                   </span>

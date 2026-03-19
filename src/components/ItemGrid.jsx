@@ -55,7 +55,7 @@ const ItemGrid = () => {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-x-4 md:gap-y-8">
             {displayItems.map((item, index) => (
-              <Item item={item} index={index} handleItemClick={handleItemClick} />
+              <Item key={item.id || index} item={item} index={index} handleItemClick={handleItemClick} />
             ))}
           </div>
         )}
