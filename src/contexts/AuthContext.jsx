@@ -6,6 +6,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState('');
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -16,7 +18,6 @@ export const AuthProvider = ({ children }) => {
       try {
         const userData = JSON.parse(savedUser);
         setUser(userData);
-        // console.log('✅ User loaded from localStorage:', userData);
       } catch (error) {
         console.error('Error parsing saved user:', error);
         localStorage.removeItem('foodbyama_user');
@@ -28,90 +29,186 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem('foodbyama_user', JSON.stringify(user));
-      // console.log('✅ User saved to localStorage:', user);
     } else {
       localStorage.removeItem('foodbyama_user');
-      // console.log('✅ User removed from localStorage');
     }
   }, [user]);
 
-  // Get user profile with full details
-  const getUserProfile = async (userId) => {
+  // Find or create user at checkout
+  const findOrCreateUser = async (userData) => {
+    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}/profile`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      const response = await fetch(`${API_BASE_URL}/users/find-or-create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      });
+
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error);
       }
+
+      // Store email for verification
+      setPendingEmail(userData.email);
+      setVerificationSent(true);
       
-      // Update user with full profile data
-      setUser(result.user);
+      // In development, show code in console
+      if (import.meta.env.DEV) {
+        console.log('🔐 Verification code:', result.verificationCode);
+      }
+      
       return result.user;
-      
+
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      console.error('Error in findOrCreateUser:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const getUserOrders = async (userId) => {
+  // Verify user with code
+  // contexts/AuthContext.jsx - Update verifyUser
+  const verifyUser = async (email, code) => {
+    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}/orders`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      console.log('🔍 Verifying with:', { email, code });
       
+      const response = await fetch(`${API_BASE_URL}/users/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, code })
+      });
+
       const result = await response.json();
-      
+      console.log('📥 Verification response:', result);
+
       if (!result.success) {
-        throw new Error(result.error);
+        throw new Error(result.error || 'Verification failed');
       }
+
+      setUser(result.user);
+      setVerificationSent(false);
+      setPendingEmail('');
       
-      return result.orders;
+      // Set session verification
+      sessionStorage.setItem('email_verified', 'true');
+      
+      return result.user;
+
     } catch (error) {
-      console.error('Error fetching user orders:', error);
+      console.error('Error in verifyUser:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const getOrder = async (orderId) => {
+  // Resend verification code
+  const resendCode = async (email) => {
+    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/orders/${orderId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      const response = await fetch(`${API_BASE_URL}/users/resend-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error);
       }
+
+      if (import.meta.env.DEV) {
+        console.log('🔐 New verification code:', result.verificationCode);
+      }
       
+      return true;
+
+    } catch (error) {
+      console.error('Error resending code:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Get user orders by email
+  const getUserOrders = async (email) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/users/orders?email=${encodeURIComponent(email)}`
+      );
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
+      return result;
+
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Get single order
+  const getOrder = async (orderId, email) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/users/orders/${orderId}?email=${encodeURIComponent(email)}`
+      );
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+
       return result.order;
+
     } catch (error) {
       console.error('Error fetching order:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const logout = () => {
     setUser(null);
+    setVerificationSent(false);
+    setPendingEmail('');
   };
 
   return (
     <AuthContext.Provider value={{
       user,
       setUser,
-      getUserProfile,
+      findOrCreateUser,
+      verifyUser,
+      resendCode,
       getUserOrders,
       getOrder,
       logout,
-      isLoading
+      isLoading,
+      verificationSent,
+      pendingEmail
     }}>
       {children}
     </AuthContext.Provider>

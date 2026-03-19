@@ -72,9 +72,9 @@ const Feedback = () => {
       </h2>
 
       <p className="max-w-2xl mx-auto">
-        Sharing your thoughts? If you would like to give feedback on our website
+        Need to share your thoughts? If you would like to give feedback on our website
         based on the services we provide or the food items we offer, please
-        complete the form below.
+        use the form below.
       </p>
 
       <br />
@@ -151,7 +151,7 @@ const Feedback = () => {
         </div>
 
         {/* Contact permission */}
-        <div className="flex items-start gap-2">
+        <div className="flex items-center gap-2">
           <input
             type="checkbox"
             name="allowContact"

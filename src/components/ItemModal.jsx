@@ -188,7 +188,7 @@ const ItemModal = ({ item, isOpen, onClose }) => {
                   onClick={handleAddToCart}
                   className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
                 >
-                  Add to Cart 
+                  Add To Cart
                   {/* - {selectedSize.price} */}
                 </button>
               </div>

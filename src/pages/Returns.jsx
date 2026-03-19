@@ -2,7 +2,7 @@ import React from 'react'
 
 const Returns = () => {
   return (
-    <div>Returns</div>
+    <div className="container py-8 text-center">Returns</div>
   )
 }
 

@@ -4,7 +4,7 @@ import Toast from './Toast.jsx';
 
 const ToastContainer = ({ toasts, removeToast }) => {
   return (
-    <div className="fixed top-20 right-4 z-300 space-y-3 pointer-events-none">
+    <div className="fixed top-20 right-4 z-1300 space-y-3 pointer-events-none">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

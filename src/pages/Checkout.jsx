@@ -6,6 +6,8 @@ import { useOrder } from '../contexts/OrderContext';
 import { useToast } from '../contexts/ToastContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarkerAlt, FaStore, FaChevronDown } from 'react-icons/fa';
+import EmailVerificationModal from '../components/EmailVerificationModal';
+import { useAuth } from '../contexts/AuthContext';
 
 const Checkout = () => {
   const { cartItems, getCartTotal, formatPrice, clearCart } = useCart();
@@ -30,6 +32,12 @@ const Checkout = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPickupDropdown, setShowPickupDropdown] = useState(false);
   const [showDeliveryDropdown, setShowDeliveryDropdown] = useState(false);
+
+
+  // Inside the Checkout component, add:
+  const { findOrCreateUser, verifyUser, resendCode, isLoading: authLoading, verificationSent, pendingEmail } = useAuth();
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [pendingUserData, setPendingUserData] = useState(null);
 
   // Load Paystack script dynamically
   // In Checkout.jsx, update the useEffect:
@@ -95,7 +103,7 @@ const Checkout = () => {
   };
 
 
-  // In Checkout.jsx - update the handleSubmit function
+  // Update the handleSubmit function:
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -107,6 +115,43 @@ const Checkout = () => {
 
     setIsProcessing(true);
     
+    try {
+      // Step 1: Find or create user
+      const userData = {
+        email: deliveryInfo.email,
+        phone: deliveryInfo.phone,
+        fullName: deliveryInfo.fullName
+      };
+
+      const user = await findOrCreateUser(userData);
+      setPendingUserData(user);
+      
+      // Show verification modal
+      setShowVerificationModal(true);
+      
+    } catch (error) {
+      console.error('User creation error:', error);
+      toast.error(error.message || 'Failed to process your information');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Handle verification
+  const handleVerify = async (email, code) => {
+    try {
+      await verifyUser(email, code);
+      
+      // Now proceed with payment
+      await processPayment();
+      
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Process payment after verification
+  const processPayment = async () => {
     try {
       const cartTotal = getCartTotal();
       const deliveryFee = getDeliveryFee();
@@ -132,26 +177,24 @@ const Checkout = () => {
       // Create order and get user info
       const orderResult = await createOrder(orderData, paymentResponse.reference);
       
-      // ✅ FIXED: Pass user data to OrderSuccess
+      // Clear and navigate
       clearCheckoutData();
-      toast.success('Order placed successfully! Account created automatically.');
+      toast.success('Order placed successfully! Check your email for confirmation.');
       
       navigate('/order-success', { 
         state: { 
           orderNumber: paymentResponse.reference,
           grandTotal: grandTotal,
-          userId: orderResult.userId, // ✅ Add this
-          isGuest: orderResult.isGuest // ✅ Add this
+          userId: orderResult.userId,
+          email: deliveryInfo.email
         } 
       });
       
     } catch (error) {
-      console.error('Checkout error:', error);
+      console.error('Payment error:', error);
       if (error.message !== 'Payment cancelled by user') {
         toast.error(error.message || 'Failed to process payment. Please try again.');
       }
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -247,6 +290,7 @@ const Checkout = () => {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete='email'
                 value={deliveryInfo.email}
                 onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -489,6 +533,19 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {showVerificationModal && (
+      <EmailVerificationModal
+        email={deliveryInfo.email}
+        onVerify={handleVerify}
+        onResend={resendCode}
+        isLoading={authLoading}
+        onClose={() => {
+          setShowVerificationModal(false);
+          setPendingUserData(null);
+        }}
+      />
+    )}
     </div>
   );
 };

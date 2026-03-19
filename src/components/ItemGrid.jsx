@@ -3,6 +3,7 @@ import Item from "./Item";
 import ItemModal from './ItemModal';
 import { useMenu } from '../contexts/MenuContext';
 import { useCart } from '../contexts/CartContext';
+import { Hamburger } from 'lucide-react';
 
 const ItemGrid = () => {
   const { categories, selectedCategory, setSelectedCategory, isLoading, getUniqueProducts } = useMenu();
@@ -47,11 +48,12 @@ const ItemGrid = () => {
         </h2>
 
         {displayItems.length === 0 ? (
-          <div className="text-center text-gray-500">
-            No items available in this category
+          <div className="rounded-xl text-center text-gray-600 bg-gray-200 min-h-60 flex flex-col items-center justify-center gap-2">
+            <Hamburger size={60} />
+            <span className='text-dark/80'> No items available in this category </span>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-x-4 md:gap-y-8">
             {displayItems.map((item, index) => (
               <Item item={item} index={index} handleItemClick={handleItemClick} />
             ))}

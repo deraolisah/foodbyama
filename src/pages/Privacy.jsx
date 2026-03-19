@@ -2,7 +2,7 @@ import React from 'react'
 
 const Privacy = () => {
   return (
-    <div>Privacy</div>
+    <div className="container py-8 text-center">Privacy</div>
   )
 }
 
