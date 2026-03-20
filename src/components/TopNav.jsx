@@ -1,4 +1,5 @@
 import { Facebook, Instagram } from 'lucide-react';
+import { TiktokLogoIcon } from "@phosphor-icons/react";
 import React from 'react'
 
 const TopNav = () => {
@@ -16,18 +17,18 @@ const TopNav = () => {
 
       <div className="w-full text-center">
         {/* Open  */}
-        7AM - 6PM 
+        7AM — 6PM 
       </div>
 
       <div className="w-full flex items-center justify-end gap-4">
         <a title='Facebook' href="" target='_blank' className="hover:text-primary"> 
-          <Facebook size={16} />
+          <Facebook size={18} />
         </a>
         <a title='Instagram' href="https://www.instagram.com/foodbyama__/" target='_blank' className="hover:text-primary"> 
-          <Instagram size={16} />
+          <Instagram size={18} />
         </a>
         <a title='Tiktok' href='https://www.tiktok.com/@foodbyama22' target='_blank' className="hover:text-primary"> 
-          TikTok
+          <TiktokLogoIcon size={18} />
         </a>
       </div>
     </div>

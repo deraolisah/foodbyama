@@ -44,7 +44,7 @@ const BottomNav = () => {
 
 
   return (
-    <div className="fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 bg-light text-dark border-t border-gray-200 flex md:hidden items-center justify-center">
+    <div className="fixed z-30 bottom-0 left-1/2 -translate-x-1/2 w-full h-16 bg-light text-dark border-t border-gray-200 flex md:hidden items-center justify-center px-0!">
       <ul ref={navRef} className="flex items-center justify-between w-full relative gap-0">
         {navItems.map((item, index) => (
           <li

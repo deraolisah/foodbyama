@@ -8,6 +8,7 @@ import { CheckoutProvider } from './contexts/CheckoutContext';
 import { OrderProvider } from './contexts/OrderContext';
 import { AuthProvider } from './contexts/AuthContext';
 import AppRoutes from './routes/AppRoutes';
+import LoginModal from './components/LoginModal';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <MenuProvider>
                 <BrowserRouter>
                   <AppRoutes />
+                  <LoginModal />
                 </BrowserRouter>
               </MenuProvider>
             </OrderProvider>

@@ -5,8 +5,12 @@ import { Facebook, Info, Instagram, Menu, X } from 'lucide-react';
 import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import WelcomePopup from './WelcomePopup';
+import { useAuth } from '../contexts/AuthContext';
+// import { FaUser } from 'react-icons/fa';
+import { TiktokLogoIcon } from "@phosphor-icons/react";
 
 const Header = () => {
+  const { user, setShowLoginModal } = useAuth();
   const { getCartItemsCount } = useCart();
   const cartItemsCount = getCartItemsCount();
 
@@ -17,7 +21,7 @@ const Header = () => {
     {name: "Shop", href: "/shop" }
   ];
 
-  const [isSticky, setIsSticy] = useState(false);
+  // const [isSticky, setIsSticy] = useState(false);
   const [isMenuOpen, setIsmenuOpen] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
@@ -70,7 +74,7 @@ const Header = () => {
       </ul>   
 
       <div className="w-full h-full">
-        <Link to="/" className="w-full h-full text-dark flex items-center justify-start md:justify-center gap-2 text-xs md:text-sm font-medium z-60 relative">
+        <Link to="/" onClick={() => { scrollTo(0,0); setIsmenuOpen(false); }} className="w-full h-full text-dark flex items-center justify-start md:justify-center gap-2 text-xs md:text-sm font-medium z-60 relative">
           <img src={logo} alt='' className="w-9 h-9 object-cover rounded-full" />
           FoodByAma
         </Link>
@@ -114,18 +118,34 @@ const Header = () => {
               </span>
             )}
           </Link>
-          <Link title='Account' to="/account" className="hover:text-primary" onClick={() => { scrollTo(0,0); }}> <UserRound size={20} strokeWidth={1.5} /> </Link>
+          
+
+          {user ? (
+            <Link to="/account" className="flex items-center gap-2 hover:bg-primary/10 pr-2 rounded-full">
+              <div className="w-6.5 h-6.5 bg-primary rounded-full flex items-center justify-center text-white text-xs font-medium">
+                {user.fullName?.charAt(0) || 'U'}
+              </div>
+              <span className="hidden md:inline text-sm">{user.fullName}</span>
+            </Link>
+          ) : (
+            <button type="button" title='Account' to="/account" onClick={() => { scrollTo(0,0); setShowLoginModal(true); }} className="flex items-center gap-2 text-sm hover:text-primary"> 
+              <UserRound size={20} strokeWidth={1.5} /> 
+              <span className="hidden md:inline">Login</span>
+            </button>
+          )}
         </div>
       </div>
 
 
+
+      {/* Mobile Nav */}
       <ul className={`fixed inset-0 w-full max-w-3xl ml-auto overflow-y-auto flex md:hidden flex-col items-start justify-between gap-10 px-4 pt-20 pb-10 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
       }`}>
         <span className="w-full">
           {navLinks.map((item) => (
             <li key={item.name} className="border-b border-gray-300 w-full">
-              <Link to={item.href} onClick={() => { scrollTo(0,0); setIsmenuOpen(false) }} className="w-full flex py-2.5 hover:text-primary"> 
+              <Link to={item.href} onClick={() => { scrollTo(0,0); setIsmenuOpen(false); }} className="w-full flex py-2.5 hover:text-primary"> 
                 {item.name} 
               </Link>
             </li>
@@ -147,7 +167,7 @@ const Header = () => {
               <Instagram size={16} />
             </a> |
             <a title='Tiktok' href='https://www.tiktok.com/@foodbyama22' target='_blank' className="hover:text-primary"> 
-              TikTok
+              <TiktokLogoIcon size={18} />
             </a>
           </div>
           <div className="border-t border-gray-300 w-full py-2.5 text-wrap"> 
