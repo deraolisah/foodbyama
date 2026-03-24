@@ -92,7 +92,7 @@ const AccountOverview = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-primary to-orange-600 rounded-2xl p-6 text-white">
+      <div className="bg-linear-to-r from-primary to-orange-600 rounded-2xl p-6 text-white">
         <h2 className="text-2xl font-bold mb-2">Welcome back, {user.fullName.split(' ')[0]}!</h2>
         <p className="opacity-90">
           {orders.length === 0 
@@ -186,7 +186,7 @@ const AccountOverview = () => {
 
       {/* Loyalty Preview */}
       {user.loyaltyPoints > 0 && (
-        <div className="bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl p-6 text-white">
+        <div className="bg-linear-to-r from-purple-500 to-purple-700 rounded-2xl p-6 text-white">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-90 mb-1">Your Loyalty Points</p>
