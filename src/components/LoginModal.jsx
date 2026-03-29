@@ -78,15 +78,15 @@ const LoginModal = () => {
     setIsLoading(false);
   };
 
-  const handleClose = () => {
-    setShowLoginModal(false);
-    setMode('request');
-    setEmail('');
-    setCode('');
-    setError('');
-    setSuccess('');
-    navigate("/");
-  };
+  // const handleClose = () => {
+  //   setShowLoginModal(false);
+  //   setMode('request');
+  //   setEmail('');
+  //   setCode('');
+  //   setError('');
+  //   setSuccess('');
+  //   navigate("/");
+  // };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-5000 p-4">

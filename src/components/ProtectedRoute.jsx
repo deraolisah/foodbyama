@@ -34,7 +34,7 @@
 // components/ProtectedRoute.jsx
 import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading, setShowLoginModal } = useAuth();
@@ -44,12 +44,18 @@ const ProtectedRoute = ({ children }) => {
 
   if (!user) {
     setShowLoginModal(true);
-    return null;
+    return <Navigate to="/login" replace />;
+    // return null;
   }
 
-  if(user.role === "admin"){
-    navigate("/admin");
+  if(user && user.role === "admin"){
+    return <Navigate to="/admin" replace />;
   }
+
+  
+  // if (!user || user.role !== 'user') {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   if (!user) {
     return null;

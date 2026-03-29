@@ -1,31 +1,23 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import AdminHeader from '../components/admin/AdminHeader';
+import AdminSiderbar from '../components/admin/AdminSiderbar';
 
 const AdminLayout = () => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <AdminHeader />
+      <div className="flex container relative p-0!">
 
-      {/* Sidebar */}
-      <aside className="w-64 bg-black text-white p-6">
-        <h2 className="text-xl font-bold mb-8">Admin</h2>
 
-        <nav className="space-y-4">
-          <Link to="/admin" className="block hover:text-gray-300">
-            Dashboard
-          </Link>
-          <Link to="/admin/orders" className="block hover:text-gray-300">
-            Orders
-          </Link>
-          <Link to="/admin/products" className="block hover:text-gray-300">
-            Products
-          </Link>
-        </nav>
-      </aside>
+        {/* Sidebar */}
+        <AdminSiderbar />
 
-      {/* Content */}
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
+        {/* Content */}
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

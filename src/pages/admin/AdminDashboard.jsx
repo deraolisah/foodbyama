@@ -36,7 +36,7 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gray-100 p-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      {/* <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">
           Admin Dashboard
         </h1>
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
         >
           Logout
         </button>
-      </div>
+      </div> */}
 
       {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

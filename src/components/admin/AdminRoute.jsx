@@ -11,12 +11,13 @@ const AdminRoute = ({ children }) => {
   if (!user || user.role !== 'admin') {
     return <Navigate to="/admin/login" replace />;
   }
+  
 
-  useEffect(() => {
-    if (user?.role === 'admin') {
-      navigate('/admin');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.role === 'admin') {
+  //     navigate('/admin');
+  //   }
+  // }, [user]);
 
   return children;
 };

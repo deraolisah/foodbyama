@@ -5,6 +5,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import AdminRoute from '../components/admin/AdminRoute.jsx';
 
 // Account Pages
+import Login from '../pages/Login.jsx';
 import Account from "../pages/account/Account.jsx";
 
 
@@ -53,6 +54,7 @@ const AppRoutes = () => {
           <Route path="/faqs" element={<Faqs />} />
 
           {/* USER DASHBOARD */}
+          <Route path='/login' element={<Login />} />
           <Route 
             path="/account" 
             element={
