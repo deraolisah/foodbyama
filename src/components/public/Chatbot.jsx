@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaWhatsapp } from "react-icons/fa";
-import logo from "../assets/logo.jpg";
-import whatsappBg from "../assets/whatsapp-bg.png";
-import sendBtn from "../assets/send-icon.svg";
+import logo from "../../assets/logo.jpg";
+import whatsappBg from "../../assets/whatsapp-bg.png";
+import sendBtn from "../../assets/send-icon.svg";
 import { IoMdClose } from "react-icons/io";
 
 const Chatbot = () => {

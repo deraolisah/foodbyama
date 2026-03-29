@@ -214,7 +214,7 @@ const Shop = () => {
 
         <div className="w-full bg-white p-4 md:p-0 lg:sticky lg:top-13 overflow-hidden">
           {/* Filters Header */}
-          <div className="flex items-center justify-between py-2 md:py-4 border-b border-dark/10">
+          <div className="flex items-center justify-between py-2 md:py-4">
             <h3 className="hidden md:flex font-semibold text-lg">Filters</h3>
             {activeFilterCount > 0 && (
               <button 
@@ -299,7 +299,7 @@ const Shop = () => {
         {/* Main Content - Right */}
         <div className="flex-1 space-y-2">
           {/* Sort, Search and Results Count */}
-          <div className="sticky top-13 z-20 bg-white py-0 space-y-1 border-b border-dark/10">
+          <div className="sticky top-13 z-20 bg-white pt-1 space-y-1 border-dark/10">
             {/* Search Bar - appears when search is open */}
             <div className={`
               transition-all duration-300 ease-in-out overflow-hidden

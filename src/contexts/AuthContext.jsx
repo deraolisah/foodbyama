@@ -534,12 +534,15 @@
 
 
 // contexts/AuthContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, use } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  // const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -616,12 +619,6 @@ export const AuthProvider = ({ children }) => {
         throw new Error(result.error || 'Something went wrong');
       }
 
-      // const result = await response.json();
-
-      // if (!result.success) {
-      //   throw new Error(result.error || 'Verification failed');
-      // }
-
       // Store user data - this will automatically save to localStorage
       setUser({
         ...result.user,
@@ -667,6 +664,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('foodbyama_user');
     setUser(null);
     setPendingEmail('');
+    // navigate("/");
   };
 
   const requireAuth = () => {
@@ -723,6 +721,42 @@ export const AuthProvider = ({ children }) => {
     verifyUserToken();
   }, []);
 
+
+
+
+  // ADMIN LOGIN
+  const adminLogin = async (email, password, navigate) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Login failed');
+      }
+
+      const result = await response.json();
+
+      setUser({
+        ...result.user,
+        token: result.token
+      });
+
+      // ✅ redirect admin
+      if (result.user.role === 'admin') {
+        navigate('/admin');
+      }
+
+      return { success: true };
+
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -734,7 +768,8 @@ export const AuthProvider = ({ children }) => {
       verifyCode,
       resendCode,
       logout,
-      requireAuth
+      requireAuth,
+      adminLogin
     }}>
       {children}
     </AuthContext.Provider>

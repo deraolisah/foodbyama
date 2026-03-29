@@ -2,14 +2,18 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
-import AdminRoute from '../components/AdminRoute.jsx';
+import AdminRoute from '../components/admin/AdminRoute.jsx';
 
 // Account Pages
 import Account from "../pages/account/Account.jsx";
 
 
 // Admin Pages
-import AdminDashboard from '../pages/AdminDashboard.jsx';
+import AdminLoginPage from '../pages/admin/AdminLoginPage.jsx';
+import AdminLayout from '../layouts/AdminLayout.jsx';
+import AdminDashboard from '../pages/admin/AdminDashboard.jsx';
+import OrdersPage from '../pages/admin/OrdersPage.jsx';
+import ProductsPage from '../pages/admin/ProductsPage.jsx';
 
 // Other imports...
 import Home from '../pages/Home.jsx';
@@ -18,7 +22,7 @@ import Contact from '../pages/Contact.jsx';
 import Shop from '../pages/Shop.jsx';
 import Cart from '../pages/Cart.jsx';
 import Checkout from '../pages/Checkout.jsx';
-import OrderSuccess from '../pages/OrderSuccess.jsx';
+import OrderSuccess from '../pages/account/OrderSuccess.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import Search from '../pages/Search.jsx';
 import Feedback from '../pages/Feedback.jsx';
@@ -59,14 +63,16 @@ const AppRoutes = () => {
           />
 
           {/* ADMIN DASHBOARD */}
-          <Route 
-            path="/admin" 
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            } 
-          />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }>
+            <Route index element={<AdminDashboard />} />
+            <Route path="orders" element={<OrdersPage />} />
+            <Route path="products" element={<ProductsPage />} />
+          </Route>
 
           
           {/* 404 */}

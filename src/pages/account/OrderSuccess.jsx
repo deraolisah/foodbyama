@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { FaCheckCircle, FaWhatsapp, FaPrint, FaHome, FaUser, FaInfoCircle } from 'react-icons/fa';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 const OrderSuccess = () => {
   const location = useLocation();

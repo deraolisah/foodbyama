@@ -34,15 +34,21 @@
 // components/ProtectedRoute.jsx
 import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading, setShowLoginModal } = useAuth();
+  const navigate = useNavigate();
 
   if (isLoading) return null;
 
   if (!user) {
     setShowLoginModal(true);
     return null;
+  }
+
+  if(user.role === "admin"){
+    navigate("/admin");
   }
 
   if (!user) {

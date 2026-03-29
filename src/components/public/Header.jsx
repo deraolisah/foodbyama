@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logo from "../assets/favicon.png";
-import { href, Link } from 'react-router-dom';
+import logo from "../../assets/favicon.png";
+import { Link } from 'react-router-dom';
 import { Facebook, Info, Instagram, Menu, X } from 'lucide-react';
-import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
-import WelcomePopup from './WelcomePopup';
-import { useAuth } from '../contexts/AuthContext';
+import { ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { TiktokLogoIcon } from "@phosphor-icons/react";
+import { useCart } from '../../contexts/CartContext';
+import WelcomePopup from './WelcomePopup';
+import { useAuth } from '../../contexts/AuthContext';
+import CookieModal from './CookieModal';
 
 const Header = () => {
   const { user, setShowLoginModal } = useAuth();
@@ -24,6 +25,7 @@ const Header = () => {
   const [isMenuOpen, setIsmenuOpen] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
+  const [openCookieModal, setOpenCookieModal] = useState(false);
 
   // Menu
   const toggleMenu = () => {
@@ -39,6 +41,11 @@ const Header = () => {
   // Welcome Popup
   const togglePopup = () => {
     setOpenPopup(!openPopup);
+  }
+
+  // Cookie Modal
+  const toggleCookieModal = () => {
+    setOpenCookieModal(!openCookieModal);
   }
 
   const dropdownRef = useRef();
@@ -105,7 +112,7 @@ const Header = () => {
                 <button className="p-2 text-nowrap cursor-pointer hover:bg-gray-100" onClick={() => { toggleCookieModal(); }}> 
                   Manage Cookies
                 </button>
-                {/* {openCookieModal && (<WelcomePopup setOpenCookieModal={setOpenCookieModal} />) } */}
+                {openCookieModal && (<CookieModal setOpenCookieModal={setOpenCookieModal} />) }
               </div>
             )}
           </div>
@@ -122,15 +129,28 @@ const Header = () => {
           
 
           {user ? (
-            <Link to="/account" className="flex items-center gap-2 hover:bg-primary/10 pr-2 rounded-full">
-              <div className="w-6.5 h-6.5 bg-primary rounded-full flex items-center justify-center text-white text-xs font-medium">
-                {user.fullName?.charAt(0) || 'U'}
-              </div>
-              <span className="hidden md:inline text-sm">{user.fullName}</span>
-            </Link>
+            user.role === "admin" ? (
+              <Link to="/admin" className="flex items-center gap-2 hover:bg-primary/10 pr-2 rounded-full">
+                <div className="w-6.5 h-6.5 bg-primary rounded-full flex items-center justify-center text-white text-xs font-medium">
+                  {user.fullName?.charAt(0) || 'A'}
+                </div>
+                <span className="hidden md:inline text-sm">{user.fullName}</span>
+              </Link>
+            ) : (
+              <Link to="/account" className="flex items-center gap-2 hover:bg-primary/10 pr-2 rounded-full">
+                <div className="w-6.5 h-6.5 bg-primary rounded-full flex items-center justify-center text-white text-xs font-medium">
+                  {user.fullName?.charAt(0) || 'U'}
+                </div>
+                <span className="hidden md:inline text-sm">{user.fullName}</span>
+              </Link>
+            )
           ) : (
-            <button type="button" title='Account' to="/account" onClick={() => { scrollTo(0,0); setShowLoginModal(true); }} className="flex items-center gap-2 text-sm hover:text-primary"> 
-              <UserRound size={20} strokeWidth={1.5} /> 
+            <button
+              type="button"
+              onClick={() => setShowLoginModal(true)}
+              className="flex items-center gap-2 text-sm hover:text-primary"
+            >
+              <UserRound size={20} strokeWidth={1.5} />
               <span className="hidden md:inline">Login</span>
             </button>
           )}

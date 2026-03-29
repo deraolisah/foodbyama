@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { FaSpinner, FaGoogle, FaTimes } from 'react-icons/fa';
+// import { useNavigate } from 'react-router-dom';
 
 const LoginModal = () => {
   const { showLoginModal, setShowLoginModal, login, verifyCode, resendCode, pendingEmail } = useAuth();
+  // const navigate = useNavigate();
   
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -83,6 +85,7 @@ const LoginModal = () => {
     setCode('');
     setError('');
     setSuccess('');
+    navigate("/");
   };
 
   return (
@@ -90,7 +93,7 @@ const LoginModal = () => {
       <div className="bg-white rounded-2xl max-h-[80vh] h-fit max-w-md w-full p-5 md:p-6 relative flex flex-col items-center justify-between overflow-y-auto">
         {/* Close button */}
         <button
-          onClick={handleClose}
+          onClick={() => { handleClose }}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
         >
           <FaTimes />
