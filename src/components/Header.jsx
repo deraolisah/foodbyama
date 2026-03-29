@@ -6,7 +6,6 @@ import { House, Search, ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import WelcomePopup from './WelcomePopup';
 import { useAuth } from '../contexts/AuthContext';
-// import { FaUser } from 'react-icons/fa';
 import { TiktokLogoIcon } from "@phosphor-icons/react";
 
 const Header = () => {
@@ -21,7 +20,7 @@ const Header = () => {
     {name: "Shop", href: "/shop" }
   ];
 
-  // const [isSticky, setIsSticy] = useState(false);
+  
   const [isMenuOpen, setIsmenuOpen] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
@@ -37,7 +36,7 @@ const Header = () => {
     setOpenHelp(!openHelp);
   }
 
-  // Popup
+  // Welcome Popup
   const togglePopup = () => {
     setOpenPopup(!openPopup);
   }
@@ -51,10 +50,8 @@ const Header = () => {
         setOpenHelp(false);
       }
     };
-
     // Add event listener
     document.addEventListener('mousedown', handleClickOutside);
-    
     // Cleanup
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -104,7 +101,11 @@ const Header = () => {
               <div className="border border-gray-300 bg-light shadow-md text-xs w-fit rounded-lg absolute right-0 flex flex-col overflow-hidden">
                 <button type='button' onClick={() => {togglePopup()}} className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> How To Order </button>
                 { openPopup && (<WelcomePopup setOpenPopup={setOpenPopup} />) }
-                <Link to="/feedback" className="p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </Link>
+                <Link to="/feedback" className="border-b border-gray-300 p-2 text-nowrap cursor-pointer hover:bg-gray-100"> Leave Feedback </Link>
+                <button className="p-2 text-nowrap cursor-pointer hover:bg-gray-100" onClick={() => { toggleCookieModal(); }}> 
+                  Manage Cookies
+                </button>
+                {/* {openCookieModal && (<WelcomePopup setOpenCookieModal={setOpenCookieModal} />) } */}
               </div>
             )}
           </div>

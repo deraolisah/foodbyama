@@ -50,7 +50,7 @@ const BottomNav = () => {
           <li
             key={index}
             className="flex-1 h-full relative"
-            onClick={() =>{ setActiveIndex(index); scrollTo(0,0) }}
+            onClick={() =>{ scrollTo(0,0); setActiveIndex(index); }}
           >
             <NavLink
               to={item.to}

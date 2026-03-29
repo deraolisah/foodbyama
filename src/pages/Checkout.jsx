@@ -809,27 +809,32 @@ const Checkout = () => {
   // Main checkout screen
   return (
     <div className="container py-8">
-      <Link to="/cart" className="inline-flex items-center text-sm text-dark hover:underline mb-6">
-        <FaArrowLeft className="mr-2" />
-        Back to Cart
-      </Link>
+      {/* <div className="flex items-center justify-between mb-6"> */}
+        <Link to="/cart" className="inline-flex items-center text-sm text-dark hover:underline mb-6">
+          <FaArrowLeft className="mr-2" />
+          Back
+        </Link>
+
+        {/* <h2 className="hidden md:flex text-lg md:text-2xl font-bold">Order</h2> */}
+
+        {/* <span></span> */}
+      {/* </div> */}
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Order Form */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-6">Order Information</h2>
+        <div className="bg-white md:rounded-xl md:shadow-sm md:border border-dark/10 overflow-hidden p-0 md:p-6">
           
           {/* Order Type Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-3">Order Type</label>
-            <div className="flex space-x-4">
+            {/* <label className="block text-sm font-medium mb-3">Order Type</label> */}
+            <div className="flex space-x-0.5 bg-gray-500/10 p-1 rounded-lg inset-shadow-sm">
               <button
                 type="button"
                 onClick={() => handleOrderTypeChange('delivery')}
-                className={`flex-1 flex items-center justify-center p-3 rounded-lg border-2 transition ${
+                className={`flex-1 flex items-center justify-center p-3 rounded-md transition ${
                   orderType === 'delivery'
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-gray-300 hover:border-primary'
+                    ? 'border-primary bg-primary text-white'
+                    : 'text-dark hover:text-primary'
                 }`}
               >
                 <FaMapMarkerAlt className="mr-2" />
@@ -838,14 +843,14 @@ const Checkout = () => {
               <button
                 type="button"
                 onClick={() => handleOrderTypeChange('pickup')}
-                className={`flex-1 flex items-center justify-center p-3 rounded-lg border-2 transition ${
+                className={`flex-1 flex items-center justify-center p-3 rounded-md transition ${
                   orderType === 'pickup'
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-gray-300 hover:border-primary'
+                    ? 'border-primary bg-primary text-white'
+                    : 'text-dark hover:text-primary'
                 }`}
               >
                 <FaStore className="mr-2" />
-                Pickup
+                Pick Up
               </button>
             </div>
           </div>
@@ -1008,7 +1013,7 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-white rounded-2xl shadow-md p-6 h-fit sticky top-4">
+        <div className="bg-white md:rounded-xl md:shadow-sm md:border border-dark/10 overflow-hidden p-6 h-fit sticky top-16">
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
           
           {/* Order Type Badge */}

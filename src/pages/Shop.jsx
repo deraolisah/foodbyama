@@ -206,21 +206,15 @@ const Shop = () => {
         <div className={`
           lg:w-72 shrink-0
           ${isFilterOpen ? 'flex md:block' : 'hidden lg:block'}
-          fixed top-29 left-0 lg:static lg:top-none inset-0 z-150 lg:z-auto bg-white lg:bg-transparent p-4 pt-0 lg:p-0
+          fixed top-28 left-0 lg:sticky lg:top-0 inset-0 z-150 lg:z-auto bg-white lg:bg-transparent 
           overflow-y-auto lg:overflow-visible
           max-h-screen lg:max-h-none
           `}
           >
 
-        <div className="w-full bg-white md:rounded-lg shadow-sm border border-dark/10 p-4 lg:sticky lg:top-22 overflow-hidden">
+        <div className="w-full bg-white p-4 md:p-0 lg:sticky lg:top-13 overflow-hidden">
           {/* Filters Header */}
-          <div className="flex items-center justify-between mb-4">
-            <button 
-            onClick={() => setIsFilterOpen(false)}
-            className="lg:hidden top-6 right-8 text-2xl cursor-pointer"
-            >
-            ×
-          </button>
+          <div className="flex items-center justify-between py-2 md:py-4 border-b border-dark/10">
             <h3 className="hidden md:flex font-semibold text-lg">Filters</h3>
             {activeFilterCount > 0 && (
               <button 
@@ -230,13 +224,19 @@ const Shop = () => {
                 Clear All ({activeFilterCount})
               </button>
             )}
+            <button 
+              onClick={() => setIsFilterOpen(false)}
+              className="lg:hidden top-6 right-8 text-2xl cursor-pointer"
+              >
+              ×
+            </button>
           </div>
 
           {/* Filter Sections */}
-          <div className="space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto pt-2 pr-2">
             {/* Days of the Week */}
             <div className="border-b border-dark/10 pb-4">
-              <h4 className="font-medium mb-2">Available Days</h4>
+              <h4 className="font-medium mb-2"> Daily Specials </h4>
               <div className="space-y-2">
                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                   <label key={day} className="flex items-center gap-2">
@@ -297,9 +297,9 @@ const Shop = () => {
       </div>
 
         {/* Main Content - Right */}
-        <div className="flex-1">
+        <div className="flex-1 space-y-2">
           {/* Sort, Search and Results Count */}
-          <div className="sticky top-13 z-20 bg-white py-1 space-y-1">
+          <div className="sticky top-13 z-20 bg-white py-0 space-y-1 border-b border-dark/10">
             {/* Search Bar - appears when search is open */}
             <div className={`
               transition-all duration-300 ease-in-out overflow-hidden
@@ -355,7 +355,7 @@ const Shop = () => {
                   title='Filter'
                 >
                   <ListFilter size={16} />
-                  <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
+                  <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`} </span>
                 </button>
                 <p className="hidden lg:flex text-sm text-gray-600 ml-1">
                   {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
@@ -425,7 +425,9 @@ const Shop = () => {
               🍽️ Weekly Specials Available!
             </p>
             <p className="text-primary text-sm">
-              Check our daily specials for Monday - Friday. Pre-order at least 12 hours in advance.
+              Check our daily specials for Monday - Friday. 
+              <br/>
+              Pre-order at least 12 hours in advance.
             </p>
           </div>
         </div>

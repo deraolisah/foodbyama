@@ -33,19 +33,17 @@
 
 // components/ProtectedRoute.jsx
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { user, setShowLoginModal } = useAuth();
-  const navigate = useNavigate();
+  const { user, isLoading, setShowLoginModal } = useAuth();
 
-  useEffect(() => {
-    if (!user) {
-      setShowLoginModal(true);
-      navigate('/', { replace: true });
-    }
-  }, [user, setShowLoginModal, navigate]);
+  if (isLoading) return null;
+
+  if (!user) {
+    setShowLoginModal(true);
+    return null;
+  }
 
   if (!user) {
     return null;

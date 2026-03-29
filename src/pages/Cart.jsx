@@ -52,7 +52,7 @@ const Cart = () => {
           <span className="text-gray-600">{cartItems.length} items</span>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-dark/10 overflow-hidden">
+        <div className="bg-white md:rounded-xl md:shadow-sm md:border border-dark/10 overflow-hidden">
           {cartItems.map((item) => (
             <div key={item.id} className="flex flex-wrap items-center gap-4 p-4 border-b border-dark/10 last:border-b-0">
               <img 
@@ -116,7 +116,7 @@ const Cart = () => {
           ))}
 
           {/* Cart Summary */}
-          <div className="p-4 pt-6 md:p-6 bg-dark/5">
+          <div className="p-4 pt-6 md:p-6 bg-primary/5">
             <div className="flex justify-between items-end mb-8">
               <div className="text-lg font-bold flex items-end gap-2">
                 Total:
@@ -136,6 +136,7 @@ const Cart = () => {
               
               <Link 
                 to="/checkout" 
+                onClick={() => { scrollTo(0,0); }}
                 className="flex-1 bg-primary text-white py-3 rounded-lg font-semibold text-center hover:bg-primary/90 transition cursor-pointer text-nowrap"
               >
                 Proceed to Checkout

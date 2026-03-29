@@ -5,21 +5,19 @@ import { useToast } from './ToastContext';
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
   const toast = useToast(); // ✅
-
+  
+  
   // Load cart from localStorage
-  useEffect(() => {
-    const savedCart = localStorage.getItem('foodByAma_cart');
-    if (savedCart) {
-      try {
-        setCartItems(JSON.parse(savedCart));
-      } catch (error) {
-        console.error('Error loading cart:', error);
-        localStorage.removeItem('foodByAma_cart');
-      }
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem('foodByAma_cart');
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error('Error loading cart:', error);
+      return [];
     }
-  }, []);
+  });
 
   // Save cart to localStorage
   useEffect(() => {

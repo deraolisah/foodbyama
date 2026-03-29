@@ -86,7 +86,7 @@ const LoginModal = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-5000 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-5000 p-4">
       <div className="bg-white rounded-2xl max-h-[80vh] h-fit max-w-md w-full p-5 md:p-6 relative flex flex-col items-center justify-between overflow-y-auto">
         {/* Close button */}
         <button
@@ -166,10 +166,6 @@ const LoginModal = () => {
           </form>
         ) : (
           <form onSubmit={handleVerify} className="w-full space-y-4 flex-1">
-            {/* <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
-              <p className="text-gray-700 text-sm">{pendingEmail || email}</p>
-            </div> */}
-
             <div>
               <input
                 type="text"

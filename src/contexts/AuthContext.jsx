@@ -539,33 +539,30 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [pendingEmail, setPendingEmail] = useState('');
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // Load user from localStorage on app start - SIMPLE
-  useEffect(() => {
-    const savedUser = localStorage.getItem('foodbyama_user');
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-        console.log('User loaded from localStorage:', userData);
-      } catch (error) {
-        console.error('Error loading user:', error);
-        localStorage.removeItem('foodbyama_user');
-      }
+  // Set and Load user from localStorage on app start - SIMPLE
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('foodbyama_user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      console.error('Error loading user:', error);
+      return null;
     }
-    setIsLoading(false);
-  }, []);
+  });
 
   // Save user to localStorage whenever it changes
   useEffect(() => {
     if (user) {
       localStorage.setItem('foodbyama_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('foodbyama_user');
     }
   }, [user]);
 
@@ -581,10 +578,15 @@ export const AuthProvider = ({ children }) => {
         })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text(); 
+        throw new Error(errorText || 'Request failed');
+      }
+
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error);
+        throw new Error(result.error || 'Something went wrong');
       }
 
       setPendingEmail(email);
@@ -603,14 +605,28 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, code })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Request failed');
+      }
+
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Verification failed');
+        throw new Error(result.error || 'Something went wrong');
       }
 
+      // const result = await response.json();
+
+      // if (!result.success) {
+      //   throw new Error(result.error || 'Verification failed');
+      // }
+
       // Store user data - this will automatically save to localStorage
-      setUser(result.user);
+      setUser({
+        ...result.user,
+        token: result.token
+      });
       setShowLoginModal(false);
       setPendingEmail('');
       
@@ -629,10 +645,15 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text(); 
+        throw new Error(errorText || 'Request failed');
+      }
+
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error);
+        throw new Error(result.error || 'Something went wrong');
       }
       
       return { success: true };
@@ -643,8 +664,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
     localStorage.removeItem('foodbyama_user');
+    setUser(null);
+    setPendingEmail('');
   };
 
   const requireAuth = () => {
@@ -654,6 +676,52 @@ export const AuthProvider = ({ children }) => {
     }
     return true;
   };
+
+
+  useEffect(() => {
+    const verifyUserToken = async () => {
+      if (!user?.token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/users/verify-token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Token verification failed');
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+
+        // ✅ Update user with fresh backend data
+        setUser(prev => ({
+          ...result.user,
+          token: prev.token
+        }));
+
+      } catch (error) {
+        console.error('Token invalid/expired:', error);
+
+        // ❌ Kill session
+        logout();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyUserToken();
+  }, []);
 
   return (
     <AuthContext.Provider value={{

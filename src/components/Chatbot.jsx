@@ -18,7 +18,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-20 md:bottom-10 left-0 w-full z-120 pointer-events-none">
+    <div className="fixed bottom-20 md:bottom-10 left-0 w-full z-5000 pointer-events-none">
       <div className="container flex justify-end items-center relative">
         {/* WhatsApp Icon */}
         <button onClick={handleOpen} className="z-40 pointer-events-auto cursor-pointer bg-[#25d366] p-2.5 rounded-full shadow">
