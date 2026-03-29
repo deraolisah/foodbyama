@@ -33,7 +33,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="">
 
       {/* Header */}
       {/* <div className="flex items-center justify-between mb-6">

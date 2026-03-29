@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const AdminHeader = () => {
+const AdminHeader = ({ toggleSidebar }) => {
   const { logout } = useAuth();
   const navigate = useNavigate(); 
 
@@ -13,10 +13,11 @@ const AdminHeader = () => {
   };
 
   return (
-    <div className="container bg-gray-200 h-14 border-b border-gray-300">
+    <div className="container bg-gray-200 h-14 border-b border-gray-300 fixed md:relative top-13 md:top-0 left-0 right-0 z-10">
       <header className="flex items-center justify-between h-full gap-4">
         <button
           className="text-sm bg-white p-2 rounded-md shadow text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer w-fit"
+          onClick={() => (toggleSidebar())}
         >
           <PanelRightOpen size={18} />
         </button>
