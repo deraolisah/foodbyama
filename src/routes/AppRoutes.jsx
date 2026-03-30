@@ -5,8 +5,9 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import AdminRoute from '../components/admin/AdminRoute.jsx';
 
 // Account Pages
-import Login from '../pages/Login.jsx';
+import Login from '../pages/account/Login.jsx';
 import Account from "../pages/account/Account.jsx";
+import OrderTracking from '../pages/account/OrderTracking.jsx';
 
 
 // Admin Pages
@@ -55,14 +56,13 @@ const AppRoutes = () => {
 
           {/* USER DASHBOARD */}
           <Route path='/login' element={<Login />} />
-          <Route 
-            path="/account" 
-            element={
-              <ProtectedRoute>
+          <Route path="/account" element={
+            <ProtectedRoute>
                 <Account />
               </ProtectedRoute>
-            } 
+            }
           />
+          <Route path="/track-order/:orderId" element={<OrderTracking />} />
 
           {/* ADMIN DASHBOARD */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

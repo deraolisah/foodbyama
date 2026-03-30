@@ -534,7 +534,7 @@
 
 
 // contexts/AuthContext.jsx
-import React, { createContext, useContext, useState, useEffect, use } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -542,10 +542,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [pendingEmail, setPendingEmail] = useState('');
 
 
@@ -593,7 +591,8 @@ export const AuthProvider = ({ children }) => {
       }
 
       setPendingEmail(email);
-      return { success: true, requiresVerification: true };
+      // return { success: true, requiresVerification: true };
+      return { success: true, email };
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, error: error.message };
@@ -624,7 +623,7 @@ export const AuthProvider = ({ children }) => {
         ...result.user,
         token: result.token
       });
-      setShowLoginModal(false);
+      // setShowLoginModal(false);
       setPendingEmail('');
       
       return { success: true };
@@ -667,13 +666,6 @@ export const AuthProvider = ({ children }) => {
     // navigate("/");
   };
 
-  const requireAuth = () => {
-    if (!user) {
-      setShowLoginModal(true);
-      return false;
-    }
-    return true;
-  };
 
 
   useEffect(() => {
@@ -719,7 +711,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     verifyUserToken();
-  }, []);
+  }, [user?.token]);
 
 
 
@@ -761,14 +753,12 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{
       user,
       isLoading,
-      showLoginModal,
-      setShowLoginModal,
+      setIsLoading,
       pendingEmail,
       login,
       verifyCode,
       resendCode,
       logout,
-      requireAuth,
       adminLogin
     }}>
       {children}

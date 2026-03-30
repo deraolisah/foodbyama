@@ -298,7 +298,7 @@ const Account = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {orders.map((order) => (
+                    {/* {orders.map((order) => (
                       <div 
                         key={order._id} 
                         className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -344,6 +344,40 @@ const Account = () => {
                               className="inline-block mt-2 text-primary hover:underline text-sm"
                             >
                               View Details →
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    ))} */}
+                    {orders.map((order) => (
+                      <div key={order._id} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-semibold">
+                              Order #{order._id.slice(-8).toUpperCase()}
+                            </h3>
+                            <p className="text-sm text-gray-500">
+                              {new Date(order.createdAt).toLocaleDateString()}
+                            </p>
+                            {/* Show status badge */}
+                            <span className={`inline-block mt-2 px-2 py-1 rounded-full text-xs font-medium ${
+                              order.trackingStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                              order.trackingStatus === 'cancelled' ? 'bg-red-100 text-red-800' :
+                              'bg-blue-100 text-blue-800'
+                            }`}>
+                              {order.trackingStatus || 'Pending'}
+                            </span>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-primary">
+                              ₦{order.pricing?.total?.toLocaleString()}
+                            </p>
+                            {/* TRACK ORDER BUTTON */}
+                            <Link
+                              to={`/track-order/${order._id}`}
+                              className="mt-2 inline-block text-sm bg-primary text-white px-3 py-1 rounded-lg hover:bg-primary/90"
+                            >
+                              Track Order →
                             </Link>
                           </div>
                         </div>

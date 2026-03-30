@@ -145,14 +145,14 @@ const Header = () => {
               </Link>
             )
           ) : (
-            <button
-              type="button"
-              onClick={() => setShowLoginModal(true)}
+            <Link
+              to="/login"
+              // onClick={() => setShowLoginModal(true)}
               className="flex items-center gap-2 text-sm hover:text-primary"
             >
               <UserRound size={20} strokeWidth={1.5} />
               <span className="hidden md:inline">Login</span>
-            </button>
+            </Link>
           )}
         </div>
       </div>
