@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
-import ItemModal from '../components/ItemModal';
+import ItemModal from '../components/home/ItemModal';
 import placeholder from "../assets/placeholder.png";
 
 const Cart = () => {

@@ -138,9 +138,9 @@
 
 
 import React from 'react';
-import Hero from "../components/Hero.jsx";
-import Categories from '../components/Categories.jsx';
-import ItemGrid from '../components/ItemGrid.jsx';
+import Hero from "../components/home/Hero.jsx";
+import Categories from '../components/home/Categories.jsx';
+import ItemGrid from '../components/home/ItemGrid.jsx';
 
 const Home = () => {
   return (

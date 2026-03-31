@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useMenu } from '../contexts/MenuContext';
 import placeholder from "../assets/placeholder.png";
-import ItemModal from './ItemModal';
+import ItemModal from './home/ItemModal';
 
 const SearchResults = ({ query, onItemSelect }) => {
   const { searchItems } = useMenu();

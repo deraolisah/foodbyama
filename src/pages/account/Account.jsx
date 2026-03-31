@@ -352,7 +352,8 @@ const Account = () => {
                     {orders.map((order) => (
                       <div key={order._id} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex justify-between items-start">
-                          <div>
+                          <img src={order.image} alt='' className="w-16 h-16 object-cover rounded" />
+                          <div className="flex-1 px-4">
                             <h3 className="font-semibold">
                               Order #{order._id.slice(-8).toUpperCase()}
                             </h3>

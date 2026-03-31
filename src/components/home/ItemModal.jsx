@@ -1,7 +1,7 @@
 // components/ItemModal.jsx
 import React, { useState, useEffect } from 'react';
-import placeholder from "../assets/placeholder.png";
-import { useCart } from '../contexts/CartContext';
+import placeholder from "../../assets/placeholder.png";
+import { useCart } from '../../contexts/CartContext';
 import { FaTimes, FaMinus, FaPlus } from "react-icons/fa";
 import { Share } from 'lucide-react';
 
@@ -107,7 +107,17 @@ const ItemModal = ({ item, isOpen, onClose }) => {
             <div className="flex justify-between items-start gap-2">
               <div>
                 <h2 className="text-xl font-bold">{normalizedItem.name}</h2>
-                <p className="text-dark/80 text-sm mt-1">{normalizedItem.desc}</p>
+                <p className="text-dark/80 text-sm mt-1.5">{normalizedItem.desc}</p>
+                <p className="text-dark/80 text-sm mt-1.5">
+                  {normalizedItem.addons && normalizedItem.addons.length > 0 && (
+                    <span className="flex items-center gap-1.5">
+                      Add-ons:
+                      <span className="bg-primary/10 text-primary px-2.5 py-0.5 pb-1 rounded-full text-xs font-medium"> 
+                        {normalizedItem.addons.join(", ")}
+                      </span>
+                    </span>
+                  )}
+                </p>
               </div>
               <span className="text-xl font-bold text-primary">
                 {selectedSize.price}

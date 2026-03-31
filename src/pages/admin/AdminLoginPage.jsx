@@ -42,7 +42,7 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-dvh flex items-start justify-center bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+      <div className="w-full max-w-md bg-white border border-gray-300 p-8 rounded-2xl shadow-lg">
         
         <h2 className="text-2xl font-bold text-center mb-6">
           Admin Login
@@ -65,35 +65,37 @@ const AdminLogin = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
           {/* Password */}
           <div className="mb-6">
             <label className="block text-sm mb-1">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(prev => !prev)}
-              className="mt-2 text-sm text-blue-500 hover:underline cursor-pointer"
-            >
-              {showPassword ? "Hide Password" : "Show Password"}
-            </button>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(prev => !prev)}
+                className="text-sm text-blue-500 hover:underline cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+            className="w-full bg-black text-white py-2.5 rounded-lg hover:bg-gray-800 transition"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>

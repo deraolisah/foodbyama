@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Item from "./Item";
 import ItemModal from './ItemModal';
-import { useMenu } from '../contexts/MenuContext';
-import { useCart } from '../contexts/CartContext';
+import { useMenu } from '../../contexts/MenuContext';
+import { useCart } from '../../contexts/CartContext';
 import { Hamburger } from 'lucide-react';
 
 const ItemGrid = () => {
@@ -48,7 +48,7 @@ const ItemGrid = () => {
         </h2>
 
         {displayItems.length === 0 ? (
-          <div className="rounded-xl text-center text-gray-600 bg-gray-200 min-h-60 flex flex-col items-center justify-center gap-2">
+          <div className="rounded-xl text-center text-gray-600 bg-gray-200 min-h-80 flex flex-col items-center justify-center gap-2">
             <Hamburger size={60} />
             <span className='text-dark/80'> No items available in this category </span>
           </div>

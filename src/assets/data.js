@@ -34,6 +34,7 @@ const products = {
     { 
       name: "Egusi Soup", 
       desc: "A hearty mix of melon seed and spiciness for a satisfying meal.", 
+      addons: ["Assorted Meat", " StockFish"],
       sizes: [
         { size: "2 Litres", price: "₦11,000" },
         { size: "3 Litres", price: "₦16,000" },

@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaFilter } from "react-icons/fa";
 import { useCart } from '../contexts/CartContext';
 import { useMenu } from '../contexts/MenuContext';
-// import placeholderImg from "../assets/placeholder.png";
-import ItemModal from '../components/ItemModal';
-import Item from '../components/Item';
+import ItemModal from '../components/home/ItemModal';
+import Item from '../components/home/Item';
 import { ListFilter, Search, X } from 'lucide-react';
 
 const Shop = () => {

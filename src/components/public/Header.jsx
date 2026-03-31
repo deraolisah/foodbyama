@@ -160,7 +160,7 @@ const Header = () => {
 
 
       {/* Mobile Nav */}
-      <ul className={`fixed inset-0 w-full max-w-3xl ml-auto overflow-y-auto flex md:hidden flex-col items-start justify-between gap-10 px-4 pt-20 pb-10 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
+      <ul className={`fixed inset-0 w-full max-w-3xl ml-auto overflow-y-auto flex md:hidden flex-col items-start justify-start gap-0 px-4 pt-20 pb-10 bg-light text-dark bottom-0 left-0 right-0 z-50 transition-all duration-400 ${
         isMenuOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-20 pointer-events-none"
       }`}>
         <span className="w-full">
@@ -174,7 +174,7 @@ const Header = () => {
         </span>
 
         <div className="h-fit w-full text-sm flex flex-col">
-          <div className="w-full flex flex-wrap items-center gap-2.5 py-2.5 border-t border-gray-300">
+          <div className="w-full flex flex-wrap items-center gap-2.5 py-2.5 ">
             <a title='Phone' href='tel:+2349054414660' target='_blank' className="hover:text-primary"> 
               09054414660
             </a> |

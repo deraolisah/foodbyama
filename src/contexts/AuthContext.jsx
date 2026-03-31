@@ -567,6 +567,18 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
+
+  const getDeviceId = () => {
+    let deviceId = localStorage.getItem('device_id');
+
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem('device_id', deviceId);
+    }
+
+    return deviceId;
+  };
+
   const login = async (email) => {
     try {
       const response = await fetch(`${API_BASE_URL}/users/find-or-create`, {
@@ -599,12 +611,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const verifyCode = async (email, code) => {
+  const verifyCode = async (email, code, rememberDevice) => {
+    const deviceId = getDeviceId();
     try {
       const response = await fetch(`${API_BASE_URL}/users/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, code })
+        body: JSON.stringify({ email, code, deviceId, rememberDevice })
       });
 
       if (!response.ok) {
@@ -675,13 +688,16 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      const deviceId = localStorage.getItem('device_id');
+
       try {
         const response = await fetch(`${API_BASE_URL}/users/verify-token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${user.token}`
-          }
+          },
+          body: JSON.stringify({ deviceId }) 
         });
 
         if (!response.ok) {
@@ -691,6 +707,10 @@ export const AuthProvider = ({ children }) => {
         const result = await response.json();
 
         if (!result.success) {
+          if (result.requiresVerification) {
+            logout();
+            return;
+          }
           throw new Error(result.error);
         }
 

@@ -36,7 +36,7 @@ import Faqs from '../pages/Faqs.jsx';
 const AppRoutes = () => {
 
   return (
-    <div className='bg-light font-body tracking-wide'>
+    <div className='bg-light font-body tracking-wide overflow-x-hidden'>
       <Routes>
         <Route element={<PublicLayout />}>
           {/* Public routes */}

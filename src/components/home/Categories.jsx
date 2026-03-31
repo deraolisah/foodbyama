@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMenu } from "../contexts/MenuContext";
+import { useMenu } from "../../contexts/MenuContext";
 
 const Categories = () => {
   const { categories, selectedCategory, setSelectedCategory, isLoading, getUniqueProducts } = useMenu();

@@ -498,10 +498,11 @@
 // export default Login;
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaSpinner, FaGoogle, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import OTPInput from '../../components/OTPInput';
 
 const Login = () => {
   const { isLoading, setIsLoading, login, verifyCode, resendCode, pendingEmail } = useAuth();
@@ -512,6 +513,16 @@ const Login = () => {
   const [mode, setMode] = useState('request');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [timer, setTimer] = useState(30); // Timer for resend button
+  const [rememberDevice, setRememberDevice] = useState(true);  
+
+
+  useEffect(() => {
+  if (timer > 0) {
+    const interval = setInterval(() => setTimer(t => t - 1), 1000);
+    return () => clearInterval(interval);
+  }
+}, [timer]);
 
 
   const handleRequestAccess = async (e) => {
@@ -550,7 +561,8 @@ const Login = () => {
       return;
     }
 
-    const result = await verifyCode(pendingEmail || email, code);
+    // const result = await verifyCode(pendingEmail || email, code);
+    const result = await verifyCode(pendingEmail || email, code, rememberDevice);
     
     if (!result.success) {
       setError(result.error);
@@ -580,17 +592,8 @@ const Login = () => {
   };
 
   return (
-    // <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-5000 p-4">
-    // <div className="min-h-screen flex items-center justify-center bg-light px-4">
     <div className="min-h-dvh flex items-start justify-center bg-gray-100 p-4">
       <div className="bg-white rounded-2xl max-h-[80vh] h-fit max-w-md w-full p-5 md:p-6 relative flex flex-col items-center justify-between overflow-y-auto">
-        {/* Close button */}
-        {/* <button
-          onClick={() => { handleClose }}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-        >
-          <FaTimes />
-        </button> */}
 
         <div className="w-full text-center mb-8">
           <h2 className="text-xl font-bold">Welcome Back!</h2>
@@ -620,6 +623,7 @@ const Login = () => {
             <input
               type="email"
               value={email}
+              autoComplete='email'
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -661,7 +665,7 @@ const Login = () => {
         ) : (
           <form onSubmit={handleVerify} className="w-full space-y-4 flex-1">
             <div>
-              <input
+              {/* <input
                 type="text"
                 value={code}
                 inputMode='numeric'
@@ -670,7 +674,20 @@ const Login = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-center text-2xl tracking-widest"
                 maxLength="6"
                 required
-              />
+              /> */}
+              <OTPInput length={6} value={code} onChange={setCode} />
+            </div>
+
+            <div className="flex items-center justify-between text-sm mt-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={rememberDevice}
+                  onChange={(e) => setRememberDevice(e.target.checked)}
+                  className="accent-primary"
+                />
+                <span className="text-gray-600">Remember this device</span>
+              </label>
             </div>
 
             <button
@@ -689,19 +706,18 @@ const Login = () => {
             </button>
 
             <div className="text-center space-x-2">
-              <button
+              <button 
                 type="button"
+                disabled={timer > 0}
                 onClick={handleResend}
-                disabled={isLoading}
-                className="text-sm text-primary hover:underline"
-              >
-                Resend code
+                className="text-sm text-primary hover:underline cursor-pointer">
+                {timer > 0 ? `Resend in ${timer}s` : 'Resend code'}
               </button>
               <span className="text-sm text-gray-400">•</span>
               <button
                 type="button"
                 onClick={() => setMode('request')}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer"
               >
                 Use different email
               </button>
@@ -714,7 +730,7 @@ const Login = () => {
           <a href="/terms" className="text-gray-700 underline hover:text-primary">
             Terms of Service
           </a>
-        </p>
+        </p>  
       </div>
     </div>
   );
