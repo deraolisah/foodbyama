@@ -66,7 +66,7 @@ const Header = () => {
   }, [openHelp]); 
 
   return (
-    <nav className={`sticky border-b border-gray-200 z-900 bg-white container flex items-center justify-between min-h-12 py-2 top-0 transition-all duration-500`}>
+    <nav className={`sticky top-0 border-b border-gray-200 z-900 bg-white container flex items-center justify-between min-h-12 py-2 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>

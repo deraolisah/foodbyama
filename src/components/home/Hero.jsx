@@ -2,6 +2,7 @@ import React from 'react';
 import bgHero from "../../assets/hero-bg.png";
 import { ChevronLeft, ChevronRight, LocateIcon } from 'lucide-react';
 
+
 const Hero = () => {
   return (
     <div className="container px-8! h-50! md:h-68! text-white flex flex-col gap-2 items-center justify-center bg-top md:bg-center relative" style={{
