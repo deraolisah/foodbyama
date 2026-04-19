@@ -2,13 +2,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoMdSearch, IoMdClose } from "react-icons/io";
 import SearchResults from './SearchResults';
-import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef(null);
-  const navigate = useNavigate();
 
   const toggleSearch = () => {
     setIsOpen(!isOpen);

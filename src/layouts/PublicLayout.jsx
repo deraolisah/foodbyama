@@ -1,7 +1,5 @@
 import React from 'react'
-// import Navbar from '../components/Navbar';
 import TopNav from '../components/public/TopNav';
-// import WelcomePopup from '../components/WelcomePopup';
 import Header from '../components/public/Header';
 import Chatbot from '../components/public/Chatbot';
 import BottomNav from '../components/public/BottomNav';
@@ -10,13 +8,11 @@ import { Outlet } from 'react-router-dom';
 
 const PublicLayout = () => {
   return (
-    <div className="pb-16 md:pb-0 h-full w-full relative!">
-      {/* <Navbar /> */}
+    <div className="min-h-screen flex flex-col">
       <TopNav />
       <Header />
-      {/* <WelcomePopup /> */}
       <Chatbot />
-      <main className='min-h-svh flex flex-col'>
+      <main className='min-h-svh flex-1 flex flex-col'>
         <Outlet />
       </main>
       <Footer />

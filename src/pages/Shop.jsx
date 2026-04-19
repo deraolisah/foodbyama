@@ -26,6 +26,21 @@ const Shop = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
 
+
+  useEffect(() => {
+    if (isFilterOpen) {      
+      // Prevent body scrolling
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isFilterOpen]);
+
   // Combine all products from all categories
   useEffect(() => {
     const uniqueProducts = getUniqueProducts();
@@ -205,7 +220,7 @@ const Shop = () => {
         <div className={`
           lg:w-72 shrink-0
           ${isFilterOpen ? 'flex md:block' : 'hidden lg:block'}
-          fixed top-28 left-0 lg:sticky lg:top-0 inset-0 z-150 lg:z-auto bg-white lg:bg-transparent 
+          fixed top-28 left-0 lg:sticky! lg:top-0 inset-0 z-150 lg:z-auto bg-white lg:bg-transparent 
           overflow-y-auto lg:overflow-visible
           max-h-screen lg:max-h-none
           `}
@@ -225,7 +240,7 @@ const Shop = () => {
             )}
             <button 
               onClick={() => setIsFilterOpen(false)}
-              className="lg:hidden top-6 right-8 text-2xl cursor-pointer"
+              className="lg:hidden top-6 right-8 ml-auto text-2xl cursor-pointer bg-gray-200 px-2 rounded-md"
               >
               ×
             </button>

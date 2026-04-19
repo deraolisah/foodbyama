@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from "../../assets/favicon.png";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Facebook, Info, Instagram, Menu, X } from 'lucide-react';
 import { ShoppingCart, Soup, UserRound } from 'lucide-react';
 import { TiktokLogoIcon } from "@phosphor-icons/react";
@@ -66,13 +66,13 @@ const Header = () => {
   }, [openHelp]); 
 
   return (
-    <nav className={`sticky top-0 border-b border-gray-200 z-900 bg-white container flex items-center justify-between min-h-12 py-2 transition-all duration-500`}>
+    <nav className={`sticky top-0 border-b border-gray-200 z-900 bg-white container flex items-center justify-between h-12 transition-all duration-500`}>
        <ul className="hidden md:flex items-center justify-start gap-4 text-sm w-full">
         {navLinks.map((item) => (
           <li key={item.name}>
-            <Link to={item.href} onClick={() => { scrollTo(0,0); }} className="hover:text-primary hover:underline"> 
+            <NavLink end to={item.href} onClick={() => { scrollTo(0,0); }} className="hover:text-primary hover:underline"> 
               {item.name} 
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>   

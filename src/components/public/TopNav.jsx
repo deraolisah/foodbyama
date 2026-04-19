@@ -4,7 +4,7 @@ import React from 'react'
 
 const TopNav = () => {
   return (
-    <div className="container hidden md:flex items-center justify-between gap-4 h-10 border-b border-gray-200 text-xs">
+    <div className="container hidden md:flex items-center justify-between gap-4 h-10 border-b border-gray-200 text-xs relative">
 
       <div className="w-full flex items-center justify-start gap-4">
         <a title='Phone' href='tel:+2349054414660' target='_blank' className="hover:text-primary"> 

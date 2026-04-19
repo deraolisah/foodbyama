@@ -20,17 +20,12 @@
 
 
 
-*{
+/* *{
   outline: 0 none;
   box-sizing: border-box;
-}
+} */
 html{
   scroll-behavior: smooth;
-}
-.no-scroll {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
 }
 
 
