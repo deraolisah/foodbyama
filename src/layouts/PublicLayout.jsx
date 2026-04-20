@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom';
 
 const PublicLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col gap-0">
       <TopNav />
       <Header />
       <Chatbot />
